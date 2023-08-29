@@ -64,8 +64,6 @@ export const Translator =
     const locale = useLocale();
     const config = useConfig();
 
-    console.log(slateToHtml(fields?.richtext?.value as any));
-
     const { initialLocale, localesOptions } =
       config.localization && (getLocalesOptions(locale, config.localization) as any);
 
@@ -185,7 +183,6 @@ export const Translator =
         setModified(true);
       } catch (error: any) {
         toast.error('Server error');
-        console.log(error.message);
         setIsLoading(false);
       }
     };
