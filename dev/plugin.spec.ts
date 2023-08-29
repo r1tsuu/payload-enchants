@@ -19,6 +19,7 @@ describe('Plugin tests', () => {
   // Add tests to ensure that the plugin works as expected
 
   // Example test to check for seeded data
-
-  expect(true).toBe(true);
+  test('Test', () => {
+    expect(true).toBe(true);
+  });
 });
