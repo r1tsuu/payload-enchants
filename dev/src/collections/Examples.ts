@@ -8,10 +8,48 @@ const Examples: CollectionConfig = {
   },
   fields: [
     {
-      name: 'someField',
+      name: 'text',
       type: 'text',
+      localized: true,
+    },
+    {
+      name: 'textarea',
+      type: 'textarea',
+      localized: true,
+    },
+    {
+      name: 'richtext',
+      type: 'richText',
+      localized: true,
+    },
+    {
+      name: 'array',
+      type: 'array',
+      fields: [
+        {
+          name: 'text',
+          type: 'text',
+          localized: true,
+        },
+      ],
+    },
+    {
+      name: 'blocks',
+      type: 'blocks',
+      blocks: [
+        {
+          slug: 'block',
+          fields: [
+            {
+              name: 'text',
+              type: 'text',
+              localized: true,
+            },
+          ],
+        },
+      ],
     },
   ],
-}
+};
 
 export default Examples;

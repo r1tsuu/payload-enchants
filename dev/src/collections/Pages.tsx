@@ -1,7 +1,7 @@
 import { CollectionConfig } from 'payload/types';
 
-const newCollection: CollectionConfig = {
-  slug: 'new-collection',
+const Pages: CollectionConfig = {
+  slug: 'pages',
   admin: {
     useAsTitle: 'title',
   },
@@ -9,8 +9,9 @@ const newCollection: CollectionConfig = {
     {
       name: 'title',
       type: 'text',
+      required: true,
     },
   ],
-}
+};
 
-export default newCollection;
+export default Pages;

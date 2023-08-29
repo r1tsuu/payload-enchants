@@ -1,2 +1,2 @@
-export { samplePlugin } from './plugin'
-export type { PluginTypes } from './types'
+export { translatorPlugin } from './plugin';
+export { translatorField } from './field';

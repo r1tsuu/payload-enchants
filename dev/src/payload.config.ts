@@ -2,13 +2,22 @@ import { buildConfig } from 'payload/config';
 import path from 'path';
 import Users from './collections/Users';
 import Examples from './collections/Examples';
-import { samplePlugin } from '../../src/index'
+import { translatorPlugin } from '../../src';
+import Pages from './collections/Pages';
+import Media from './collections/Media';
 
 export default buildConfig({
   serverURL: 'http://localhost:3000',
+  i18n: {
+    lng: 'en',
+  },
+  localization: {
+    locales: ['en', 'de', 'fr', 'jp'],
+    defaultLocale: 'en',
+  },
   admin: {
     user: Users.slug,
-    webpack: config => {
+    webpack: (config) => {
       const newConfig = {
         ...config,
         resolve: {
@@ -20,13 +29,12 @@ export default buildConfig({
             payload: path.join(__dirname, '../node_modules/payload'),
           },
         },
-      }
-      return newConfig
+      };
+      return newConfig;
     },
   },
-  collections: [
-    Examples, Users,
-  ],
+  collections: [Pages, Media, Users, Examples],
+  globals: [],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },
@@ -34,8 +42,9 @@ export default buildConfig({
     schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql'),
   },
   plugins: [
-    samplePlugin({
-      enabled: true,
-    })
+    translatorPlugin({
+      GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
+      collections: ['examples'],
+    }) as any,
   ],
-})
+});
