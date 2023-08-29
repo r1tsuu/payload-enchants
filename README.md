@@ -31,7 +31,7 @@ plugins: [
 
 `globals` - Globals with enabled translator
 
-`translateService` - If you would like use for example DeepL instead of Google, you can write you own implementation for service
+`translateService` - If you would like to use for example DeepL instead of Google, you can write you own implementation for service
 ```ts
 type TranslateService = (text: string, target: string, source: string) => Promise<string>;
 ```
