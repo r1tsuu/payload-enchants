@@ -64,6 +64,8 @@ export const Translator =
     const locale = useLocale();
     const config = useConfig();
 
+    console.log(slateToHtml(fields?.richtext?.value as any));
+
     const { initialLocale, localesOptions } =
       config.localization && (getLocalesOptions(locale, config.localization) as any);
 

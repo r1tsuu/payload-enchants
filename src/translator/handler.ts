@@ -8,7 +8,6 @@ export const createTranslatorHandler = (translatorConfig: TranslatorConfig): Pay
     : createGoogleTranslateService(translatorConfig.GOOGLE_API_KEY as string);
 
   return async (req, res) => {
-    console.log(req);
     if (translatorConfig.access) {
       const hasAccesses = await translatorConfig.access(req);
       if (!hasAccesses) res.status(403).send();

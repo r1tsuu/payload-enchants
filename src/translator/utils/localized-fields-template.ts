@@ -55,7 +55,9 @@ export const filterObjectByTemplate = (
 ) => {
   const filteredEntries = Object.entries(obj).filter(([key, value]) => {
     if (typeof value === 'number') return null;
-    return translateOnlyEmptyFields ? !value : true && template.includes(replaceNumbers(key, '0'));
+    return translateOnlyEmptyFields
+      ? !value || !value?.length
+      : true && template.includes(replaceNumbers(key, '0'));
   });
 
   return filteredEntries.flatMap((each) => each[0]);
