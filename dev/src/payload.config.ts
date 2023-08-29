@@ -45,6 +45,6 @@ export default buildConfig({
     translatorPlugin({
       GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
       collections: ['examples'],
-    }) as any,
+    }),
   ],
 });

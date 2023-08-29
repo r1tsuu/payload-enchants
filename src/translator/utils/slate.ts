@@ -1,7 +1,8 @@
 // import jsdom from 'jsdom';
-import { getAttributeValue } from 'domutils'
-import { extractCssFromStyle } from '@slate-serializers/dom'
-import { Element } from 'domhandler'
+import { getAttributeValue } from 'domutils';
+import { extractCssFromStyle } from '@slate-serializers/dom';
+import { Element } from 'domhandler';
+import { SlateToHtmlConfig } from '@slate-serializers/html';
 
 const ELEMENT_NAME_TAG_MAP = {
   p: 'p',
@@ -16,7 +17,7 @@ const ELEMENT_NAME_TAG_MAP = {
   ol: 'ol',
   li: 'li',
   blockquote: 'blockquote',
-}
+};
 
 const MARK_ELEMENT_TAG_MAP = {
   strikethrough: ['s'],
@@ -24,15 +25,25 @@ const MARK_ELEMENT_TAG_MAP = {
   underline: ['u'],
   italic: ['i'],
   code: ['pre', 'code'],
-}
+  textAlign: ['text-align'],
+};
 
-export const slateToHtmlConfig = {
+export const slateToHtmlConfig: SlateToHtmlConfig = {
   markMap: MARK_ELEMENT_TAG_MAP,
   elementMap: ELEMENT_NAME_TAG_MAP,
   elementTransforms: {
     quote: ({ children = [] }) => {
-      const p = [new Element('p', {}, children as any)]
-      return new Element('blockquote', {}, p) as any
+      const p = [new Element('p', {}, children as any)];
+      return new Element('blockquote', {}, p) as any;
+    },
+    textAlign: ({ node, children }: any) => {
+      return new Element(
+        'align',
+        {
+          align: node.align,
+        },
+        children
+      );
     },
     relationship: ({ node, children }: any) => {
       return new Element(
@@ -41,8 +52,8 @@ export const slateToHtmlConfig = {
           to: node.relationTo,
           id: node.value.id,
         },
-        children,
-      )
+        children
+      );
     },
     upload: ({ node, children }: any) => {
       return new Element(
@@ -51,20 +62,20 @@ export const slateToHtmlConfig = {
           to: node.relationTo,
           id: node.value.id,
         },
-        children,
-      )
+        children
+      );
     },
     link: ({ node, children = [] }: any) => {
-      const attrs: any = {}
+      const attrs: any = {};
       if (node.newTab) {
-        attrs.target = '_blank'
+        attrs.target = '_blank';
       }
       if (node.doc) {
-        attrs.value = node.doc.value
-        attrs.relationTo = node.doc.relationTo
+        attrs.value = node.doc.value;
+        attrs.relationTo = node.doc.relationTo;
       }
       if (node.url) {
-        attrs.href = node.url
+        attrs.href = node.url;
       }
 
       return new Element(
@@ -73,39 +84,36 @@ export const slateToHtmlConfig = {
           linkType: node.linkType,
           ...attrs,
         },
-        children as any,
-      ) as any
+        children as any
+      ) as any;
     },
   },
-  encodeEntities: false,
-  alwaysEncodeBreakingEntities: true,
-  alwaysEncodeCodeEntities: false,
-  convertLineBreakToBr: false,
-}
+  defaultTag: 'p',
+};
 
 export const htmlToSlateConfig = {
   elementAttributeTransform: ({ el }: any) => {
-    const attrs: { [key: string]: string } = {}
+    const attrs: { [key: string]: string } = {};
     const elementStyleMap: { [key: string]: string } = {
       align: 'textAlign',
-    }
-    Object.keys(elementStyleMap).forEach(slateKey => {
-      const cssProperty = elementStyleMap[slateKey]
-      const cssValue = extractCssFromStyle(el, cssProperty)
+    };
+    Object.keys(elementStyleMap).forEach((slateKey) => {
+      const cssProperty = elementStyleMap[slateKey];
+      const cssValue = extractCssFromStyle(el, cssProperty);
       if (cssValue) {
-        attrs[slateKey] = cssValue
+        attrs[slateKey] = cssValue;
       }
-    })
-    return attrs
+    });
+    return attrs;
   },
   elementTags: {
     a: (el: any) => {
-      if (!el) return {}
-      const relationTo = getAttributeValue(el, 'relationto')
-      const value = getAttributeValue(el, 'value')
-      const url = getAttributeValue(el, 'href')
-      const target = getAttributeValue(el, 'target')
-      const linkType = getAttributeValue(el, 'linktype')
+      if (!el) return {};
+      const relationTo = getAttributeValue(el, 'relationto');
+      const value = getAttributeValue(el, 'value');
+      const url = getAttributeValue(el, 'href');
+      const target = getAttributeValue(el, 'target');
+      const linkType = getAttributeValue(el, 'linktype');
 
       return {
         type: 'link',
@@ -121,7 +129,7 @@ export const htmlToSlateConfig = {
           target === '_blank' && {
             newTab: true,
           }),
-      }
+      };
     },
     blockquote: () => ({ type: 'blockquote' }),
     h1: () => ({ type: 'h1' }),
@@ -163,4 +171,4 @@ export const htmlToSlateConfig = {
     html.replace(/<pre[^>]*>/g, '<code>').replace(/<\/pre>/g, '</code>'),
   filterWhitespaceNodes: true,
   convertBrToLineBreak: true,
-}
+};
