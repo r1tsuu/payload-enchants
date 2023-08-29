@@ -2,7 +2,9 @@
 
 ## Video
 
-[translator.webm](https://github.com/r1tsuu/payload-plugin-translator/assets/64744993/593a1dce-4a6e-4fe2-9707-a074587b4984)
+https://github.com/r1tsuu/payload-plugin-translator/assets/64744993/c915ca6f-62a8-4d76-b644-3ac85abe91e4
+
+
 
 ## Usage
 
