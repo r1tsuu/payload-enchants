@@ -34,6 +34,8 @@ export const templateWithLocalizedFields = (fields: Field[]) => {
             deepFields(tab.fields, basepath + tab.name + '.');
           } else deepFields(tab.fields, basepath);
         }
+      } else if (field.type === 'row') {
+        deepFields(field.fields, basepath);
       }
     }
   };
