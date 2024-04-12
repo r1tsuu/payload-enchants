@@ -1,0 +1,20 @@
+@mixin blur-bg($color: var(--theme-bg), $opacity: 0.75) {
+  &:before,
+  &:after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    content: ' ';
+  }
+
+  &:before {
+    opacity: $opacity;
+    background: $color;
+  }
+
+  &:after {
+    backdrop-filter: blur(8px);
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "eslint-config-next",
+    "plugin:perfectionist/recommended-natural"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "simple-import-sort", "import"],
+  "rules": {
+    "@typescript-eslint/consistent-type-definitions": ["error", "type"],
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "fixStyle": "separate-type-imports"
+      }
+    ],
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/padding-line-between-statements": [
+      "warn",
+      {
+        "blankLine": "always",
+        "next": "*",
+        "prev": ["const", "let", "var"]
+      },
+      {
+        "blankLine": "always",
+        "next": ["return", "function", "class"],
+        "prev": "*"
+      },
+      {
+        "blankLine": "always",
+        "next": "*",
+        "prev": ["function", "class"]
+      },
+      {
+        "blankLine": "always",
+        "next": "export",
+        "prev": "*"
+      },
+      {
+        "blankLine": "always",
+        "next": "*",
+        "prev": "multiline-const"
+      }
+    ],
+    "import/first": "error",
+    "import/newline-after-import": "error",
+    "import/no-duplicates": "error",
+    "no-unused-vars": "off",
+    "padding-line-between-statements": "off",
+    "perfectionist/sort-imports": "off",
+    "prefer-const": "error",
+    "require-await": "error",
+    "simple-import-sort/exports": "warn",
+    "simple-import-sort/imports": "warn",
+    "typescript-eslint/explicit-function-return-type": "off",
+    "perfectionist/sort-named-imports": "off",
+    "@typescript-eslint/ban-ts-comment": "error"
+  }
+}

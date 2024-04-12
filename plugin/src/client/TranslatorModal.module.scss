@@ -1,0 +1,37 @@
+@import './mixins.scss';
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+  @include blur-bg;
+}
+
+.wrapper {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  gap: var(--base);
+  z-index: 1;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--base);
+
+  > * {
+    margin: 0;
+  }
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
