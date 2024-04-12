@@ -38,6 +38,37 @@ export default buildConfig({
       ],
       slug: 'tests',
     },
+    {
+      fields: [
+        {
+          localized: true,
+          name: 'title',
+          type: 'text',
+        },
+      ],
+      slug: 'tests_b',
+    },
+    {
+      fields: [
+        {
+          blocks: [
+            {
+              fields: [
+                {
+                  localized: true,
+                  name: 'title',
+                  type: 'text',
+                },
+              ],
+              slug: 'some',
+            },
+          ],
+          name: 'blocks',
+          type: 'blocks',
+        },
+      ],
+      slug: 'blocks_test',
+    },
   ],
   db: mongooseAdapter({
     url: process.env.MONGODB_URI || '',
@@ -48,6 +79,7 @@ export default buildConfig({
   },
   localization: {
     defaultLocale: 'en',
+    fallback: false,
     locales: ['en', 'de', 'pl'],
   },
   async onInit(payload) {
@@ -68,9 +100,9 @@ export default buildConfig({
   },
   plugins: [
     payloadPluginTranslator({
-      collections: ['tests'],
+      collections: ['tests', 'tests_b'],
       resolver: getGoogleResolver({
-        apiKey: '',
+        apiKey: process.env.GOOGLE_API_KEY!,
       }),
     }),
   ],

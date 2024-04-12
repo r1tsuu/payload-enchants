@@ -1,6 +1,6 @@
 import type { Plugin } from 'payload/config';
 
-import { Translator } from './client/Translator';
+import { CustomSaveButton } from './client/components/CustomSaveButton';
 import { getLocalesListHandler } from './server/getLocalesListHandler';
 import { getTranslateHandler } from './server/translateHandler';
 import type { PluginConfig } from './types';
@@ -20,7 +20,7 @@ export const payloadPluginTranslator: (pluginConfig: PluginConfig) => Plugin = (
           admin: {
             components: {
               edit: {
-                SaveButton: Translator,
+                SaveButton: CustomSaveButton,
               },
             },
           },

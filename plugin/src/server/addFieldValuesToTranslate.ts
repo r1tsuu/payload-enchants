@@ -28,6 +28,8 @@ export const addFieldValuesToTranslate = ({
 
     if (!isSlate && !isLexical) return valueFrom;
 
+    siblingData[name] = valueFrom;
+
     const root = isLexical ? valueFrom.root : valueFrom;
 
     const traverseChilds = (siblingData: any) => {

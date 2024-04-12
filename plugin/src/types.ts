@@ -34,3 +34,7 @@ export type TranslateHandlerArgs = {
       globalSlug: string;
     }
 );
+
+export type TranslateHandlerResponse = {
+  translatedData: Record<string, any>;
+};

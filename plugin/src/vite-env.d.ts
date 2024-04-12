@@ -5,3 +5,7 @@ declare module '*.svg' {
 
   export default content;
 }
+
+declare module 'react-toastify' {
+  export const toast: any;
+}

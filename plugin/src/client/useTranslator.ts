@@ -6,7 +6,7 @@ import { getFormState } from '@payloadcms/ui/utilities/getFormState';
 import { reduceFieldsToValues } from '@payloadcms/ui/utilities/reduceFieldsToValues';
 import { useCallback, useEffect, useState } from 'react';
 
-export const useTranslator = () => {
+export const useTranslator = ({ onSuccess }: { onSuccess?: () => void }) => {
   const { collectionSlug, globalSlug, id } = useDocumentInfo();
 
   const {
@@ -33,10 +33,10 @@ export const useTranslator = () => {
       body: JSON.stringify({
         collectionSlug,
         data: values,
-        from: activeLocaleCode,
         globalSlug,
         id,
-        locale,
+        locale: locale.code,
+        localeFrom: activeLocaleCode,
       }),
       credentials: 'include',
       headers: {
@@ -61,6 +61,8 @@ export const useTranslator = () => {
     });
 
     setIsLoading(false);
+
+    if (onSuccess) onSuccess();
   };
 
   const getLocalesOptions = useCallback(
@@ -84,7 +86,7 @@ export const useTranslator = () => {
           collectionSlug,
           globalSlug,
           id,
-          locale,
+          locale: locale.code,
         }),
         credentials: 'include',
         headers: {

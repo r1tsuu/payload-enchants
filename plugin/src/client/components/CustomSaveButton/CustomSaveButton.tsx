@@ -4,12 +4,12 @@ import { Button } from '@payloadcms/ui/elements';
 import { useModal } from '@payloadcms/ui/elements/Modal';
 import { DefaultSaveButton } from '@payloadcms/ui/elements/Save';
 
-import styles from './Translator.module.scss';
-import { TranslatorModal } from './TranslatorModal';
+import { TranslatorModal } from '../TranslatorModal';
+import styles from './CustomSaveButton.module.scss';
 
 const modalSlug = 'translator-modal';
 
-export const Translator = () => {
+export const CustomSaveButton = () => {
   const { isModalOpen, openModal } = useModal();
 
   return (

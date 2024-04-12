@@ -4,9 +4,9 @@ import { useModal } from '@payloadcms/ui/elements/Modal';
 import { useConfig } from '@payloadcms/ui/providers/Config';
 import { useTranslation } from '@payloadcms/ui/providers/Translation';
 
+import { useTranslator } from '../useTranslator';
 import { LocalizerLabel } from './LocaleLabel';
 import styles from './TranslatorModal.module.scss';
-import { useTranslator } from './useTranslator';
 
 type Props = {
   slug: string;
@@ -19,7 +19,9 @@ export const TranslatorModal = ({ slug }: Props) => {
 
   const { i18n } = useTranslation();
 
-  const { activeLocaleCode, localesOptions, setActiveLocaleCode, translate } = useTranslator();
+  const { activeLocaleCode, localesOptions, setActiveLocaleCode, translate } = useTranslator({
+    onSuccess: () => closeModal(slug),
+  });
 
   if (!localization) return null;
 

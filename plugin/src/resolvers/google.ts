@@ -41,6 +41,8 @@ export const getGoogleResolver = ({
       ),
     );
 
+    console.log(JSON.stringify(responses));
+
     const translatedTexts = responses
       .flatMap((chunk) => chunk.data.translations)
       .map((translation) => translation.translatedText);

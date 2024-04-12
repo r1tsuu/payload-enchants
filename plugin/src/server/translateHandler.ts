@@ -101,12 +101,13 @@ export const getTranslateHandler: (resolver: TranslateResolver) => PayloadHandle
     traverseFields(entityConfig.fields, args.data, doc);
 
     const { translatedTexts } = await resolver({
-      localeFrom: args.locale,
-      localeTo: args.localeFrom,
+      localeFrom: args.localeFrom,
+      localeTo: args.locale,
       req,
       texts: valuesToTranslate.map((each) => each.value),
     });
 
+    console.log(args.data);
     await Promise.all(
       valuesToTranslate.map((each, index) => each.onTranslate(translatedTexts[index])),
     );
