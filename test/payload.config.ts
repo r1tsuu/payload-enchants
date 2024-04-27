@@ -1,6 +1,6 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
-import { payloadPluginTranslator } from '@plugin/main';
+import { payloadPluginTranslator } from '@plugin';
 import { getGoogleResolver } from '@plugin/resolvers/google';
 import path from 'path';
 import { buildConfig } from 'payload/config';
@@ -18,11 +18,19 @@ export default buildConfig({
       password: 'test',
     },
   },
+
   collections: [
     {
       access: {
         delete: () => false,
         update: () => false,
+      },
+      admin: {
+        preview: () => {
+          console.log('here we are');
+
+          return '';
+        },
       },
       auth: true,
       fields: [],

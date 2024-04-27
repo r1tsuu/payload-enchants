@@ -4,8 +4,8 @@ import { useModal } from '@payloadcms/ui/elements/Modal';
 import { useConfig } from '@payloadcms/ui/providers/Config';
 import { useTranslation } from '@payloadcms/ui/providers/Translation';
 
-import { useTranslator } from '../useTranslator';
-import { LocalizerLabel } from './LocaleLabel';
+import { useTranslator } from '../../useTranslator';
+import { LocalizerLabel } from '../LocalizerLabel';
 import styles from './TranslatorModal.module.scss';
 
 type Props = {

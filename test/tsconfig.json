@@ -22,7 +22,7 @@
       "@/*": ["./src/*"],
       "@payload-config": ["./payload.config.ts"],
       "@plugin/*": ["../plugin/src/*"],
-      "@plugin": ["../plugin/src/main.ts"]
+      "@plugin": ["../plugin/src/index.ts"]
     }
   },
   "include": [
