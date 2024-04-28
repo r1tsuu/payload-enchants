@@ -1,4 +1,3 @@
-import httpStatus from 'http-status';
 import type { PayloadHandler } from 'payload/config';
 import { APIError } from 'payload/errors';
 import { type Field, fieldAffectsData } from 'payload/types';
@@ -11,7 +10,7 @@ import type { ValueToTranslate } from './types';
 
 export const getTranslateHandler: (resolver: TranslateResolver) => PayloadHandler =
   (resolver) => async (req) => {
-    const args = req.data as TranslateHandlerArgs;
+    const args = (await req.json?.()) as TranslateHandlerArgs;
 
     const isGlobal = 'globalSlug' in args;
 
@@ -24,7 +23,7 @@ export const getTranslateHandler: (resolver: TranslateResolver) => PayloadHandle
     if (!entityConfig)
       throw new APIError(
         `This ${isGlobal ? 'global' : 'collection'} slug is invalid - ${slug}`,
-        httpStatus.BAD_REQUEST,
+        400,
       );
 
     const localizationConfig = req.payload.config.localization;

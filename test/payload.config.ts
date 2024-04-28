@@ -1,10 +1,10 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
-import { payloadPluginTranslator } from '@plugin';
-import { getGoogleResolver } from '@plugin/resolvers/google';
 import path from 'path';
 import { buildConfig } from 'payload/config';
 import { en } from 'payload/i18n/en';
+import { payloadPluginTranslator } from 'payload-plugin-translator';
+import { copyResolver } from 'payload-plugin-translator/resolvers/copy';
 import { fileURLToPath } from 'url';
 
 const filename = fileURLToPath(import.meta.url);
@@ -109,9 +109,7 @@ export default buildConfig({
   plugins: [
     payloadPluginTranslator({
       collections: ['tests', 'tests_b'],
-      resolver: getGoogleResolver({
-        apiKey: process.env.GOOGLE_API_KEY!,
-      }),
+      resolver: copyResolver(),
     }),
   ],
   secret: process.env.PAYLOAD_SECRET || '',

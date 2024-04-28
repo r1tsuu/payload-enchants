@@ -1,3 +1,5 @@
+import './TranslatorModal.scss';
+
 import { getTranslation } from '@payloadcms/translations';
 import { Button, Modal, Popup, PopupList } from '@payloadcms/ui/elements';
 import { useModal } from '@payloadcms/ui/elements/Modal';
@@ -6,7 +8,6 @@ import { useTranslation } from '@payloadcms/ui/providers/Translation';
 
 import { useTranslator } from '../../useTranslator';
 import { LocalizerLabel } from '../LocalizerLabel';
-import styles from './TranslatorModal.module.scss';
 
 type Props = {
   slug: string;
@@ -28,9 +29,9 @@ export const TranslatorModal = ({ slug }: Props) => {
   const activeLocale = localization.locales.find((each) => each.code === activeLocaleCode);
 
   return (
-    <Modal className={styles.modal} slug={slug}>
-      <div className={styles.wrapper}>
-        <div className={styles.content}>
+    <Modal className={'translator__modal'} slug={slug}>
+      <div className={'translator__wrapper'}>
+        <div className={'translator__content'}>
           <h2>Choose the language to translate from</h2>
           {activeLocale && (
             <Popup
@@ -59,7 +60,7 @@ export const TranslatorModal = ({ slug }: Props) => {
               )}
             ></Popup>
           )}
-          <div className={styles.buttons}>
+          <div className={'translator__buttons'}>
             <Button onClick={translate}>Translate</Button>
             <Button onClick={() => closeModal(slug)}>Exit</Button>
           </div>

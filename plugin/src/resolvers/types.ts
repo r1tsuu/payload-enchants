@@ -12,6 +12,8 @@ export type TranslateResolverResponse = {
   translatedTexts: string[];
 };
 
-export type TranslateResolver = (args: TranslateResolverArgs) => Promise<TranslateResolverResponse>;
+export type TranslateResolver = (
+  args: TranslateResolverArgs,
+) => Promise<TranslateResolverResponse> | TranslateResolverResponse;
 
 export type TranslatorResolverAccess = (args: TranslateResolverArgs) => Promise<boolean> | boolean;

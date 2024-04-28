@@ -14,20 +14,31 @@
   },
   "peerDependencies": {
     "@payloadcms/ui": "^3.0.0-beta.19",
-    "payload": "^3.0.0-beta.19"
+    "payload": "^3.0.0-beta.19",
+    "@payloadcms/translations": "^3.0.0-beta.19"
   },
   "devDependencies": {
     "payload": "3.0.0-beta.19",
     "@payloadcms/ui": "3.0.0-beta.19",
     "@types/react": "18.2.64",
     "react": "18.2.0",
-    "typescript": "^5.2.2"
+    "@payloadcms/translations": "3.0.0-beta.19"
   },
   "exports": {
     ".": {
       "import": "./src/index.ts",
       "require": "./src/index.ts",
       "types": "./src/index.ts"
+    },
+    "./resolvers/google": {
+      "import": "./src/resolvers/google.ts",
+      "require": "./src/resolvers/google.ts",
+      "types": "./src/resolvers/google.ts"
+    },
+    "./resolvers/copy": {
+      "import": "./src/resolvers/copy.ts",
+      "require": "./src/resolvers/copy.ts",
+      "types": "./src/resolvers/copy.ts"
     }
   },
   "publishConfig": {

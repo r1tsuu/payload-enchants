@@ -1,4 +1,3 @@
-import httpStatus from 'http-status';
 import type { PayloadHandler } from 'payload/config';
 import { APIError } from 'payload/errors';
 import type { Field } from 'payload/types';
@@ -8,7 +7,7 @@ import type { GetLocalesListHandlerArgs } from '../types';
 import { isEmpty } from '../utils/isEmpty';
 
 export const getLocalesListHandler: PayloadHandler = async (req) => {
-  const args = req.data as GetLocalesListHandlerArgs;
+  const args = (await req.json?.()) as GetLocalesListHandlerArgs;
 
   const isGlobal = 'globalSlug' in args;
 
@@ -19,10 +18,7 @@ export const getLocalesListHandler: PayloadHandler = async (req) => {
   ).find((entity) => entity.slug === slug);
 
   if (!entityConfig)
-    throw new APIError(
-      `This ${isGlobal ? 'global' : 'collection'} slug is invalid - ${slug}`,
-      httpStatus.BAD_REQUEST,
-    );
+    throw new APIError(`This ${isGlobal ? 'global' : 'collection'} slug is invalid - ${slug}`, 400);
 
   const localizationConfig = req.payload.config.localization;
 
