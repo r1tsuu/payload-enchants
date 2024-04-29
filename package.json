@@ -1,57 +1,31 @@
 {
-  "name": "payload-plugin-translator",
+  "name": "payload-plugin-translator-repo",
   "version": "1.0.0",
-  "homepage:": "https://github.com/r1tsuu/payload-plugin-translator",
-  "repository": "git@github.com:r1tsuu/payload-plugin-translator.git",
-  "description": "Content translator plugin for Payload",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "keywords": [
-    "payload",
-    "cms",
-    "plugin",
-    "typescript",
-    "react",
-    "template",
-    "translator",
-    "google-translate"
-  ],
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "test": "cd dev && yarn test",
-    "lint": "eslint src",
-    "lint:fix": "eslint --fix --ext .ts,.tsx src",
-    "clean": "rimraf dist && rimraf dev/yarn.lock",
-    "prepublishOnly": "yarn clean && yarn build && cd dev && yarn test"
-  },
-  "author": "enjoythepain1337@gmail.com",
-  "license": "MIT",
-  "peerDependencies": {
-    "payload": "^1.0.0"
+    "dev": "pnpm --filter test dev",
+    "test": "cd test && pnpm test"
   },
   "devDependencies": {
-    "@payloadcms/eslint-config": "^0.0.1",
-    "@swc/jest": "^0.2.28",
-    "@typescript-eslint/eslint-plugin": "5.12.1",
-    "@typescript-eslint/parser": "5.12.1",
-    "dotenv": "^8.2.0",
-    "eslint": "^8.19.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-import": "2.25.4",
-    "eslint-plugin-prettier": "^4.0.0",
-    "jest": "^29.6.2",
-    "payload": "1.15.2",
-    "prettier": "^2.7.1",
-    "react": "^18.0.0",
-    "typescript": "^4.8.4"
+    "@next/eslint-plugin-next": "^14.1.4",
+    "@swc/cli": "^0.1.62",
+    "@swc/core": "^1.4.16",
+    "@typescript-eslint/eslint-plugin": "^6.7.5",
+    "@typescript-eslint/parser": "^6.7.5",
+    "copyfiles": "^2.4.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.57.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-perfectionist": "^2.1.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.2.5",
+    "prettier-plugin-css-order": "^2.0.1",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.4.2"
   },
-  "dependencies": {
-    "@slate-serializers/dom": "^2.0.0",
-    "@slate-serializers/html": "^2.0.0",
-    "domhandler": "^5.0.3",
-    "domutils": "^3.1.0",
-    "flatley": "^5.2.0",
-    "lodash": "^4.17.21"
-  }
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

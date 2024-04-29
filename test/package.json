@@ -1,0 +1,44 @@
+{
+  "name": "test",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
+    "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
+    "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
+    "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
+    "generate:types": "payload generate:types",
+    "standalone-script": "tsx ./src/scripts/standalone-script.ts",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --config=./jest.config.js"
+  },
+  "engines": {
+    "node": ">=18.19.0"
+  },
+  "dependencies": {
+    "@payloadcms/db-mongodb": "3.0.0-beta.19",
+    "@payloadcms/next": "3.0.0-beta.19",
+    "@payloadcms/richtext-lexical": "3.0.0-beta.19",
+    "@payloadcms/richtext-slate": "3.0.0-beta.19",
+    "@payloadcms/translations": "3.0.0-beta.19",
+    "@payloadcms/ui": "3.0.0-beta.19",
+    "cross-env": "^7.0.3",
+    "next": "14.3.0-canary.28",
+    "payload": "3.0.0-beta.19",
+    "payload-plugin-translator": "workspace:*",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "sharp": "0.32.6"
+  },
+  "devDependencies": {
+    "@swc/jest": "^0.2.36",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.25",
+    "dotenv": "^16.4.5",
+    "jest": "^29.7.0",
+    "tsx": "^4.7.1",
+    "typescript": "^5.4.2"
+  }
+}

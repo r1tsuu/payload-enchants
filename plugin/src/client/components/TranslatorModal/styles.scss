@@ -1,0 +1,76 @@
+.translator {
+  &__modal {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+  }
+
+  &__wrapper {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    gap: var(--base);
+    z-index: 1;
+    background: var(--theme-elevation-50);
+    padding: 50px;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--base);
+    max-width: 400px;
+
+    h2 {
+      margin: 0;
+      text-align: center;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+
+    button {
+      margin: 0;
+    }
+  }
+
+  &__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    transition: 0.25s;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+
+    &:hover {
+      opacity: 0.6;
+    }
+
+    &:before,
+    &:after {
+      position: absolute;
+      left: 15px;
+      background-color: var(--theme-elevation-800);
+      width: 2px;
+      height: 33px;
+      content: ' ';
+    }
+
+    &:before {
+      transform: rotate(45deg);
+    }
+
+    &:after {
+      transform: rotate(-45deg);
+    }
+  }
+}
