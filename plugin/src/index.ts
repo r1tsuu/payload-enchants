@@ -49,13 +49,12 @@ export const payloadPluginTranslator: (pluginConfig: TranslatorPluginConfig) => 
         },
       },
       endpoints: [
-        ...(config.endpoints ?? [
-          {
-            handler: translateEndpoint,
-            method: 'post',
-            path: '/translator/translate',
-          },
-        ]),
+        ...(config.endpoints ?? []),
+        {
+          handler: translateEndpoint,
+          method: 'post',
+          path: '/translator/translate',
+        },
       ],
       globals:
         config.globals?.map((global) => {
