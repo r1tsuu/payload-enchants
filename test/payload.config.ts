@@ -10,6 +10,7 @@ import { googleResolver } from 'payload-plugin-translator/resolvers/google';
 import { fileURLToPath } from 'url';
 
 import { openAIResolver } from './../plugin/src/resolvers/openAI';
+import { copyOtherLocales } from './copyOtherLocalesHook';
 import { seed } from './seed';
 
 const filename = fileURLToPath(import.meta.url);
@@ -100,6 +101,9 @@ export default buildConfig({
           type: 'text',
         },
       ],
+      hooks: {
+        afterChange: [copyOtherLocales],
+      },
       slug: 'small-posts',
     },
   ],
@@ -107,6 +111,12 @@ export default buildConfig({
     url: process.env.MONGODB_URI || '',
   }),
   editor: isLexical ? lexicalEditor({}) : slateEditor({}),
+  globals: [
+    {
+      fields: [],
+      slug: 'test',
+    },
+  ],
   i18n: {
     supportedLanguages: { en },
   },
