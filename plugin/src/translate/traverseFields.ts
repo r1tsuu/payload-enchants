@@ -182,26 +182,20 @@ export const traverseFields = ({
       case 'relationship':
       case 'select':
       case 'upload':
-        if (!field.localized) break;
-        const fieldDataFrom = siblingDataFrom[field.name];
-
-        if (isEmpty(fieldDataFrom)) break;
-
-        siblingDataTranslated[field.name] = fieldDataFrom;
+        siblingDataTranslated[field.name] = siblingDataFrom[field.name];
 
         break;
 
       case 'text':
       case 'textarea':
         if (!field.localized && !localizedParent && isEmpty(siblingDataFrom[field.name])) return;
-        if (emptyOnly && siblingDataTranslated[field.name]) return;
-
-        valuesToTranslate.push({
-          onTranslate: (translated: string) => {
-            siblingDataTranslated[field.name] = translated;
-          },
-          value: siblingDataFrom[field.name],
-        });
+        if (emptyOnly && siblingDataTranslated[field.name])
+          valuesToTranslate.push({
+            onTranslate: (translated: string) => {
+              siblingDataTranslated[field.name] = translated;
+            },
+            value: siblingDataFrom[field.name],
+          });
         break;
 
       case 'richText':
