@@ -1,7 +1,7 @@
 {
   "name": "payload-plugin-translator",
   "private": true,
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -31,6 +31,16 @@
       "require": "./src/index.ts",
       "types": "./src/index.ts"
     },
+    "./types": {
+      "import": "./src/types.ts",
+      "require": "./src/types.ts",
+      "types": "./src/types.ts"
+    },
+    "./resolvers/types": {
+      "import": "./src/resolvers/types.ts",
+      "require": "./src/resolvers/types.ts",
+      "types": "./src/resolvers/types.ts"
+    },
     "./resolvers/google": {
       "import": "./src/resolvers/google.ts",
       "require": "./src/resolvers/google.ts",
@@ -58,6 +68,16 @@
         "import": "./dist/index.js",
         "require": "./dist/index.js",
         "types": "./dist/index.d.ts"
+      },
+      "./types": {
+        "import": "./dist/types.js",
+        "require": "./dist/types.js",
+        "types": "./dist/types.d.ts"
+      },
+      "./resolvers/types": {
+        "import": "./dist/resolvers/types.js",
+        "require": "./dist/resolvers/types.js",
+        "types": "./dist/resolvers/types.d.ts"
       },
       "./resolvers/google": {
         "import": "./dist/resolvers/google.js",

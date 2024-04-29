@@ -9,7 +9,14 @@ export type OpenAIPrompt = (args: {
 
 export type OpenAIResolverConfig = {
   apiKey: string;
+  /**
+   * How many texts to include into 1 request
+   * @default 100
+   */
   chunkLength?: number;
+  /**
+   * @default "gpt-3.5-turbo"
+   */
   model?: string;
   promt?: OpenAIPrompt;
 };
