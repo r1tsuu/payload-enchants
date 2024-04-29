@@ -7,7 +7,7 @@ https://github.com/r1tsuu/payload-plugin-translator/assets/64744993/d39aeba4-baf
 `pnpm add payload-plugin-translator`
 
 ## Features:
-1. A flexibile structure with [resolvers](https://github.com/r1tsuu/payload-plugin-translator/tree/6d0c8098467f9b5e757bf9fd8cfe63ff5da68d5b/plugin/src/resolvers) that allows you to apply any kind of transformation to your localizated data.
+1. A flexibile structure with [resolvers](https://github.com/r1tsuu/payload-plugin-translator/tree/6d0c8098467f9b5e757bf9fd8cfe63ff5da68d5b/plugin/src/resolvers) that allow you to apply any kind of transformation to your localizated data.
 2. Can be used not only from the admin panel, but within Local API as well. [Example of the hook](#example-of-the-hook-that-uses-local-operation-to-copy-the-doc-data-to-other-locales) that automatically fills the other locales data on create 
 3. Out of the box supports 3 resolvers - Copy, Google Translate, OpenAI and your own can be written easily.
 4. Works with any nested document structure and 2 Rich Text editor adapters - Lexical and Slate.
