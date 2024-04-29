@@ -3,11 +3,13 @@ import type { TranslateResolver } from './types';
 
 type GoogleResponse = {
   data: {
-    translations: {
-      detectedSourceLanguage: string;
-      model: string;
-      translatedText: string;
-    }[];
+    data: {
+      translations: {
+        detectedSourceLanguage: string;
+        model: string;
+        translatedText: string;
+      }[];
+    };
   };
   success: boolean;
 };
@@ -23,6 +25,10 @@ const mapLocale = (incoming: string) =>
 
 export type GoogleResolverConfig = {
   apiKey: string;
+  /**
+   * How many texts to include into 1 request
+   * @default 100
+   */
   chunkLength?: number;
 };
 
@@ -73,7 +79,7 @@ export const googleResolver = ({
       }
 
       const translatedTexts = responses
-        .flatMap((chunk) => chunk.data.translations)
+        .flatMap((chunk) => chunk.data.data.translations)
         .map((translation) => translation.translatedText);
 
       return {

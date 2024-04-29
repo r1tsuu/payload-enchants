@@ -4,9 +4,11 @@ import { deepMerge } from 'payload/utilities';
 import { CustomSaveButton } from './client/components/CustomSaveButton';
 import { translateEndpoint } from './translate/endpoint';
 import { translations } from './translations';
-import type { PluginConfig } from './types';
+import type { TranslatorPluginConfig } from './types';
 
-export const payloadPluginTranslator: (pluginConfig: PluginConfig) => Plugin = (pluginConfig) => {
+export const payloadPluginTranslator: (pluginConfig: TranslatorPluginConfig) => Plugin = (
+  pluginConfig,
+) => {
   return (config) => {
     if (pluginConfig.disabled || !config.localization || config.localization.locales.length < 2)
       return config;
