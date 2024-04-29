@@ -15,7 +15,8 @@
   "peerDependencies": {
     "@payloadcms/translations": "^3.0.0-beta.19",
     "@payloadcms/ui": "^3.0.0-beta.19",
-    "payload": "^3.0.0-beta.19"
+    "payload": "^3.0.0-beta.19",
+    "react": "^18.2.0"
   },
   "devDependencies": {
     "@payloadcms/translations": "3.0.0-beta.19",
