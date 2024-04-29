@@ -77,7 +77,7 @@ export type GoogleResolverConfig = {
 };
 ```
 
-### Writting your own
+### Writing your own
 ```ts
 import type { TranslateResolver } from 'payload-plugin-translator/resolvers/types';
 
