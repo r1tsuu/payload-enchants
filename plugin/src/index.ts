@@ -31,8 +31,11 @@ export const payloadPluginTranslator: (pluginConfig: TranslatorPluginConfig) => 
           return {
             ...collection,
             admin: {
+              ...(collection.admin ?? {}),
               components: {
+                ...(collection.admin?.components ?? {}),
                 edit: {
+                  ...(collection.admin?.components?.edit ?? {}),
                   SaveButton: CustomSaveButton,
                 },
               },
@@ -61,8 +64,11 @@ export const payloadPluginTranslator: (pluginConfig: TranslatorPluginConfig) => 
           return {
             ...global,
             admin: {
+              ...(global.admin ?? {}),
               components: {
+                ...(global.admin?.components ?? {}),
                 elements: {
+                  ...(global.admin?.components?.elements ?? {}),
                   SaveButton: CustomSaveButton,
                 },
               },
