@@ -85,7 +85,7 @@ export const translateOperation = async (args: TranslateOperationArgs) => {
     });
 
     if (args.update) {
-      translatedData = await updateEntity({
+      await updateEntity({
         collectionSlug,
         data: translatedData,
         depth: 0,
