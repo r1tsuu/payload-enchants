@@ -1,30 +1,29 @@
 'use client';
 
-import './CustomSaveButton.scss';
+import './styles.scss';
 
-import { Button } from '@payloadcms/ui/elements';
-import { useModal } from '@payloadcms/ui/elements/Modal';
 import { DefaultSaveButton } from '@payloadcms/ui/elements/Save';
 import { useConfig } from '@payloadcms/ui/providers/Config';
 
+import type { TranslateResolver } from '../../../resolvers/types';
+import { TranslatorProvider } from '../../providers/Translator/TranslatorProvider';
+import { ResolverButton } from '../ResolverButton';
 import { TranslatorModal } from '../TranslatorModal';
 
-const modalSlug = 'translator-modal';
-
 export const CustomSaveButton = () => {
-  const { isModalOpen, openModal } = useModal();
-
   const config = useConfig();
 
-  console.log(config.collections);
+  const resolvers = (config.admin?.custom?.translator?.resolvers as TranslateResolver[]) ?? [];
 
   return (
-    <div className={'translator__custom-save-button'}>
-      {isModalOpen(modalSlug) && <TranslatorModal slug={modalSlug} />}
-      <Button onClick={() => openModal(modalSlug)} size='small'>
-        Translate content
-      </Button>
-      <DefaultSaveButton />
-    </div>
+    <TranslatorProvider>
+      <div className={'translator__custom-save-button'}>
+        <TranslatorModal />
+        {resolvers.map((resolver) => (
+          <ResolverButton key={resolver.key} resolver={resolver} />
+        ))}
+        <DefaultSaveButton />
+      </div>
+    </TranslatorProvider>
   );
 };

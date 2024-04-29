@@ -1,8 +1,9 @@
 import type { Plugin } from 'payload/config';
+import { deepMerge } from 'payload/utilities';
 
 import { CustomSaveButton } from './client/components/CustomSaveButton';
-import { getLocalesListHandler } from './server/getLocalesListHandler';
-import { getTranslateHandler } from './server/translateHandler';
+import { translateEndpoint } from './translate/endpoint';
+import { translations } from './translations';
 import type { PluginConfig } from './types';
 
 export const payloadPluginTranslator: (pluginConfig: PluginConfig) => Plugin = (pluginConfig) => {
@@ -12,34 +13,66 @@ export const payloadPluginTranslator: (pluginConfig: PluginConfig) => Plugin = (
 
     return {
       ...config,
-      collections: config.collections?.map((collection) => {
-        if (!pluginConfig.collections.includes(collection.slug)) return collection;
+      admin: {
+        ...(config.admin ?? {}),
+        custom: {
+          ...(config.admin?.custom ?? {}),
+          translator: {
+            resolvers: pluginConfig.resolvers.map(({ key }) => ({ key })),
+          },
+        },
+      },
+      collections:
+        config.collections?.map((collection) => {
+          if (!pluginConfig.collections.includes(collection.slug)) return collection;
 
-        return {
-          ...collection,
-          admin: {
-            components: {
-              edit: {
-                SaveButton: CustomSaveButton,
+          return {
+            ...collection,
+            admin: {
+              components: {
+                edit: {
+                  SaveButton: CustomSaveButton,
+                },
               },
             },
-          },
-        };
-      }),
+          };
+        }) ?? [],
+      custom: {
+        ...(config.custom ?? {}),
+        translator: {
+          resolvers: pluginConfig.resolvers,
+        },
+      },
       endpoints: [
         ...(config.endpoints ?? [
           {
-            handler: getTranslateHandler(pluginConfig.resolver),
+            handler: translateEndpoint,
             method: 'post',
             path: '/translator/translate',
           },
-          {
-            handler: getLocalesListHandler,
-            method: 'post',
-            path: '/translator/locales-list',
-          },
         ]),
       ],
+      globals:
+        config.globals?.map((global) => {
+          if (!pluginConfig.globals.includes(global.slug)) return global;
+
+          return {
+            ...global,
+            admin: {
+              components: {
+                elements: {
+                  SaveButton: CustomSaveButton,
+                },
+              },
+            },
+          };
+        }) ?? [],
+      i18n: {
+        ...config.i18n,
+        translations: {
+          ...deepMerge(config.i18n?.translations ?? {}, translations),
+        },
+      },
     };
   };
 };

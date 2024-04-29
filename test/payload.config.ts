@@ -1,15 +1,22 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
+import { slateEditor } from '@payloadcms/richtext-slate';
 import path from 'path';
 import { buildConfig } from 'payload/config';
 import { en } from 'payload/i18n/en';
 import { payloadPluginTranslator } from 'payload-plugin-translator';
 import { copyResolver } from 'payload-plugin-translator/resolvers/copy';
+import { googleResolver } from 'payload-plugin-translator/resolvers/google';
 import { fileURLToPath } from 'url';
+
+import { openAIResolver } from './../plugin/src/resolvers/openAI';
+import { seed } from './seed';
 
 const filename = fileURLToPath(import.meta.url);
 
 const dirname = path.dirname(filename);
+
+const isLexical = process.env.USE_LEXICAL === 'true' ? true : false;
 
 export default buildConfig({
   admin: {
@@ -21,17 +28,6 @@ export default buildConfig({
 
   collections: [
     {
-      access: {
-        delete: () => false,
-        update: () => false,
-      },
-      admin: {
-        preview: () => {
-          console.log('here we are');
-
-          return '';
-        },
-      },
       auth: true,
       fields: [],
       slug: 'users',
@@ -40,24 +36,38 @@ export default buildConfig({
       fields: [
         {
           localized: true,
-          name: 'rich',
-          type: 'richText',
-        },
-      ],
-      slug: 'tests',
-    },
-    {
-      fields: [
-        {
-          localized: true,
           name: 'title',
           type: 'text',
         },
-      ],
-      slug: 'tests_b',
-    },
-    {
-      fields: [
+        {
+          localized: true,
+          name: 'checkbox',
+          type: 'checkbox',
+        },
+        {
+          fields: [
+            {
+              localized: true,
+              name: 'titleLocalized',
+              type: 'text',
+            },
+          ],
+          name: 'array',
+          required: true,
+          type: 'array',
+        },
+        {
+          fields: [
+            {
+              localized: true,
+              name: 'title',
+              type: 'text',
+            },
+          ],
+          localized: true,
+          name: 'arrayLocalized',
+          type: 'array',
+        },
         {
           blocks: [
             {
@@ -68,27 +78,47 @@ export default buildConfig({
                   type: 'text',
                 },
               ],
-              slug: 'some',
+              slug: 'first',
             },
           ],
           name: 'blocks',
           type: 'blocks',
         },
+        {
+          localized: true,
+          name: 'someRich',
+          type: 'richText',
+        },
       ],
-      slug: 'blocks_test',
+      slug: 'posts',
+    },
+    {
+      fields: [
+        {
+          localized: true,
+          name: 'title',
+          type: 'text',
+        },
+      ],
+      slug: 'small-posts',
     },
   ],
   db: mongooseAdapter({
     url: process.env.MONGODB_URI || '',
   }),
-  editor: lexicalEditor({}),
+  editor: isLexical ? lexicalEditor({}) : slateEditor({}),
   i18n: {
     supportedLanguages: { en },
   },
   localization: {
     defaultLocale: 'en',
     fallback: false,
-    locales: ['en', 'de', 'pl'],
+    locales: [
+      { code: 'en', label: 'English' },
+      { code: 'de', label: 'German' },
+      { code: 'pl', label: 'Polish' },
+      { code: 'fr', label: 'French' },
+    ],
   },
   async onInit(payload) {
     const existingUsers = await payload.find({
@@ -105,11 +135,25 @@ export default buildConfig({
         },
       });
     }
+
+    await seed({
+      isLexical,
+      payload,
+    });
   },
   plugins: [
     payloadPluginTranslator({
-      collections: ['tests', 'tests_b'],
-      resolver: copyResolver(),
+      collections: ['posts', 'small-posts'],
+      globals: [],
+      resolvers: [
+        copyResolver(),
+        googleResolver({
+          apiKey: process.env.GOOGLE_API_KEY!,
+        }),
+        openAIResolver({
+          apiKey: process.env.OPENAI_KEY!,
+        }),
+      ],
     }),
   ],
   secret: process.env.PAYLOAD_SECRET || '',

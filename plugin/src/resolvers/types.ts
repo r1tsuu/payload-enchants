@@ -4,16 +4,21 @@ export type TranslateResolverArgs = {
   localeFrom: string;
   localeTo: string;
   req: PayloadRequest;
-  skipAccess?: boolean;
   texts: string[];
 };
 
-export type TranslateResolverResponse = {
-  translatedTexts: string[];
+export type TranslateResolverResponse =
+  | {
+      success: false;
+    }
+  | {
+      success: true;
+      translatedTexts: string[];
+    };
+
+export type TranslateResolver = {
+  key: string;
+  resolve: (
+    args: TranslateResolverArgs,
+  ) => Promise<TranslateResolverResponse> | TranslateResolverResponse;
 };
-
-export type TranslateResolver = (
-  args: TranslateResolverArgs,
-) => Promise<TranslateResolverResponse> | TranslateResolverResponse;
-
-export type TranslatorResolverAccess = (args: TranslateResolverArgs) => Promise<boolean> | boolean;

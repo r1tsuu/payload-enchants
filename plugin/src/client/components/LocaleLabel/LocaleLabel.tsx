@@ -5,7 +5,7 @@ import type { Locale } from 'payload/config';
 
 const baseClass = 'localizer-button';
 
-export const LocalizerLabel = ({ locale }: { locale: Locale }) => {
+export const LocaleLabel = ({ locale }: { locale: Locale }) => {
   const { i18n, t } = useTranslation();
 
   return (

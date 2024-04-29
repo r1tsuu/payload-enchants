@@ -11,6 +11,7 @@ type Args = {
   globalSlug?: string;
   id?: number | string;
   locale: string;
+  overrideAccess?: boolean;
   req: PayloadRequest;
 };
 
@@ -19,15 +20,15 @@ const findConfigBySlug = (
   enities: SanitizedCollectionConfig[] | SanitizedGlobalConfig[],
 ) => enities.find((entity) => entity.slug === slug);
 
-export const findEntity = async (
+export const findEntityWithConfig = async (
   args: Args,
 ): Promise<{
   config: SanitizedCollectionConfig | SanitizedGlobalConfig;
-  doc: TypeWithID & Record<string, unknown>;
+  doc: Record<string, unknown> & TypeWithID;
 }> => {
-  const { collectionSlug, globalSlug, id, locale, req } = args;
+  const { collectionSlug, globalSlug, id, locale, overrideAccess, req } = args;
 
-  if (!collectionSlug || !globalSlug) throw new APIError('Bad Request', 400);
+  if (!collectionSlug && !globalSlug) throw new APIError('Bad Request', 400);
 
   const { payload } = req;
 
@@ -39,7 +40,7 @@ export const findEntity = async (
 
   const entityConfig = isGlobal
     ? findConfigBySlug(globalSlug, config.globals)
-    : findConfigBySlug(collectionSlug, config.collections);
+    : findConfigBySlug(collectionSlug as string, config.collections);
 
   if (!entityConfig) throw new APIError('Bad Request', 400);
 
@@ -47,7 +48,7 @@ export const findEntity = async (
     ? payload.findGlobal({
         depth: 0,
         locale,
-        overrideAccess: false,
+        overrideAccess,
         req,
         slug: args.globalSlug as string,
       })
@@ -56,7 +57,7 @@ export const findEntity = async (
         depth: 0,
         id: id as number | string,
         locale,
-        overrideAccess: false,
+        overrideAccess,
         req,
       });
 
