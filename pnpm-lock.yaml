@@ -62,12 +62,6 @@ importers:
       bson-objectid:
         specifier: ^2.0.4
         version: 2.0.4
-      clsx:
-        specifier: ^2.1.0
-        version: 2.1.1
-      zod:
-        specifier: ^3.23.0
-        version: 3.23.4
     devDependencies:
       '@payloadcms/translations':
         specifier: 3.0.0-beta.19
@@ -8845,7 +8839,3 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
-
-  /zod@3.23.4:
-    resolution: {integrity: sha512-/AtWOKbBgjzEYYQRNfoGKHObgfAZag6qUJX1VbHo2PRBgS+wfWagEY2mizjfyAPcGesrJOcx/wcl0L9WnVrHFw==}
-    dev: false
