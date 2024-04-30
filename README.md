@@ -19,8 +19,7 @@ import { buildConfig } from 'payload/config';
 import { payloadPluginTranslator } from 'payload-plugin-translator';
 import { copyResolver } from 'payload-plugin-translator/resolvers/copy';
 import { googleResolver } from 'payload-plugin-translator/resolvers/google';
-
-import { openAIResolver } from './../plugin/src/resolvers/openAI';
+import { openAIResolver } from 'payload-plugin-translator/resolvers/openAI';
 
 export default buildConfig({
   plugins: [
