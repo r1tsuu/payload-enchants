@@ -1,7 +1,7 @@
 {
   "name": "payload-plugin-translator",
   "private": false,
-  "version": "1.0.6",
+  "version": "1.0.7",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -109,8 +109,6 @@
     "dist"
   ],
   "dependencies": {
-    "bson-objectid": "^2.0.4",
-    "clsx": "^2.1.0",
-    "zod": "^3.23.0"
+    "bson-objectid": "^2.0.4"
   }
 }
