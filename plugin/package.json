@@ -1,7 +1,10 @@
 {
   "name": "payload-plugin-translator",
   "private": false,
-  "version": "1.0.7",
+  "version": "1.0.8",
+  "repository": "https://github.com/r1tsuu/payload-plugin-translator",
+  "author": "r1tsuu",
+  "bugs": "https://github.com/r1tsuu/payload-plugin-translator/issues",
   "type": "module",
   "scripts": {
     "dev": "vite",
