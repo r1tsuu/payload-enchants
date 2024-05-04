@@ -90,7 +90,7 @@ export type GoogleResolverConfig = {
 ### Writing your own
 
 ```ts
-import type { TranslateResolver } from 'payload-plugin-translator/resolvers/types';
+import type { TranslateResolver } from '@payload-enchants/translator/resolvers/types';
 
 const myResolver: TranslateResolver = {
   key: 'my',
@@ -136,7 +136,7 @@ export default buildConfig({
 ## Using the Local API
 
 ```ts
-import { translateOperation } from 'payload-plugin-translator/operation';
+import { translateOperation } from '@payload-enchants/translator';
 
 const translateResult = await translateOperation({
   collectionSlug: 'posts', // or globalSlug if globals,
@@ -157,7 +157,7 @@ const translateResult = await translateOperation({
 
 ```ts
 import type { CollectionAfterChangeHook } from 'payload/types';
-import { translateOperation } from 'payload-plugin-translator/operation';
+import { translateOperation } from '@payload-enchants/translator';
 
 export const copyOtherLocales: CollectionAfterChangeHook = async ({
   collection,
