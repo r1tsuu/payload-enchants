@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "build": "pnpm clean && pnpm copyfiles && pnpm build:swc && pnpm build:types",
+    "build": "pnpm copyfiles && pnpm build:swc && pnpm build:types",
     "build:swc": "swc ./src -d ./dist --config-file .swcrc",
     "build:types": "tsc --emitDeclarationOnly --outDir dist",
     "lint": "eslint src",

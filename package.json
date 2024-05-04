@@ -15,7 +15,10 @@
     "bump-payload:translator": "tsx ./scripts/bump-payload.ts ./packages/translator/package.json",
     "bump:major": "tsx ./scripts/bump-version.ts major",
     "bump:minor": "tsx ./scripts/bump-version.ts minor",
-    "bump:patch": "tsx ./scripts/bump-version.ts patch"
+    "bump:patch": "tsx ./scripts/bump-version.ts patch",
+    "publish:docs-reorder": "cd ./packages/docs-reorder && pnpm publish",
+    "publish:translator": "cd ./packages/translator && pnpm publish",
+    "publish:all": "pnpm publish:docs-reorder && pnpm publish:translator"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^14.1.4",
