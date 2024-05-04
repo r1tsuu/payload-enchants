@@ -60,6 +60,11 @@ query {
 
 ## Script to setup for collections that had documents before installing the plugin
 
-1. Create folder named cli in your project's root
-2. Copy this file to the created folder and update `collections` array with your needs. https://gist.github.com/r1tsuu/047008be9800dfcbe371247d10ee6794
-3. Run the file like that: `yarn ts-node --project ./tsconfig.server.json ./cli/pluginCollectionsDocsSetup.ts` (It will run for a database that in your .env, also be sure to backup if this on production)
+1. Place [this file](../../test/src/scripts/docsReorderSetupScript.ts) to your src/scripts directory
+2. Change here list to your list of collection slugs with enabled plugin
+
+```ts
+const collections: (keyof GeneratedTypes['collections'])[] = ['docs-reoder-examples'];
+```
+
+3. Run pnpm tsx ./src/scripts/docsReorderSetupScript.ts
