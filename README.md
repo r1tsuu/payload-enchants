@@ -1,4 +1,4 @@
-# Payload enchantment packages
+# Payload 3.0 enchantment packages
 
 ## Packages list:
 
