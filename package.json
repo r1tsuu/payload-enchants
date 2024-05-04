@@ -9,6 +9,7 @@
     "test": "cd test && pnpm test",
     "build": "turbo build --filter \"@payload-enchants/*\"",
     "lint": "turbo lint --filter \"@payload-enchants/*\"",
+    "bump-payload": "pnpm bump-payload:test && pnpm bump-payload:docs-reorder && pnpm bump-payload:translator",
     "bump-payload:test": "tsx ./scripts/bump-payload.ts ./test/package.json",
     "bump-payload:docs-reorder": "tsx ./scripts/bump-payload.ts ./packages/docs-reorder/package.json",
     "bump-payload:translator": "tsx ./scripts/bump-payload.ts ./packages/translator/package.json"
