@@ -1,5 +1,9 @@
 # Docs reorder plugin for Payload 3.0 beta
 
+## Install
+
+`pnpm add @payload-enchants/docs-reorder`
+
 ## About
 
 Adds an option to re-order collection documents with drag n drop (almost like array/blocks items). Then on your front end you can query documents with applied sort by `docOrder` field.
@@ -8,9 +12,6 @@ Adds an option to re-order collection documents with drag n drop (almost like ar
 
 https://github.com/r1tsuu/payload-plugin-collections-docs-order/assets/64744993/2c13cdd9-f809-4c40-82c6-0b6f78997f74
 
-## Install
-
-`pnpm add @payload-enchants/docs-reorder`
 In your payload.config.ts:
 
 ```ts

@@ -1,12 +1,12 @@
 # Translator plugin for Payload 3.0 (beta)
 
-## Video
-
-https://github.com/r1tsuu/payload-plugin-translator/assets/64744993/d39aeba4-bafc-4c3b-838e-9abc5cf1d64a
-
 ## Install
 
 `pnpm add @payload-enchants/translator`
+
+## Video
+
+https://github.com/r1tsuu/payload-plugin-translator/assets/64744993/d39aeba4-bafc-4c3b-838e-9abc5cf1d64a
 
 ## Features:
 
