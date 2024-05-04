@@ -1,8 +1,10 @@
 {
   "name": "@payload-enchants/docs-reorder",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
+  "repository": "https://github.com/r1tsuu/payload-enchants",
+  "bugs": "https://github.com/r1tsuu/payload-enchants/issues",
   "scripts": {
     "build": "pnpm copyfiles && pnpm build:swc && pnpm build:types",
     "build:swc": "swc ./src -d ./dist --config-file .swcrc",
