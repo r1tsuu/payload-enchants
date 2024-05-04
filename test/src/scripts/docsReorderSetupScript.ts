@@ -3,6 +3,7 @@ import { resolve } from 'path';
 import type { GeneratedTypes } from 'payload';
 import { getPayload } from 'payload';
 import { importConfig } from 'payload/node';
+import type { PayloadRequest } from 'payload/types';
 
 config({
   path: resolve(import.meta.dirname, './../../.env'),
@@ -17,13 +18,18 @@ const docsReorderSetupScript = async () => {
 
   payload.logger.info('Starting...');
 
+  const req = {} as PayloadRequest;
+
   const transactionId = await payload.db.beginTransaction?.();
+
+  if (transactionId !== null) req.transactionID = transactionId;
 
   try {
     for (const slug of collections) {
       const { docs } = await payload.find({
         collection: slug,
         pagination: false,
+        req,
         sort: '-createdAt',
       });
 
@@ -35,6 +41,7 @@ const docsReorderSetupScript = async () => {
             collection: slug,
             data: { docOrder: index + 1 } as any,
             id: doc.id,
+            req,
           }),
         );
       });
@@ -45,11 +52,11 @@ const docsReorderSetupScript = async () => {
     }
 
     payload.logger.info('Success');
-    if (transactionId) await payload.db.commitTransaction?.(transactionId);
+    if (req.transactionID) await payload.db.commitTransaction?.(req.transactionID);
   } catch (e) {
     if (e instanceof Error) payload.logger.error(e);
     payload.logger.error('Rollback script changes...');
-    if (transactionId) await payload.db.rollbackTransaction?.(transactionId);
+    if (req.transactionID) await payload.db.rollbackTransaction?.(req.transactionID);
   }
 
   process.exit(0);
