@@ -1,0 +1,17 @@
+.plugin-indicator {
+  &__field-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  &__tabs.plugin-indicator__tabs {
+    &::before {
+      content: none;
+    }
+
+    .tabs-field__tab-button {
+      padding-bottom: 5px;
+    }
+  }
+}

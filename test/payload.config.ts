@@ -1,3 +1,4 @@
+import { betterLocalizedFields } from '@payload-enchants/better-localized-fields';
 import { docsReorder } from '@payload-enchants/docs-reorder';
 import { translator } from '@payload-enchants/translator';
 import { copyResolver } from '@payload-enchants/translator/resolvers/copy';
@@ -188,6 +189,7 @@ export default buildConfig({
         }),
       ],
     }),
+    betterLocalizedFields({}),
   ],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

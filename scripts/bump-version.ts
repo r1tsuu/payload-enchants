@@ -49,6 +49,7 @@ const packageJsonPaths = [
   './package.json',
   './packages/docs-reorder/package.json',
   './packages/translator/package.json',
+  './packages/better-localized-fields/package.json',
   './test/package.json',
 ];
 
