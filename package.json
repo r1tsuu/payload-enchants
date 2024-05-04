@@ -12,7 +12,10 @@
     "bump-payload": "pnpm bump-payload:test && pnpm bump-payload:docs-reorder && pnpm bump-payload:translator",
     "bump-payload:test": "tsx ./scripts/bump-payload.ts ./test/package.json",
     "bump-payload:docs-reorder": "tsx ./scripts/bump-payload.ts ./packages/docs-reorder/package.json",
-    "bump-payload:translator": "tsx ./scripts/bump-payload.ts ./packages/translator/package.json"
+    "bump-payload:translator": "tsx ./scripts/bump-payload.ts ./packages/translator/package.json",
+    "bump:major": "tsx ./scripts/bump-version.ts major",
+    "bump:minor": "tsx ./scripts/bump-version.ts minor",
+    "bump:patch": "tsx ./scripts/bump-version.ts patch"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^14.1.4",

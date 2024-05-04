@@ -1,7 +1,7 @@
 {
   "name": "@payload-enchants/translator",
   "private": false,
-  "version": "1.0.0-alpha-0",
+  "version": "1.0.0",
   "repository": "https://github.com/r1tsuu/payload-plugin-translator",
   "author": "r1tsuu",
   "bugs": "https://github.com/r1tsuu/payload-plugin-translator/issues",
