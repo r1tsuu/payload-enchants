@@ -1,7 +1,7 @@
 {
   "name": "@payload-enchants/translator",
   "private": false,
-  "version": "0.0.1-alpha.1",
+  "version": "0.0.1-alpha.2",
   "repository": "https://github.com/r1tsuu/payload-plugin-translator",
   "author": "r1tsuu",
   "bugs": "https://github.com/r1tsuu/payload-plugin-translator/issues",
@@ -19,8 +19,7 @@
   "peerDependencies": {
     "@payloadcms/translations": "^3.0.0-beta.24",
     "@payloadcms/ui": "^3.0.0-beta.24",
-    "payload": "^3.0.0-beta.24",
-    "react": "^18.2.0"
+    "payload": "^3.0.0-beta.24"
   },
   "devDependencies": {
     "@payloadcms/translations": "3.0.0-beta.24",
