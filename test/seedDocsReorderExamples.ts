@@ -37,6 +37,6 @@ const randomWords = [
 export const seedDocsReorderExamples = async (payload: Payload) => {
   payload.logger.info('Seeding examples...');
   for (const title of randomWords) {
-    await payload.create({ collection: 'examples' as any, data: { title } });
+    await payload.create({ collection: 'docs-reoder-examples', data: { title } });
   }
 };

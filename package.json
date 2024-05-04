@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm --filter test dev",
+    "dev:types": "cd test && pnpm generate:types",
     "test": "cd test && pnpm test",
     "build": "turbo build --filter \"@payload-enchants/*\"",
     "lint": "turbo lint --filter \"@payload-enchants/*\"",

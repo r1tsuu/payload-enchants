@@ -13,7 +13,7 @@ import { fileURLToPath } from 'url';
 
 import { copyOtherLocales } from './copyOtherLocalesHook';
 import { seed } from './seed';
-import { seedDocsReorderExamples } from './seedDocsReorderExamples.js';
+import { seedDocsReorderExamples } from './seedDocsReorderExamples';
 
 const filename = fileURLToPath(import.meta.url);
 
