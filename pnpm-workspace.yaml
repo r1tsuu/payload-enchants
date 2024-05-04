@@ -1,3 +1,6 @@
 packages:
-  - 'plugin'
+  # all packages in direct subdirs of packages/
+  - 'packages/*'
   - 'test'
+  # exclude packages that are inside test directories
+  # - '!**/test/**'

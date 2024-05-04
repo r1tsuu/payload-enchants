@@ -11,11 +11,14 @@ export interface Config {
     users: User;
     posts: Post;
     'small-posts': SmallPost;
+    'docs-reoder-examples': DocsReoderExample;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  globals: {};
-  locale: 'en' | 'de' | 'pl' | 'ua';
+  globals: {
+    test: Test;
+  };
+  locale: 'en' | 'de' | 'pl' | 'fr';
   user: User & {
     collection: 'users';
   };
@@ -93,6 +96,17 @@ export interface SmallPost {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "docs-reoder-examples".
+ */
+export interface DocsReoderExample {
+  id: string;
+  title?: string | null;
+  docOrder?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
@@ -124,6 +138,15 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "test".
+ */
+export interface Test {
+  id: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
 }
 
 

@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "composite": true, // Make sure typescript knows that this module depends on their references
+    "noEmit": false /* Do not emit outputs. */,
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    "declarationMap": true,
+    "allowJs": true,
+    "checkJs": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "preserve",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "skipLibCheck": true,
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext",
+    "sourceMap": true,
+    "strict": true,
+    "incremental": true,
+    "isolatedModules": true,
+    "target": "ESNext"
+  },
+  "include": ["scripts/**/*.ts"],
+  "exclude": ["dist", "build", "node_modules"]
+}

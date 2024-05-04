@@ -2,7 +2,7 @@ import type { GeneratedTypes } from 'payload';
 
 import type { TranslateResolver } from './resolvers/types';
 
-export type TranslatorPluginConfig = {
+export type TranslatorConfig = {
   /**
    * Collections with the enabled translator in the admin UI
    */

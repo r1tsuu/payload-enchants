@@ -1,17 +1,19 @@
+import { docsReorder } from '@payload-enchants/docs-reorder';
+import { translator } from '@payload-enchants/translator';
+import { copyResolver } from '@payload-enchants/translator/resolvers/copy';
+import { googleResolver } from '@payload-enchants/translator/resolvers/google';
+import { openAIResolver } from '@payload-enchants/translator/resolvers/openAI';
 import { mongooseAdapter } from '@payloadcms/db-mongodb';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import { slateEditor } from '@payloadcms/richtext-slate';
 import path from 'path';
 import { buildConfig } from 'payload/config';
 import { en } from 'payload/i18n/en';
-import { payloadPluginTranslator } from 'payload-plugin-translator';
-import { copyResolver } from 'payload-plugin-translator/resolvers/copy';
-import { googleResolver } from 'payload-plugin-translator/resolvers/google';
 import { fileURLToPath } from 'url';
 
-import { openAIResolver } from './../plugin/src/resolvers/openAI';
 import { copyOtherLocales } from './copyOtherLocalesHook';
 import { seed } from './seed';
+import { seedDocsReorderExamples } from './seedDocsReorderExamples';
 
 const filename = fileURLToPath(import.meta.url);
 
@@ -106,6 +108,18 @@ export default buildConfig({
       },
       slug: 'small-posts',
     },
+    {
+      admin: {
+        useAsTitle: 'title',
+      },
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+        },
+      ],
+      slug: 'docs-reoder-examples',
+    },
   ],
   db: mongooseAdapter({
     url: process.env.MONGODB_URI || '',
@@ -150,9 +164,18 @@ export default buildConfig({
       isLexical,
       payload,
     });
+
+    await seedDocsReorderExamples(payload);
   },
   plugins: [
-    payloadPluginTranslator({
+    docsReorder({
+      collections: [
+        {
+          slug: 'docs-reoder-examples',
+        },
+      ],
+    }),
+    translator({
       collections: ['posts', 'small-posts'],
       globals: [],
       resolvers: [

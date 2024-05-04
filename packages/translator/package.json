@@ -1,31 +1,31 @@
 {
-  "name": "payload-plugin-translator",
+  "name": "@payload-enchants/translator",
   "private": false,
-  "version": "1.0.8",
-  "repository": "https://github.com/r1tsuu/payload-plugin-translator",
+  "version": "1.0.1",
+  "repository": "https://github.com/r1tsuu/payload-enchants",
   "author": "r1tsuu",
-  "bugs": "https://github.com/r1tsuu/payload-plugin-translator/issues",
+  "bugs": "https://github.com/r1tsuu/payload-enchants/issues",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "pnpm clean && pnpm copyfiles && pnpm build:swc && pnpm build:types",
+    "build": "pnpm copyfiles && pnpm build:swc && pnpm build:types",
     "build:swc": "swc ./src -d ./dist --config-file .swcrc",
     "build:types": "tsc --emitDeclarationOnly --outDir dist",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix --ext .ts,.tsx src",
     "clean": "rimraf dist && rimraf tsconfig.tsbuildinfo",
     "copyfiles": "copyfiles -u 1 \"src/**/*.{html,css,scss,ttf,woff,woff2,eot,svg,jpg,png,json}\" dist/",
     "prepublishOnly": "pnpm clean && pnpm build"
   },
   "peerDependencies": {
-    "@payloadcms/translations": "^3.0.0-beta.19",
-    "@payloadcms/ui": "^3.0.0-beta.19",
-    "payload": "^3.0.0-beta.19",
-    "react": "^18.2.0"
+    "@payloadcms/translations": "^3.0.0-beta.24",
+    "@payloadcms/ui": "^3.0.0-beta.24",
+    "payload": "^3.0.0-beta.24"
   },
   "devDependencies": {
-    "@payloadcms/translations": "3.0.0-beta.19",
-    "@payloadcms/ui": "3.0.0-beta.19",
+    "@payloadcms/translations": "3.0.0-beta.24",
+    "@payloadcms/ui": "3.0.0-beta.24",
     "@types/react": "18.2.64",
-    "payload": "3.0.0-beta.19",
+    "payload": "3.0.0-beta.24",
     "react": "18.2.0",
     "typescript": "^5.4.2"
   },
@@ -59,11 +59,6 @@
       "import": "./src/resolvers/openAI.ts",
       "require": "./src/resolvers/openAI.ts",
       "types": "./src/resolvers/openAI.ts"
-    },
-    "./operation": {
-      "import": "./src/translate/operation.ts",
-      "require": "./src/translate/operation.ts",
-      "types": "./src/translate/operation.ts"
     }
   },
   "publishConfig": {
@@ -97,11 +92,6 @@
         "import": "./dist/resolvers/openAI.js",
         "require": "./dist/resolvers/openAI.js",
         "types": "./dist/resolvers/openAI.d.ts"
-      },
-      "./operation": {
-        "import": "./dist/translate/operation.js",
-        "require": "./dist/translate/operation.js",
-        "types": "./dist/translate/operation.d.ts"
       }
     },
     "main": "./dist/index.js",

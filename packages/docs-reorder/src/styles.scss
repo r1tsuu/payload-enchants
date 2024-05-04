@@ -1,0 +1,85 @@
+.collection-docs-order {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 10px;
+  button {
+    margin: 0;
+  }
+}
+
+.collection-docs-order-content {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  overflow-x: visible;
+}
+
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 25px;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.order-item {
+  display: flex;
+  background: var(--theme-elevation-50);
+  padding: var(--toggle-pad-v) var(--toggle-pad-h);
+  --toggle-pad-h: 1.4423076923rem;
+  --toggle-pad-v: 0.9615384615rem;
+  gap: 10px;
+  border-radius: 5px;
+}
+
+.order-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.order-buttons button {
+  margin: 0;
+  width: fit-content;
+}
+
+.dialog-overlay {
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  justify-content: center;
+  z-index: 30;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 5rem 3rem;
+  min-width: 100%;
+  overflow: auto;
+}
+
+.dialog-content {
+  position: relative;
+  background-color: var(--theme-bg);
+  padding: 2rem;
+  width: 100%;
+  overflow: auto;
+}
+
+.dialog-content .close {
+  display: flex;
+  position: absolute;
+  right: 2rem;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+
+  svg {
+    width: 30px;
+    height: 30px;
+  }
+}
