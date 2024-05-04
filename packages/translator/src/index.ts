@@ -1,14 +1,16 @@
+/* eslint-disable perfectionist/sort-named-exports */
 import type { Plugin } from 'payload/config';
 import { deepMerge } from 'payload/utilities';
 
 import { CustomSaveButton } from './client/components/CustomSaveButton';
+import { translations } from './i18n-translations';
 import { translateEndpoint } from './translate/endpoint';
-import { translations } from './translations';
-import type { TranslatorPluginConfig } from './types';
+import { translateOperation } from './translate/operation';
+import type { TranslatorConfig } from './types';
 
-export const payloadPluginTranslator: (pluginConfig: TranslatorPluginConfig) => Plugin = (
-  pluginConfig,
-) => {
+export { translateOperation };
+
+export const translator: (pluginConfig: TranslatorConfig) => Plugin = (pluginConfig) => {
   return (config) => {
     if (pluginConfig.disabled || !config.localization || config.localization.locales.length < 2)
       return config;

@@ -1,16 +1,24 @@
 {
-  "name": "payload-plugin-translator-repo",
+  "name": "payload-enchants",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "pnpm --filter test dev",
-    "test": "cd test && pnpm test"
+    "test": "cd test && pnpm test",
+    "build": "turbo build --filter \"@payload-enchants/*\"",
+    "lint": "turbo lint --filter \"@payload-enchants/*\"",
+    "bump-payload:test": "tsx ./scripts/bump-payload.ts ./test/package.json",
+    "bump-payload:docs-reorder": "tsx ./scripts/bump-payload.ts ./packages/docs-reorder/package.json",
+    "bump-payload:translator": "tsx ./scripts/bump-payload.ts ./packages/translator/package.json"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^14.1.4",
     "@swc/cli": "^0.1.62",
     "@swc/core": "^1.4.16",
+    "@types/eslint": "8.56.6",
+    "@types/node": "^20.11.25",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
     "copyfiles": "^2.4.1",
@@ -23,6 +31,8 @@
     "prettier": "^3.2.5",
     "prettier-plugin-css-order": "^2.0.1",
     "rimraf": "^5.0.5",
+    "tsx": "^4.7.1",
+    "turbo": "^1.13.3",
     "typescript": "^5.4.2"
   },
   "keywords": [],

@@ -1,5 +1,5 @@
+import { translateOperation } from '@payload-enchants/translator';
 import type { CollectionAfterChangeHook } from 'payload/types';
-import { translateOperation } from 'payload-plugin-translator/operation';
 
 export const copyOtherLocales: CollectionAfterChangeHook = async ({
   collection,

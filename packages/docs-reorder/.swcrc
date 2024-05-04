@@ -7,11 +7,6 @@
       "syntax": "typescript",
       "tsx": true,
       "dts": true
-    },
-    "transform": {
-      "react": {
-        "runtime": "automatic"
-      }
     }
   },
   "module": {

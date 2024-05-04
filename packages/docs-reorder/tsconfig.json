@@ -17,9 +17,10 @@
     "moduleResolution": "Bundler",
     "module": "ES6",
     "sourceMap": true,
-    "strict": false,
+    "strict": true,
     "incremental": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "target": "ESNext"
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts", "src/**/*.json"],
   "exclude": ["dist", "build", "node_modules"]
