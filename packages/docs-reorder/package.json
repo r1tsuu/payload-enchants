@@ -1,7 +1,7 @@
 {
   "name": "@payload-enchants/docs-reorder",
   "private": false,
-  "version": "0.0.1-alpha.1",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "build": "pnpm copyfiles && pnpm build:swc && pnpm build:types",
