@@ -8,11 +8,13 @@ import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 
-const args = process.argv.slice(2);
-
-const packageJsonPath = path.resolve(import.meta.dirname, '../', args[0]);
-
-console.log(`Starting, package.json path - ${packageJsonPath}`);
+const packageJsonPaths = [
+  './package.json',
+  './packages/docs-reorder/package.json',
+  './packages/translator/package.json',
+  './packages/better-localized-fields/package.json',
+  './test/package.json',
+];
 
 const bumpDeps = ({
   deps,
@@ -50,36 +52,41 @@ const start = async () => {
 
   console.log(`Found latest payload 3.0 version - ${latest}`);
 
-  const packageJson = fs.readFileSync(packageJsonPath, 'utf-8');
+  for (const relativePath of packageJsonPaths) {
+    console.log(`Resolving ${relativePath}`);
+    const packageJsonPath = path.resolve(import.meta.dirname, '../', relativePath);
 
-  if (!packageJson) {
-    console.error('package.json was not found');
-    process.exit(1);
-  }
+    const packageJson = fs.readFileSync(packageJsonPath, 'utf-8');
 
-  const packageJsonObject = JSON.parse(packageJson) as {
-    dependencies?: Record<string, string>;
-    devDependencies?: Record<string, string>;
-    peerDependencies?: Record<string, string>;
-  };
+    if (!packageJson) {
+      console.error('package.json was not found');
+      process.exit(1);
+    }
 
-  if (packageJsonObject.dependencies)
-    bumpDeps({ deps: packageJsonObject.dependencies, version: latest });
-  if (packageJsonObject.devDependencies)
-    bumpDeps({
-      deps: packageJsonObject.devDependencies,
-      shouldMatchVersion: true,
-      version: latest,
+    const packageJsonObject = JSON.parse(packageJson) as {
+      dependencies?: Record<string, string>;
+      devDependencies?: Record<string, string>;
+      peerDependencies?: Record<string, string>;
+    };
+
+    if (packageJsonObject.dependencies)
+      bumpDeps({ deps: packageJsonObject.dependencies, version: latest });
+    if (packageJsonObject.devDependencies)
+      bumpDeps({
+        deps: packageJsonObject.devDependencies,
+        shouldMatchVersion: true,
+        version: latest,
+      });
+    if (packageJsonObject.peerDependencies)
+      bumpDeps({ deps: packageJsonObject.peerDependencies, version: latest });
+
+    fs.writeFileSync(packageJsonPath, JSON.stringify(packageJsonObject), {
+      encoding: 'utf-8',
+      flag: 'w',
     });
-  if (packageJsonObject.peerDependencies)
-    bumpDeps({ deps: packageJsonObject.peerDependencies, version: latest });
 
-  fs.writeFileSync(packageJsonPath, JSON.stringify(packageJsonObject), {
-    encoding: 'utf-8',
-    flag: 'w',
-  });
-
-  execSync(`npx prettier ${packageJsonPath} --write`);
+    execSync(`npx prettier ${packageJsonPath} --write`);
+  }
 
   console.log(`Successfully bumped versions to ${latest}`);
 };

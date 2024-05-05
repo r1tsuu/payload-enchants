@@ -36,6 +36,7 @@
     "payload": "3.0.0-beta.24",
     "@payload-enchants/translator": "workspace:*",
     "@payload-enchants/docs-reorder": "workspace:*",
+    "@payload-enchants/better-localized-fields": "workspace:*",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "sharp": "0.32.6"
