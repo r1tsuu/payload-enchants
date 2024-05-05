@@ -102,7 +102,7 @@ export const bin = async () => {
   pkgJson.update(updatedPackageJson);
   await pkgJson.save();
 
-  console.log(`${countRef.count} packages has been updated.`);
+  console.log(`${countRef.count} packages have been updated.`);
 
   process.exit(0);
 };
