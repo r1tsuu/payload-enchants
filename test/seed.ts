@@ -3,7 +3,11 @@ import type { Payload } from 'payload';
 import { lexicalRich } from './seedLexical';
 import { slateRich } from './seedSlate';
 
-export const seed = ({ isLexical, payload }: { isLexical: boolean; payload: Payload }) => {
+export const seed = async ({ isLexical, payload }: { isLexical: boolean; payload: Payload }) => {
+  const smallPosts = await payload.count({ collection: 'small-posts' });
+
+  if (!smallPosts.totalDocs) return;
+
   return Promise.all([
     payload.create({
       collection: 'small-posts',

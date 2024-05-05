@@ -121,6 +121,56 @@ export default buildConfig({
       ],
       slug: 'docs-reoder-examples',
     },
+    {
+      fields: [
+        {
+          tabs: [
+            {
+              admin: {
+                condition: () => false,
+              },
+              fields: [
+                {
+                  localized: true,
+                  name: 'text',
+                  type: 'text',
+                },
+              ],
+              label: 'default',
+            },
+            {
+              fields: [
+                {
+                  localized: true,
+                  name: 'text',
+                  type: 'text',
+                },
+              ],
+
+              name: 'named',
+            },
+            {
+              fields: [
+                {
+                  name: 'text',
+                  type: 'text',
+                },
+              ],
+
+              localized: true,
+              name: 'localized',
+            },
+          ],
+          type: 'tabs',
+        },
+        {
+          localized: true,
+          name: 'sidebar',
+          type: 'text',
+        },
+      ],
+      slug: 'better-localized-issue',
+    },
   ],
   db: mongooseAdapter({
     url: process.env.MONGODB_URI || '',
@@ -146,12 +196,11 @@ export default buildConfig({
     ],
   },
   async onInit(payload) {
-    const existingUsers = await payload.find({
+    const usersCount = await payload.count({
       collection: 'users',
-      limit: 1,
     });
 
-    if (existingUsers.docs.length === 0) {
+    if (!usersCount.totalDocs) {
       await payload.create({
         collection: 'users',
         data: {
