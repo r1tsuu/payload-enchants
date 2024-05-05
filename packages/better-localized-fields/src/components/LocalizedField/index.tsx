@@ -5,6 +5,7 @@ import './index.scss';
 import { useFieldProps } from '@payloadcms/ui/forms/FieldPropsProvider';
 import { FormContext, FormFieldsContext, FormWatchContext } from '@payloadcms/ui/forms/Form';
 import { useConfig } from '@payloadcms/ui/providers/Config';
+import { useDocumentInfo } from '@payloadcms/ui/providers/DocumentInfo';
 import { useFieldComponents } from '@payloadcms/ui/providers/FieldComponents';
 import { useLocale } from '@payloadcms/ui/providers/Locale';
 import { reduceFieldsToValues } from '@payloadcms/ui/utilities/reduceFieldsToValues';
@@ -42,6 +43,8 @@ export const LocalizedField = ({
     | 'text'
     | 'textarea';
 }) => {
+  const { globalSlug, id } = useDocumentInfo();
+
   const fieldComponents = useFieldComponents();
 
   const config = useConfig();
@@ -60,7 +63,7 @@ export const LocalizedField = ({
     setActiveLocaleTab(locale.code);
   }, [locale.code]);
 
-  if (type == 'richText' && !custom?.localized)
+  if ((type == 'richText' && !custom?.localized) || (!id && !globalSlug))
     return customField ?? <FieldComponent {...(fieldComponentProps as any)} />;
 
   if (!config.localization) return;
