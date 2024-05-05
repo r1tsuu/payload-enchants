@@ -12,16 +12,18 @@ import type { ComponentProps, ReactElement, ReactNode } from 'react';
 import { cloneElement, useEffect, useState } from 'react';
 
 import { useLocalesData } from '../../providers/LocalesData/context';
+import { LocaleTabButtonProvider } from '../../providers/LocaleTabButton/provider';
 import { getDataByPath } from '../../utils/getDataByPath';
 import { getSiblingDataByPath } from '../../utils/getSiblingDataByPath';
 
 export const LocalizedField = ({
   customField,
+  customTabButton,
   type,
   ...fieldComponentProps
 }: {
   customField?: ReactNode;
-
+  customTabButton?: ReactNode;
   type:
     | 'array'
     | 'blocks'
@@ -47,8 +49,6 @@ export const LocalizedField = ({
   const { localesFormState } = useLocalesData();
 
   const locale = useLocale();
-
-  console.log(localesFormState);
 
   const { custom } = useFieldProps();
 
@@ -99,15 +99,25 @@ export const LocalizedField = ({
   return (
     <div className='plugin-indicator__field-wrapper field-type'>
       <div className='tabs-field__tabs plugin-indicator__tabs'>
-        {localesOptions.map((code) => (
-          <div
-            className={`tabs-field__tab-button ${code === activeLocaleTab ? 'tabs-field__tab-button--active' : ''}`}
-            key={code}
-            onClick={() => setActiveLocaleTab(code)}
-          >
-            {code.toUpperCase()}
-          </div>
-        ))}
+        {localesOptions.map((code) =>
+          customTabButton ? (
+            <LocaleTabButtonProvider
+              activeLocaleTab={activeLocaleTab}
+              localeCode={code}
+              setLocaleTab={setActiveLocaleTab}
+            >
+              {customTabButton}
+            </LocaleTabButtonProvider>
+          ) : (
+            <div
+              className={`tabs-field__tab-button ${code === activeLocaleTab ? 'tabs-field__tab-button--active' : ''}`}
+              key={code}
+              onClick={() => setActiveLocaleTab(code)}
+            >
+              {code.toUpperCase()}
+            </div>
+          ),
+        )}
       </div>
       {activeLocaleTab === locale.code
         ? customField ?? <FieldComponent {...(fieldComponentProps as any)} />
@@ -115,11 +125,15 @@ export const LocalizedField = ({
             <FormContext.Provider value={formContextValue}>
               <FormWatchContext.Provider value={formContextValue}>
                 <FormFieldsContext.Provider value={[formContextValue.fields, () => {}]}>
-                  {customField ? (
-                    cloneElement(customField as ReactElement, { readOnly: true })
-                  ) : (
-                    <FieldComponent readOnly {...(fieldComponentProps as any)} />
-                  )}
+                  <div>
+                    <div>
+                      {customField ? (
+                        cloneElement(customField as ReactElement, { readOnly: true })
+                      ) : (
+                        <FieldComponent readOnly {...(fieldComponentProps as any)} />
+                      )}
+                    </div>
+                  </div>
                 </FormFieldsContext.Provider>
               </FormWatchContext.Provider>
             </FormContext.Provider>

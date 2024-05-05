@@ -3,10 +3,10 @@ import type { Plugin } from 'payload/config';
 import { attachLocalesProvider } from './attachLocalesProvider';
 import { attachLocalizedFieldToEditor } from './attachLocalizedFieldToEditor';
 import { traverseFields } from './traverseFields';
-import type { LocalizedFieldsIndicatorPluginOptions as BetterLocalizedFieldsOptions } from './types';
+import type { BetterLocalizedFieldsOptions as BetterLocalizedFieldsOptions } from './types';
 
 export const betterLocalizedFields =
-  (options: BetterLocalizedFieldsOptions): Plugin =>
+  (options: BetterLocalizedFieldsOptions = {}): Plugin =>
   (config) => {
     if (options.disabled) return config;
 
@@ -25,7 +25,7 @@ export const betterLocalizedFields =
       editor: async ({ config: sanitizedConfig }) => {
         const editor = await config.editor({ config: sanitizedConfig });
 
-        attachLocalizedFieldToEditor(editor);
+        attachLocalizedFieldToEditor({ editor, options });
 
         return editor;
       },

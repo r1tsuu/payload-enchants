@@ -1,14 +1,14 @@
 import type { Field } from 'payload/types';
 
 import { attachLocalizedField } from './attachLocalizedField';
-import type { LocalizedFieldsIndicatorPluginOptions } from './types';
+import type { BetterLocalizedFieldsOptions } from './types';
 
 export const traverseFields = ({
   fields,
   options,
 }: {
   fields: Field[];
-  options: LocalizedFieldsIndicatorPluginOptions;
+  options: BetterLocalizedFieldsOptions;
 }) => {
   fields.forEach((field) => {
     switch (field.type) {
@@ -26,13 +26,13 @@ export const traverseFields = ({
       case 'email':
       case 'point':
       case 'richText':
-        if (field.localized) attachLocalizedField({ field });
+        if (field.localized) attachLocalizedField({ field, options });
         break;
 
       case 'array':
       case 'group':
         if (field.localized) {
-          attachLocalizedField({ field });
+          attachLocalizedField({ field, options });
           break;
         }
 
@@ -44,7 +44,7 @@ export const traverseFields = ({
 
       case 'blocks':
         if (field.localized) {
-          attachLocalizedField({ field });
+          attachLocalizedField({ field, options });
           break;
         }
         field.blocks.forEach((block) => {

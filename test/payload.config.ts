@@ -189,7 +189,7 @@ export default buildConfig({
         }),
       ],
     }),
-    betterLocalizedFields({}),
+    betterLocalizedFields(),
   ],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
