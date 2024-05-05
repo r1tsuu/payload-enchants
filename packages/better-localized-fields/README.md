@@ -7,11 +7,10 @@
 Add into your payload.config.ts:
 
 ```ts
-/// ....
 import { betterLocalizedFields } from '@payload-enchants/better-localized-fields';
 
 export default buildConfig({
-  // ...
+  // ...your config
   plugins: [betterLocalizedFields()],
 });
 ```
