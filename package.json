@@ -1,6 +1,6 @@
 {
   "name": "payload-enchants",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "",
   "private": true,
   "main": "index.js",
@@ -11,16 +11,14 @@
     "test": "cd test && pnpm test",
     "build": "turbo build --filter \"@payload-enchants/*\"",
     "lint": "turbo lint --filter \"@payload-enchants/*\"",
-    "bump-payload": "pnpm bump-payload:test && pnpm bump-payload:docs-reorder && pnpm bump-payload:translator",
-    "bump-payload:test": "tsx ./scripts/bump-payload.ts ./test/package.json",
-    "bump-payload:docs-reorder": "tsx ./scripts/bump-payload.ts ./packages/docs-reorder/package.json",
-    "bump-payload:translator": "tsx ./scripts/bump-payload.ts ./packages/translator/package.json",
+    "bump-payload": "tsx ./scripts/bump-payload.ts",
     "bump:major": "tsx ./scripts/bump-version.ts major",
     "bump:minor": "tsx ./scripts/bump-version.ts minor",
     "bump:patch": "tsx ./scripts/bump-version.ts patch",
     "publish:docs-reorder": "cd ./packages/docs-reorder && pnpm publish",
     "publish:translator": "cd ./packages/translator && pnpm publish",
-    "publish:all": "pnpm publish:docs-reorder && pnpm publish:translator"
+    "publish:better-localized-fields": "cd ./packages/better-localized-fields && pnpm publish",
+    "publish:all": "pnpm publish:docs-reorder && pnpm publish:translator && pnpm publish:better-localized-fields"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^14.1.4",
