@@ -97,6 +97,7 @@ export const traverseFields = ({
 
           arrayDataTranslated.push({
             // ensure ids are different, Postgres doesn't like the same.
+            ...(currentArrayItemInTranslated ?? {}),
             id: currentArrayItemInTranslated?.id ?? ObjectID().toHexString(),
           });
 
@@ -133,6 +134,7 @@ export const traverseFields = ({
           blockDataTranslated.push({
             blockType: item.blockType,
             // ensure ids are different, needed with Postgres
+            ...(currentBlockItemInTranslated ?? {}),
             id: currentBlockItemInTranslated?.id ?? ObjectID().toHexString(),
           });
 
