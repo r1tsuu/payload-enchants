@@ -146,7 +146,6 @@ export default buildConfig({
                   type: 'text',
                 },
               ],
-
               name: 'named',
             },
             {
@@ -164,8 +163,21 @@ export default buildConfig({
           type: 'tabs',
         },
         {
+          admin: { position: 'sidebar' },
+          fields: [
+            {
+              localized: true,
+              name: 'sidebar',
+              type: 'text',
+            },
+          ],
+          type: 'row',
+        },
+
+        {
+          admin: { condition: (data) => data.sidebar !== 'asd' },
           localized: true,
-          name: 'sidebar',
+          name: 'textCondition',
           type: 'text',
         },
       ],
