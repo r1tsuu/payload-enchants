@@ -1,0 +1,29 @@
+{
+  "name": "bump-payload",
+  "private": false,
+  "version": "1.1.5",
+  "repository": "https://github.com/r1tsuu/payload-enchants",
+  "author": "r1tsuu",
+  "bugs": "https://github.com/r1tsuu/payload-enchants/issues",
+  "type": "module",
+  "scripts": {
+    "build": "pnpm copyfiles && pnpm build:swc && pnpm build:types",
+    "build:swc": "swc ./src -d ./dist --config-file .swcrc",
+    "build:types": "tsc --emitDeclarationOnly --outDir dist",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix --ext .ts,.tsx src",
+    "clean": "rimraf dist && rimraf tsconfig.tsbuildinfo",
+    "copyfiles": "copyfiles -u 1 \"src/**/*.{html,css,scss,ttf,woff,woff2,eot,svg,jpg,png,json}\" dist/",
+    "prepublishOnly": "pnpm clean && pnpm build"
+  },
+  "bin": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@npmcli/package-json": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/npmcli__package-json": "^4.0.4"
+  }
+}
