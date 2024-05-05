@@ -4,6 +4,18 @@
 
 `pnpm add @payload-enchants/better-localized-fields`
 
+Add into your payload.config.ts:
+
+```ts
+/// ....
+import { betterLocalizedFields } from '@payload-enchants/better-localized-fields';
+
+export default buildConfig({
+  // ...
+  plugins: [betterLocalizedFields()],
+});
+```
+
 ## About
 
 Adds to every localized field locales tabs with a field's value on selected locale.
