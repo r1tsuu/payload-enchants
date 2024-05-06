@@ -10,4 +10,6 @@
 
 ### 4. [Bump Payload CLI](packages/bump-payload/) - Bumps all Payload 3.0 related packages versions.
 
+### 5. [Plugin Seo](packages/seo) - Alternative version of [official](https://payloadcms.com/docs/plugins/seo) Payload plugin that comes with AI seo generating.
+
 This repository has been renamed from payload-plugin-translator in order to keep all of my payload-related packages in 1 place.
