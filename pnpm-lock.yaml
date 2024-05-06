@@ -129,6 +129,27 @@ importers:
         specifier: 18.2.0
         version: 18.2.0
 
+  packages/scheduled-publish:
+    devDependencies:
+      '@payloadcms/next':
+        specifier: 3.0.0-beta.24
+        version: 3.0.0-beta.24(@types/react@18.2.64)(graphql@16.8.1)(monaco-editor@0.48.0)(next@14.3.0-canary.28)(payload@3.0.0-beta.24)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.2)(typescript@5.4.5)
+      '@payloadcms/translations':
+        specifier: 3.0.0-beta.24
+        version: 3.0.0-beta.24
+      '@payloadcms/ui':
+        specifier: 3.0.0-beta.24
+        version: 3.0.0-beta.24(@types/react@18.2.64)(monaco-editor@0.48.0)(next@14.3.0-canary.28)(payload@3.0.0-beta.24)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.2)
+      '@types/react':
+        specifier: 18.2.64
+        version: 18.2.64
+      payload:
+        specifier: 3.0.0-beta.24
+        version: 3.0.0-beta.24(@swc/core@1.4.17)(@swc/types@0.1.6)(graphql@16.8.1)(typescript@5.4.5)
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
+
   packages/translator:
     dependencies:
       bson-objectid:
