@@ -51,6 +51,7 @@ const packageJsonPaths = [
   './packages/translator/package.json',
   './packages/better-localized-fields/package.json',
   './packages/bump-payload/package.json',
+  './packages/seo/package.json',
   './test/package.json',
 ];
 

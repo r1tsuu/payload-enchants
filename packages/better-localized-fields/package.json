@@ -1,7 +1,7 @@
 {
   "name": "@payload-enchants/better-localized-fields",
   "private": false,
-  "version": "1.1.8",
+  "version": "1.1.9",
   "repository": "https://github.com/r1tsuu/payload-enchants",
   "bugs": "https://github.com/r1tsuu/payload-enchants/issues",
   "author": "r1tsuu",
@@ -17,19 +17,19 @@
     "prepublishOnly": "pnpm clean && pnpm build"
   },
   "peerDependencies": {
-    "@payloadcms/next": "^3.0.0-beta.24",
-    "@payloadcms/translations": "^3.0.0-beta.24",
-    "@payloadcms/ui": "^3.0.0-beta.24",
-    "payload": "^3.0.0-beta.24",
+    "@payloadcms/next": "^3.0.0-beta.25",
+    "@payloadcms/translations": "^3.0.0-beta.25",
+    "@payloadcms/ui": "^3.0.0-beta.25",
+    "payload": "^3.0.0-beta.25",
     "react": "^18.2.0",
     "flatley": "^5.2.0"
   },
   "devDependencies": {
-    "@payloadcms/next": "3.0.0-beta.24",
-    "@payloadcms/translations": "3.0.0-beta.24",
-    "@payloadcms/ui": "3.0.0-beta.24",
+    "@payloadcms/next": "3.0.0-beta.25",
+    "@payloadcms/translations": "3.0.0-beta.25",
+    "@payloadcms/ui": "3.0.0-beta.25",
     "@types/react": "18.2.64",
-    "payload": "3.0.0-beta.24",
+    "payload": "3.0.0-beta.25",
     "react": "18.2.0"
   },
   "exports": {
