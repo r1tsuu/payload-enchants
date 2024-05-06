@@ -1,10 +1,11 @@
 {
   "name": "@payload-enchants/better-localized-fields",
   "private": false,
-  "version": "1.1.9",
+  "version": "1.1.10",
   "repository": "https://github.com/r1tsuu/payload-enchants",
   "bugs": "https://github.com/r1tsuu/payload-enchants/issues",
   "author": "r1tsuu",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "build": "pnpm copyfiles && pnpm build:swc && pnpm build:types",

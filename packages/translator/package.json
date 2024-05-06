@@ -1,10 +1,11 @@
 {
   "name": "@payload-enchants/translator",
   "private": false,
-  "version": "1.1.9",
+  "version": "1.1.10",
   "repository": "https://github.com/r1tsuu/payload-enchants",
   "author": "r1tsuu",
   "bugs": "https://github.com/r1tsuu/payload-enchants/issues",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "build": "pnpm copyfiles && pnpm build:swc && pnpm build:types",
