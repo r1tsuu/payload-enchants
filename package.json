@@ -20,7 +20,7 @@
     "publish:better-localized-fields": "cd ./packages/better-localized-fields && pnpm publish",
     "publish:bump-payload": "cd ./packages/bump-payload && pnpm publish",
     "publish:seo": "cd ./packages/seo && pnpm publish",
-    "publish:all": "pnpm publish:docs-reorder && pnpm publish:translator && pnpm publish:better-localized-fields && pnpm publish:bump-payload"
+    "publish:all": "pnpm publish:docs-reorder && pnpm publish:translator && pnpm publish:better-localized-fields && pnpm publish:bump-payload && pnpm publish:seo"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^14.1.4",
