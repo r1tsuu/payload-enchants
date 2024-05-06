@@ -10,7 +10,7 @@
 
 #### 4. [Bump Payload CLI](packages/bump-payload/) - Bumps all Payload 3.0 related packages versions.
 
-#### 5. [Plugin Seo](packages/seo) - Alternative version of [official](https://payloadcms.com/docs/plugins/seo) Payload plugin that comes with AI seo generating.
+#### 5. [Plugin SEO](packages/seo) - Alternative version of [official](https://payloadcms.com/docs/plugins/seo) Payload plugin that comes with AI seo generating.
 
 ## Note
 
