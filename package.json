@@ -19,6 +19,7 @@
     "publish:translator": "cd ./packages/translator && pnpm publish",
     "publish:better-localized-fields": "cd ./packages/better-localized-fields && pnpm publish",
     "publish:bump-payload": "cd ./packages/bump-payload && pnpm publish",
+    "publish:seo": "cd ./packages/seo && pnpm publish",
     "publish:all": "pnpm publish:docs-reorder && pnpm publish:translator && pnpm publish:better-localized-fields && pnpm publish:bump-payload"
   },
   "devDependencies": {
