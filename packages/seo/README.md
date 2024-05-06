@@ -13,4 +13,4 @@ Should return prompt, example: `"Generate meta SEO title for <type of site> site
 `generateDescriptionAi`:
 Should return prompt, example: "`Generate meta SEO description for <type of site> site in language=${data.locale}`"
 
-The args are the same as `generateTitle` and `generateDescriptionAi`
+The args are the same as `generateTitle` and `generateDescription`
