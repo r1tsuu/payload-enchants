@@ -183,6 +183,9 @@ importers:
       '@payload-enchants/docs-reorder':
         specifier: workspace:*
         version: link:../packages/docs-reorder
+      '@payload-enchants/scheduled-publish':
+        specifier: workspace:*
+        version: link:../packages/scheduled-publish
       '@payload-enchants/translator':
         specifier: workspace:*
         version: link:../packages/translator

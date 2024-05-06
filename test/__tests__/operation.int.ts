@@ -1,10 +1,10 @@
+import { translateOperation } from '@payload-enchants/translator';
 import { config } from 'dotenv';
 import mongoose from 'mongoose';
 import path from 'path';
 import type { Payload } from 'payload';
 import { getPayload } from 'payload';
 import { importConfig } from 'payload/node';
-import { translateOperation } from 'payload-plugin-translator/operation';
 import { fileURLToPath } from 'url';
 
 config({

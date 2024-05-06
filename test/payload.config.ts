@@ -1,5 +1,6 @@
 import { betterLocalizedFields } from '@payload-enchants/better-localized-fields';
 import { docsReorder } from '@payload-enchants/docs-reorder';
+import { scheduledPublish } from '@payload-enchants/scheduled-publish';
 import { translator } from '@payload-enchants/translator';
 import { copyResolver } from '@payload-enchants/translator/resolvers/copy';
 import { googleResolver } from '@payload-enchants/translator/resolvers/google';
@@ -183,6 +184,15 @@ export default buildConfig({
       ],
       slug: 'better-localized-issue',
     },
+    {
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+        },
+      ],
+      slug: 'scheduled-docs',
+    },
   ],
   db: mongooseAdapter({
     url: process.env.MONGODB_URI || '',
@@ -251,6 +261,7 @@ export default buildConfig({
       ],
     }),
     betterLocalizedFields(),
+    scheduledPublish({ collections: ['scheduled-docs'] }),
   ],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
