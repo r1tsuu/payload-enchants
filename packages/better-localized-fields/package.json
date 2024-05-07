@@ -1,38 +1,12 @@
 {
   "name": "@payload-enchants/better-localized-fields",
-  "private": false,
   "version": "1.1.10",
-  "repository": "https://github.com/r1tsuu/payload-enchants",
+  "private": false,
   "bugs": "https://github.com/r1tsuu/payload-enchants/issues",
-  "author": "r1tsuu",
+  "repository": "https://github.com/r1tsuu/payload-enchants",
   "license": "MIT",
+  "author": "r1tsuu",
   "type": "module",
-  "scripts": {
-    "build": "pnpm copyfiles && pnpm build:swc && pnpm build:types",
-    "build:swc": "swc ./src -d ./dist --config-file .swcrc",
-    "build:types": "tsc --emitDeclarationOnly --outDir dist",
-    "lint": "eslint src",
-    "lint:fix": "eslint --fix --ext .ts,.tsx src",
-    "clean": "rimraf dist && rimraf tsconfig.tsbuildinfo",
-    "copyfiles": "copyfiles -u 1 \"src/**/*.{html,css,scss,ttf,woff,woff2,eot,svg,jpg,png,json}\" dist/",
-    "prepublishOnly": "pnpm clean && pnpm build"
-  },
-  "peerDependencies": {
-    "@payloadcms/next": "^3.0.0-beta.25",
-    "@payloadcms/translations": "^3.0.0-beta.25",
-    "@payloadcms/ui": "^3.0.0-beta.25",
-    "payload": "^3.0.0-beta.25",
-    "react": "^18.2.0",
-    "flatley": "^5.2.0"
-  },
-  "devDependencies": {
-    "@payloadcms/next": "3.0.0-beta.25",
-    "@payloadcms/translations": "3.0.0-beta.25",
-    "@payloadcms/ui": "3.0.0-beta.25",
-    "@types/react": "18.2.64",
-    "payload": "3.0.0-beta.25",
-    "react": "18.2.0"
-  },
   "exports": {
     ".": {
       "import": "./src/index.ts",
@@ -54,6 +28,35 @@
       "require": "./src/providers/LocaleTabButton/context.ts",
       "types": "./src/providers/LocaleTabButton/context.ts"
     }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "pnpm copyfiles && pnpm build:swc && pnpm build:types",
+    "build:swc": "swc ./src -d ./dist --config-file .swcrc",
+    "build:types": "tsc --emitDeclarationOnly --outDir dist",
+    "clean": "rimraf dist && rimraf tsconfig.tsbuildinfo",
+    "copyfiles": "copyfiles -u 1 \"src/**/*.{html,css,scss,ttf,woff,woff2,eot,svg,jpg,png,json}\" dist/",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix --ext .ts,.tsx src",
+    "prepublishOnly": "pnpm clean && pnpm build"
+  },
+  "devDependencies": {
+    "@payloadcms/next": "3.0.0-beta.25",
+    "@payloadcms/translations": "3.0.0-beta.25",
+    "@payloadcms/ui": "3.0.0-beta.25",
+    "@types/react": "18.2.64",
+    "payload": "3.0.0-beta.25",
+    "react": "18.2.0"
+  },
+  "peerDependencies": {
+    "@payloadcms/next": "^3.0.0-beta.25",
+    "@payloadcms/translations": "^3.0.0-beta.25",
+    "@payloadcms/ui": "^3.0.0-beta.25",
+    "flatley": "^5.2.0",
+    "payload": "^3.0.0-beta.25",
+    "react": "^18.2.0"
   },
   "publishConfig": {
     "exports": {
@@ -81,8 +84,5 @@
     "main": "./dist/index.js",
     "registry": "https://registry.npmjs.org/",
     "types": "./dist/index.d.ts"
-  },
-  "files": [
-    "dist"
-  ]
+  }
 }

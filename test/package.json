@@ -4,18 +4,15 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
     "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
-    "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
-    "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
-    "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
-    "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
     "generate:types": "payload generate:types",
+    "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
+    "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "standalone-script": "tsx ./src/scripts/standalone-script.ts",
+    "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --config=./jest.config.js"
-  },
-  "engines": {
-    "node": ">=18.19.0"
   },
   "devDependencies": {
     "@payload-enchants/better-localized-fields": "workspace:*",
@@ -41,5 +38,8 @@
     "sharp": "0.32.6",
     "tsx": "^4.7.1",
     "typescript": "^5.4.2"
+  },
+  "engines": {
+    "node": ">=18.19.0"
   }
 }
