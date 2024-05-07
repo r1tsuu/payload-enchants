@@ -145,6 +145,27 @@ export default buildConfig({
                   name: 'text',
                   type: 'text',
                 },
+                {
+                  fields: [
+                    {
+                      admin: {
+                        width: '50%',
+                      },
+                      localized: true,
+                      name: 'inRow',
+                      type: 'text',
+                    },
+                    {
+                      admin: {
+                        width: '50%',
+                      },
+                      localized: true,
+                      name: 'inRow_second',
+                      type: 'text',
+                    },
+                  ],
+                  type: 'row',
+                },
               ],
               name: 'named',
             },
@@ -179,6 +200,73 @@ export default buildConfig({
           localized: true,
           name: 'textCondition',
           type: 'text',
+        },
+        {
+          blocks: [
+            {
+              fields: [
+                {
+                  fields: [
+                    {
+                      admin: {
+                        width: '50%',
+                      },
+                      localized: true,
+                      name: 'inRow',
+                      type: 'text',
+                    },
+                    {
+                      admin: {
+                        width: '50%',
+                      },
+                      localized: true,
+                      name: 'inRow_second',
+                      type: 'text',
+                    },
+                  ],
+                  type: 'row',
+                },
+                {
+                  fields: [
+                    {
+                      admin: {
+                        width: '50%',
+                      },
+                      localized: true,
+                      name: 'inRow_f',
+                      type: 'text',
+                    },
+                    {
+                      admin: {
+                        width: '50%',
+                      },
+                      localized: true,
+                      name: 'inRow_f_second',
+                      type: 'text',
+                    },
+                  ],
+                  type: 'row',
+                },
+                {
+                  fields: [
+                    {
+                      admin: {
+                        width: '50%',
+                      },
+                      localized: true,
+                      name: 'text',
+                      type: 'text',
+                    },
+                  ],
+                  name: 'array',
+                  type: 'array',
+                },
+              ],
+              slug: 'some-block',
+            },
+          ],
+          name: 'blocks',
+          type: 'blocks',
         },
       ],
       slug: 'better-localized-issue',
