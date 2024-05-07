@@ -6,12 +6,16 @@
   }
 
   &__tabs.plugin-indicator__tabs {
+    display: flex;
+    gap: 10px;
     &::before {
       content: none;
     }
 
     .tabs-field__tab-button {
+      margin: 0;
       padding-bottom: 5px;
+      font-size: 13.5px;
     }
   }
 }
