@@ -24,6 +24,7 @@
     "@swc/jest": "^0.2.36",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.25",
+    "@types/pg": "^8.11.6",
     "bump-payload": "workspace:*",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",

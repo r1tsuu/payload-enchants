@@ -158,7 +158,7 @@ importers:
     devDependencies:
       '@payloadcms/db-postgres':
         specifier: 3.0.0-beta.25
-        version: 3.0.0-beta.25(payload@3.0.0-beta.25)(react@18.2.0)
+        version: 3.0.0-beta.25(@types/pg@8.11.6)(payload@3.0.0-beta.25)(react@18.2.0)
       payload:
         specifier: 3.0.0-beta.25
         version: 3.0.0-beta.25(@swc/core@1.5.3)(@swc/types@0.1.6)(graphql@16.8.1)(typescript@5.4.5)
@@ -298,7 +298,7 @@ importers:
     devDependencies:
       '@payloadcms/db-postgres':
         specifier: 3.0.0-beta.25
-        version: 3.0.0-beta.25(payload@3.0.0-beta.25)(react@18.2.0)
+        version: 3.0.0-beta.25(@types/pg@8.11.6)(payload@3.0.0-beta.25)(react@18.2.0)
       '@payloadcms/next':
         specifier: 3.0.0-beta.25
         version: 3.0.0-beta.25(@types/react@18.2.64)(graphql@16.8.1)(monaco-editor@0.48.0)(next@14.3.0-canary.28)(payload@3.0.0-beta.25)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.2)(typescript@5.4.5)
@@ -323,6 +323,9 @@ importers:
       '@types/node':
         specifier: ^20.11.25
         version: 20.12.10
+      '@types/pg':
+        specifier: ^8.11.6
+        version: 8.11.6
       bump-payload:
         specifier: workspace:*
         version: link:../packages/bump-payload
@@ -3127,7 +3130,7 @@ packages:
       - supports-color
     dev: true
 
-  /@payloadcms/db-postgres@3.0.0-beta.25(payload@3.0.0-beta.25)(react@18.2.0):
+  /@payloadcms/db-postgres@3.0.0-beta.25(@types/pg@8.11.6)(payload@3.0.0-beta.25)(react@18.2.0):
     resolution: {integrity: sha512-hRto7KHPHQQppGqbBtNqgWoLechFv8AsYJbgmssYoDtJ2mO3HCBe2ccbRZEHYpvu1Ks07kdx1Yz9BkJzstRyWQ==}
     peerDependencies:
       payload: 3.0.0-beta.25
@@ -3135,7 +3138,7 @@ packages:
       '@libsql/client': 0.5.6
       console-table-printer: 2.11.2
       drizzle-kit: 0.20.14-1f2c838
-      drizzle-orm: 0.29.4(@libsql/client@0.5.6)(pg@8.11.3)(react@18.2.0)
+      drizzle-orm: 0.29.4(@libsql/client@0.5.6)(@types/pg@8.11.6)(pg@8.11.3)(react@18.2.0)
       payload: 3.0.0-beta.25(@swc/core@1.5.3)(@swc/types@0.1.6)(graphql@16.8.1)(typescript@5.4.5)
       pg: 8.11.3
       prompts: 2.4.2
@@ -4405,6 +4408,14 @@ packages:
 
   /@types/parse-json@4.0.2:
     resolution: {integrity: sha512-dISoDXWWQwUquiKsyZ4Ng+HX2KsPL7LyHKHQwgGFEA3IaKac4Obd+h2a/a6waisAoepJlBcx9paWqjA8/HVjCw==}
+
+  /@types/pg@8.11.6:
+    resolution: {integrity: sha512-/2WmmBXHLsfRqzfHW7BNZ8SbYzE8OSk7i3WjFYvfgRHj7S1xj+16Je5fUKv3lVdVzk/zn9TXOqf+avFCFIE0yQ==}
+    dependencies:
+      '@types/node': 20.12.10
+      pg-protocol: 1.6.1
+      pg-types: 4.0.2
+    dev: true
 
   /@types/prettier@2.7.3:
     resolution: {integrity: sha512-+68kP9yzs4LMp7VNh8gdzMSPZFL44MLGqiHWvttYJe+6qnuVr4Ek9wSBQoveqY/r+LwjCcU29kNVkidwim+kYA==}
@@ -5787,7 +5798,7 @@ packages:
       - supports-color
     dev: true
 
-  /drizzle-orm@0.29.4(@libsql/client@0.5.6)(pg@8.11.3)(react@18.2.0):
+  /drizzle-orm@0.29.4(@libsql/client@0.5.6)(@types/pg@8.11.6)(pg@8.11.3)(react@18.2.0):
     resolution: {integrity: sha512-ZnSM8TAxFhzH7p1s3+w3pRE/eKaOeNkH9SKitm717pubDVVcV2I0BCDBPGKV+pe02+wMfw37ntlTcCyo2rA3IA==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
@@ -5859,6 +5870,7 @@ packages:
         optional: true
     dependencies:
       '@libsql/client': 0.5.6
+      '@types/pg': 8.11.6
       pg: 8.11.3
       react: 18.2.0
     dev: true
@@ -8560,6 +8572,10 @@ packages:
       es-object-atoms: 1.0.0
     dev: true
 
+  /obuf@1.1.2:
+    resolution: {integrity: sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==}
+    dev: true
+
   /on-exit-leak-free@2.1.2:
     resolution: {integrity: sha512-0eJJY6hXLGf1udHwfNftBqH+g73EU4B504nZeKpz1sYRKafAghwxEJunB2O7rDZkL4PGfsMVnTXZ2EjibbqcsA==}
     engines: {node: '>=14.0.0'}
@@ -8784,6 +8800,11 @@ packages:
     engines: {node: '>=4.0.0'}
     dev: true
 
+  /pg-numeric@1.0.2:
+    resolution: {integrity: sha512-BM/Thnrw5jm2kKLE5uJkXqqExRUY/toLHda65XgFTBTFYZyopbKjBe29Ii3RbkvlsMoFwD+tHeGaCjjv0gHlyw==}
+    engines: {node: '>=4'}
+    dev: true
+
   /pg-pool@3.6.2(pg@8.11.3):
     resolution: {integrity: sha512-Htjbg8BlwXqSBQ9V8Vjtc+vzf/6fVUuak/3/XXKA9oxZprwW3IMDQTGHP+KDmVL7rtd+R1QjbnCFPuTHm3G4hg==}
     peerDependencies:
@@ -8805,6 +8826,19 @@ packages:
       postgres-bytea: 1.0.0
       postgres-date: 1.0.7
       postgres-interval: 1.2.0
+    dev: true
+
+  /pg-types@4.0.2:
+    resolution: {integrity: sha512-cRL3JpS3lKMGsKaWndugWQoLOCoP+Cic8oseVcbr0qhPzYD5DWXK+RZ9LY9wxRf7RQia4SCwQlXk0q6FCPrVng==}
+    engines: {node: '>=10'}
+    dependencies:
+      pg-int8: 1.0.1
+      pg-numeric: 1.0.2
+      postgres-array: 3.0.2
+      postgres-bytea: 3.0.0
+      postgres-date: 2.1.0
+      postgres-interval: 3.0.0
+      postgres-range: 1.1.4
     dev: true
 
   /pg@8.11.3:
@@ -8961,9 +8995,21 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
+  /postgres-array@3.0.2:
+    resolution: {integrity: sha512-6faShkdFugNQCLwucjPcY5ARoW1SlbnrZjmGl0IrrqewpvxvhSLHimCVzqeuULCbG0fQv7Dtk1yDbG3xv7Veog==}
+    engines: {node: '>=12'}
+    dev: true
+
   /postgres-bytea@1.0.0:
     resolution: {integrity: sha512-xy3pmLuQqRBZBXDULy7KbaitYqLcmxigw14Q5sj8QBVLqEwXfeybIKVWiqAXTlcvdvb0+xkOtDbfQMOf4lST1w==}
     engines: {node: '>=0.10.0'}
+    dev: true
+
+  /postgres-bytea@3.0.0:
+    resolution: {integrity: sha512-CNd4jim9RFPkObHSjVHlVrxoVQXz7quwNFpz7RY1okNNme49+sVyiTvTRobiLV548Hx/hb1BG+iE7h9493WzFw==}
+    engines: {node: '>= 6'}
+    dependencies:
+      obuf: 1.1.2
     dev: true
 
   /postgres-date@1.0.7:
@@ -8971,11 +9017,25 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
+  /postgres-date@2.1.0:
+    resolution: {integrity: sha512-K7Juri8gtgXVcDfZttFKVmhglp7epKb1K4pgrkLxehjqkrgPhfG6OO8LHLkfaqkbpjNRnra018XwAr1yQFWGcA==}
+    engines: {node: '>=12'}
+    dev: true
+
   /postgres-interval@1.2.0:
     resolution: {integrity: sha512-9ZhXKM/rw350N1ovuWHbGxnGh/SNJ4cnxHiM0rxE4VN41wsg8P8zWn9hv/buK00RP4WvlOyr/RBDiptyxVbkZQ==}
     engines: {node: '>=0.10.0'}
     dependencies:
       xtend: 4.0.2
+    dev: true
+
+  /postgres-interval@3.0.0:
+    resolution: {integrity: sha512-BSNDnbyZCXSxgA+1f5UU2GmwhoI0aU5yMxRGO8CdFEcY2BQF9xm/7MqKnYoM1nJDk8nONNWDk9WeSmePFhQdlw==}
+    engines: {node: '>=12'}
+    dev: true
+
+  /postgres-range@1.1.4:
+    resolution: {integrity: sha512-i/hbxIE9803Alj/6ytL7UHQxRvZkI9O4Sy+J3HGc4F4oo/2eQAjTSNJ0bfxyse3bH0nuVesCk+3IRLaMtG3H6w==}
     dev: true
 
   /prebuild-install@7.1.2:

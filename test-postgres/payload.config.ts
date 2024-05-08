@@ -18,7 +18,9 @@ export default buildConfig({
   },
 
   db: postgresAdapter({
-    pool: {},
+    pool: {
+      connectionString: process.env.POSTGRES_URI,
+    },
   }),
   editor: lexicalEditor({}),
   i18n: {
