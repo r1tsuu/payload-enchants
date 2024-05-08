@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@payload-enchants/better-localized-fields": "workspace:*",
+    "@payload-enchants/better-use-as-title": "workspace:*",
     "@payload-enchants/docs-reorder": "workspace:*",
     "@payload-enchants/translator": "workspace:*",
     "@payloadcms/db-mongodb": "3.0.0-beta.25",

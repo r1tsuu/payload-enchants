@@ -1,4 +1,5 @@
 import { betterLocalizedFields } from '@payload-enchants/better-localized-fields';
+import { betterUseAsTitle } from '@payload-enchants/better-use-as-title';
 import { docsReorder } from '@payload-enchants/docs-reorder';
 import { translator } from '@payload-enchants/translator';
 import { copyResolver } from '@payload-enchants/translator/resolvers/copy';
@@ -99,177 +100,19 @@ export default buildConfig({
     {
       fields: [
         {
-          localized: true,
-          name: 'title',
-          type: 'text',
-        },
-      ],
-      hooks: {
-        afterChange: [copyOtherLocales],
-      },
-      slug: 'small-posts',
-    },
-    {
-      admin: {
-        useAsTitle: 'title',
-      },
-      fields: [
-        {
-          name: 'title',
-          type: 'text',
-        },
-      ],
-      slug: 'docs-reoder-examples',
-    },
-    {
-      fields: [
-        {
-          tabs: [
-            {
-              admin: {
-                condition: () => false,
-              },
-              fields: [
-                {
-                  localized: true,
-                  name: 'text',
-                  type: 'text',
-                },
-              ],
-              label: 'default',
-            },
-            {
-              fields: [
-                {
-                  localized: true,
-                  name: 'text',
-                  type: 'text',
-                },
-                {
-                  fields: [
-                    {
-                      admin: {
-                        width: '50%',
-                      },
-                      localized: true,
-                      name: 'inRow',
-                      type: 'text',
-                    },
-                    {
-                      admin: {
-                        width: '50%',
-                      },
-                      localized: true,
-                      name: 'inRow_second',
-                      type: 'text',
-                    },
-                  ],
-                  type: 'row',
-                },
-              ],
-              name: 'named',
-            },
-            {
-              fields: [
-                {
-                  name: 'text',
-                  type: 'text',
-                },
-              ],
-
-              localized: true,
-              name: 'localized',
-            },
-          ],
-          type: 'tabs',
-        },
-        {
-          admin: { position: 'sidebar' },
-          fields: [
-            {
-              localized: true,
-              name: 'sidebar',
-              type: 'text',
-            },
-          ],
-          type: 'row',
-        },
-
-        {
-          admin: { condition: (data) => data.sidebar !== 'asd' },
-          localized: true,
-          name: 'textCondition',
+          name: 'firstName',
           type: 'text',
         },
         {
-          blocks: [
-            {
-              fields: [
-                {
-                  fields: [
-                    {
-                      admin: {
-                        width: '50%',
-                      },
-                      localized: true,
-                      name: 'inRow',
-                      type: 'text',
-                    },
-                    {
-                      admin: {
-                        width: '50%',
-                      },
-                      localized: true,
-                      name: 'inRow_second',
-                      type: 'text',
-                    },
-                  ],
-                  type: 'row',
-                },
-                {
-                  fields: [
-                    {
-                      admin: {
-                        width: '50%',
-                      },
-                      localized: true,
-                      name: 'inRow_f',
-                      type: 'text',
-                    },
-                    {
-                      admin: {
-                        width: '50%',
-                      },
-                      localized: true,
-                      name: 'inRow_f_second',
-                      type: 'text',
-                    },
-                  ],
-                  type: 'row',
-                },
-                {
-                  fields: [
-                    {
-                      admin: {
-                        width: '50%',
-                      },
-                      localized: true,
-                      name: 'text',
-                      type: 'text',
-                    },
-                  ],
-                  name: 'array',
-                  type: 'array',
-                },
-              ],
-              slug: 'some-block',
-            },
-          ],
-          name: 'blocks',
-          type: 'blocks',
+          name: 'secondName',
+          type: 'text',
+        },
+        {
+          name: 'age',
+          type: 'number',
         },
       ],
-      slug: 'better-localized-issue',
+      slug: 'better-use-as-title-test',
     },
   ],
   db: mongooseAdapter({
@@ -339,6 +182,11 @@ export default buildConfig({
       ],
     }),
     betterLocalizedFields(),
+    // betterUseAsTitle({
+    //   collections: [{
+    //     slug: "better-use-as-title-test",
+    //   }]
+    // }),
   ],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

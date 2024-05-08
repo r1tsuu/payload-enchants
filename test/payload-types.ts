@@ -10,8 +10,7 @@ export interface Config {
   collections: {
     users: User;
     posts: Post;
-    'small-posts': SmallPost;
-    'docs-reoder-examples': DocsReoderExample;
+    'better-use-as-title-test': BetterUseAsTitleTest;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -86,22 +85,13 @@ export interface Post {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "small-posts".
+ * via the `definition` "better-use-as-title-test".
  */
-export interface SmallPost {
+export interface BetterUseAsTitleTest {
   id: string;
-  title?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "docs-reoder-examples".
- */
-export interface DocsReoderExample {
-  id: string;
-  title?: string | null;
-  docOrder?: number | null;
+  firstName?: string | null;
+  secondName?: string | null;
+  age?: number | null;
   updatedAt: string;
   createdAt: string;
 }

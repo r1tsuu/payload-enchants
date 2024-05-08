@@ -97,6 +97,37 @@ importers:
         specifier: 18.2.0
         version: 18.2.0
 
+  packages/better-use-as-title:
+    dependencies:
+      '@payloadcms/next':
+        specifier: ^3.0.0-beta.25
+        version: 3.0.0-beta.25(@types/react@18.2.64)(graphql@16.8.1)(monaco-editor@0.48.0)(next@14.3.0-canary.28)(payload@3.0.0-beta.25)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.2)(typescript@5.4.5)
+      bson-objectid:
+        specifier: ^2.0.4
+        version: 2.0.4
+    devDependencies:
+      '@payloadcms/translations':
+        specifier: 3.0.0-beta.25
+        version: 3.0.0-beta.25
+      '@payloadcms/ui':
+        specifier: 3.0.0-beta.25
+        version: 3.0.0-beta.25(@types/react@18.2.64)(monaco-editor@0.48.0)(next@14.3.0-canary.28)(payload@3.0.0-beta.25)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.2)
+      '@types/react':
+        specifier: 18.2.64
+        version: 18.2.64
+      openai:
+        specifier: ^4.30.0
+        version: 4.42.0
+      payload:
+        specifier: 3.0.0-beta.25
+        version: 3.0.0-beta.25(@swc/core@1.5.3)(@swc/types@0.1.6)(graphql@16.8.1)(typescript@5.4.5)
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
+      typescript:
+        specifier: ^5.4.2
+        version: 5.4.5
+
   packages/bump-payload:
     dependencies:
       '@npmcli/package-json':
@@ -193,6 +224,9 @@ importers:
       '@payload-enchants/better-localized-fields':
         specifier: workspace:*
         version: link:../packages/better-localized-fields
+      '@payload-enchants/better-use-as-title':
+        specifier: workspace:*
+        version: link:../packages/better-use-as-title
       '@payload-enchants/docs-reorder':
         specifier: workspace:*
         version: link:../packages/docs-reorder
