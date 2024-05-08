@@ -36,9 +36,6 @@ export const betterUseAsTitle =
 
       const useAsTitleField: TextField = {
         admin: {
-          components: {
-            Field: InjectCustomUseAsTitle,
-          },
           hidden: true,
         },
         hooks: {
