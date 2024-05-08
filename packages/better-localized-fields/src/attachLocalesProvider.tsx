@@ -11,7 +11,7 @@ export const attachLocalesProvider = (entity: { fields: Field[] }) => {
     {
       admin: {
         components: {
-          Field: LocalesDataProvider,
+          Field: (props) => <LocalesDataProvider {...props} />,
         },
       },
       fields: mainFields,
@@ -27,7 +27,7 @@ export const attachLocalesProvider = (entity: { fields: Field[] }) => {
     entity.fields.push({
       admin: {
         components: {
-          Field: LocalesDataProvider,
+          Field: (props) => <LocalesDataProvider {...props} />,
         },
         position: 'sidebar',
       },

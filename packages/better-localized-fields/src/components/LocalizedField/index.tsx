@@ -10,7 +10,7 @@ import { useDocumentInfo } from '@payloadcms/ui/providers/DocumentInfo';
 import { useFieldComponents } from '@payloadcms/ui/providers/FieldComponents';
 import { useLocale } from '@payloadcms/ui/providers/Locale';
 import { reduceFieldsToValues } from '@payloadcms/ui/utilities/reduceFieldsToValues';
-import type { ComponentProps, ReactElement, ReactNode } from 'react';
+import type { ComponentProps, CSSProperties, ReactElement, ReactNode } from 'react';
 import { cloneElement, useEffect, useState } from 'react';
 
 import { useLocalesData } from '../../providers/LocalesData/context';
@@ -56,6 +56,15 @@ export const LocalizedField = withCondition(
     const locale = useLocale();
 
     const fieldProps = useFieldProps();
+
+    const width = 'width' in fieldComponentProps && fieldComponentProps.width;
+
+    const style: CSSProperties = {};
+
+    if (width && typeof width === 'string') {
+      delete fieldComponentProps['width'];
+      style.width = width;
+    }
 
     const FieldComponent = fieldComponents[type];
 
@@ -103,7 +112,7 @@ export const LocalizedField = withCondition(
       activeLocaleTab !== locale.code && getFormContextValue(activeLocaleTab);
 
     return (
-      <div className='plugin-indicator__field-wrapper field-type'>
+      <div className='plugin-indicator__field-wrapper field-type' style={style}>
         <div className='tabs-field__tabs plugin-indicator__tabs'>
           {localesOptions.map((code) =>
             customTabButton ? (
