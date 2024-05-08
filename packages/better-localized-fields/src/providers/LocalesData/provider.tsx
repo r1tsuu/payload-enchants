@@ -4,7 +4,6 @@ import './index.scss';
 
 import { getTranslation } from '@payloadcms/translations';
 import type { Row } from '@payloadcms/ui/fields/Row';
-import { RowProvider } from '@payloadcms/ui/fields/Row';
 import { useFieldProps } from '@payloadcms/ui/forms/FieldPropsProvider';
 import { RenderFields } from '@payloadcms/ui/forms/RenderFields';
 import { useConfig } from '@payloadcms/ui/providers/Config';
@@ -87,18 +86,16 @@ export const LocalesDataProvider = (props: React.ComponentProps<typeof Row>) => 
 
   return (
     <LocalesDataContext.Provider value={{ localesFormState: localesFormState ?? [] }}>
-      <RowProvider>
-        <div className='locales-data-provider'>
-          <RenderFields
-            {...{ fieldMap, forceRender, path, readOnly, schemaPath }}
-            fieldMap={fieldMap}
-            forceRender={forceRender}
-            indexPath={indexPath}
-            margins={false}
-            permissions={siblingPermissions}
-          />
-        </div>
-      </RowProvider>
+      <div className='locales-data-provider'>
+        <RenderFields
+          {...{ fieldMap, forceRender, path, readOnly, schemaPath }}
+          fieldMap={fieldMap}
+          forceRender={forceRender}
+          indexPath={indexPath}
+          margins={false}
+          permissions={siblingPermissions}
+        />
+      </div>
     </LocalesDataContext.Provider>
   );
 };
