@@ -27,23 +27,15 @@
     "lint:fix": "eslint --fix --ext .ts,.tsx src",
     "prepublishOnly": "pnpm clean && pnpm build"
   },
-  "dependencies": {
-    "bson-objectid": "^2.0.4"
-  },
   "devDependencies": {
-    "@payloadcms/translations": "3.0.0-beta.25",
     "@payloadcms/ui": "3.0.0-beta.25",
     "@types/react": "18.2.64",
-    "openai": "^4.30.0",
     "payload": "3.0.0-beta.25",
     "react": "18.2.0",
     "typescript": "^5.4.2"
   },
   "peerDependencies": {
-    "@payloadcms/next": "^3.0.0-beta.25",
-    "@payloadcms/translations": "^3.0.0-beta.25",
     "@payloadcms/ui": "^3.0.0-beta.25",
-    "openai": "^4.30.0",
     "payload": "^3.0.0-beta.25"
   },
   "publishConfig": {
