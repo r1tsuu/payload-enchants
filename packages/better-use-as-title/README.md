@@ -41,3 +41,12 @@ export default buildConfig({
   ],
 });
 ```
+
+## Note for data that already exist
+You would need to write a custom script that updates all your docs like this
+```
+payload.update({
+  collection: 'posts',
+  where: {}
+})
+```
