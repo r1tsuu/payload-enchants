@@ -153,12 +153,12 @@ export default buildConfig({
       });
     }
 
-    await seed({
-      isLexical,
-      payload,
-    });
+    // await seed({
+    //   isLexical,
+    //   payload,
+    // });
 
-    await seedDocsReorderExamples(payload);
+    // await seedDocsReorderExamples(payload);
   },
   plugins: [
     docsReorder({
@@ -182,11 +182,14 @@ export default buildConfig({
       ],
     }),
     betterLocalizedFields(),
-    // betterUseAsTitle({
-    //   collections: [{
-    //     slug: "better-use-as-title-test",
-    //   }]
-    // }),
+    betterUseAsTitle({
+      collections: [
+        {
+          slug: 'better-use-as-title-test',
+          useAsTitle: ({ data }) => `${data.firstName ?? ''} - ${data.secondName}, ${data.age} y.o`,
+        },
+      ],
+    }),
   ],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

@@ -1,16 +1,40 @@
-# Alternative version of official @payloadcms/plugin-seo package with AI generating improvements
+# Better `useAsTitle` property for Payload 3.0
 
-[Official docs](https://payloadcms.com/docs/plugins/seo)
+## Install
 
-## List of the added options:
+`pnpm add @payload-enchants/better-use-as-title`
 
-`openaiApiKey`
-API key for OpenAI
+Add into your payload.config.ts:
 
-`generateTitleAi`:
-Should return prompt, example: `"Generate meta SEO title for <type of site> site in language=${data.locale}"`
+```ts
+import { betterUseAsTitle } from '@payload-enchants/better-use-as-title';
 
-`generateDescriptionAi`:
-Should return prompt, example: "`Generate meta SEO description for <type of site> site in language=${data.locale}`"
+export default buildConfig({
+  // ...your config
+  plugins: [
+    betterUseAsTitle({
+      // List of collections to apply a custom `useAsTitle`
+      collections: [
+        {
+          // Collection slug
+          slug: 'better-use-as-title-test',
 
-The args are the same as `generateTitle` and `generateDescription`
+          // `data` is the current document data, req is instance of PayloadRequest, from which you can get `payload` and `user`
+          // could be asynchronous as well
+          useAsTitle: ({ data, req }) =>
+            `${data.firstName ?? ''} - ${data.secondName}, ${data.age} y.o`,
+
+          // override properties for useAsTitle field for this collection
+          fieldOverride: {
+            name: 'customNameForCollection',
+          },
+        },
+      ],
+      // override properties for useAsTitle field globally
+      fieldOverride: {
+        name: 'customName',
+      },
+    }),
+  ],
+});
+```

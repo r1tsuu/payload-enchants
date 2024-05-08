@@ -92,6 +92,7 @@ export interface BetterUseAsTitleTest {
   firstName?: string | null;
   secondName?: string | null;
   age?: number | null;
+  useAsTitle?: string | null;
   updatedAt: string;
   createdAt: string;
 }

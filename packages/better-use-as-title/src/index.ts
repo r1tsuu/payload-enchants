@@ -1,13 +1,18 @@
 import type { GeneratedTypes } from 'payload';
 import type { Plugin } from 'payload/config';
-import type { TextField } from 'payload/types';
+import type { PayloadRequest, TextField } from 'payload/types';
 import { deepMerge } from 'payload/utilities';
+
+import { InjectCustomUseAsTitle } from './index.client';
 
 export type BetterUseAsTitleArgs<T extends keyof GeneratedTypes['collections']> = {
   collections: {
     fieldOverride?: Partial<TextField>;
     slug: T;
-    useAsTitle: (data: T) => Promise<string> | string;
+    useAsTitle: (args: {
+      data: GeneratedTypes['collections'][T];
+      req: PayloadRequest;
+    }) => Promise<string> | string;
   }[];
   fieldOverride?: Partial<TextField>;
 };
@@ -31,14 +36,17 @@ export const betterUseAsTitle =
 
       const useAsTitleField: TextField = {
         admin: {
+          components: {
+            Field: InjectCustomUseAsTitle,
+          },
           hidden: true,
         },
         hooks: {
           beforeValidate: [
-            ({ data: dataToUpdate, originalDoc }) => {
+            ({ data: dataToUpdate, originalDoc, req }) => {
               const data = deepMerge(originalDoc ?? {}, dataToUpdate);
 
-              return useAsTitle(data);
+              return useAsTitle({ data, req });
             },
           ],
         },
@@ -49,7 +57,30 @@ export const betterUseAsTitle =
       };
 
       collection.fields.push(useAsTitleField);
+      collection.fields.push({
+        admin: {
+          components: {
+            Field: InjectCustomUseAsTitle,
+          },
+        },
+        name: 'injectCustomUseAsTitle',
+        type: 'ui',
+      });
       collection.admin = collection.admin ?? {};
+
+      collection.endpoints = collection.endpoints || [];
+
+      collection.endpoints.push({
+        handler: async (req) => {
+          const data = await req.json();
+
+          const adminTitle = await useAsTitle({ data, req });
+
+          return Response.json({ useAsTitle: adminTitle });
+        },
+        method: 'post',
+        path: '/use-as-title',
+      });
 
       collection.admin.useAsTitle = useAsTitleField.name;
     });
