@@ -10,9 +10,7 @@ export interface Config {
   collections: {
     users: User;
     posts: Post;
-    'small-posts': SmallPost;
-    'docs-reoder-examples': DocsReoderExample;
-    'better-localized-issue': BetterLocalizedIssue;
+    'better-use-as-title-test': BetterUseAsTitleTest;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -87,59 +85,14 @@ export interface Post {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "small-posts".
+ * via the `definition` "better-use-as-title-test".
  */
-export interface SmallPost {
+export interface BetterUseAsTitleTest {
   id: string;
-  title?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "docs-reoder-examples".
- */
-export interface DocsReoderExample {
-  id: string;
-  title?: string | null;
-  docOrder?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "better-localized-issue".
- */
-export interface BetterLocalizedIssue {
-  id: string;
-  text?: string | null;
-  named: {
-    text?: string | null;
-    inRow?: string | null;
-    inRow_second?: string | null;
-  };
-  localized: {
-    text?: string | null;
-  };
-  textCondition?: string | null;
-  blocks?:
-    | {
-        inRow?: string | null;
-        inRow_second?: string | null;
-        inRow_f?: string | null;
-        inRow_f_second?: string | null;
-        array?:
-          | {
-              text?: string | null;
-              id?: string | null;
-            }[]
-          | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'some-block';
-      }[]
-    | null;
-  sidebar?: string | null;
+  firstName?: string | null;
+  secondName?: string | null;
+  age?: number | null;
+  useAsTitle?: string | null;
   updatedAt: string;
   createdAt: string;
 }
