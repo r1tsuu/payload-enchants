@@ -1,0 +1,37 @@
+html,
+body {
+  font-family: 'Roboto', 'Inter', sans-serif;
+}
+
+.container {
+  margin-right: auto;
+  margin-left: auto;
+  padding: 0 2rem;
+  max-width: 37.5rem;
+}
+
+h1 {
+  font-size: 4rem;
+}
+
+.rainbow {
+  animation: rainbow_animation 6s ease-in-out infinite;
+  background: linear-gradient(to right, #6666ff, #0099ff, #00ff00, #ff3399, #6666ff);
+  background-size: 400% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-family: monospace;
+  letter-spacing: 5px;
+}
+
+@keyframes rainbow_animation {
+  0%,
+  100% {
+    background-position: 0 0;
+  }
+
+  50% {
+    background-position: 100% 0;
+  }
+}

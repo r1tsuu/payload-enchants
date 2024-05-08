@@ -1,0 +1,52 @@
+{
+  "name": "@payload-enchants/postgres-json-store",
+  "version": "1.1.12",
+  "private": false,
+  "bugs": "https://github.com/r1tsuu/payload-enchants/issues",
+  "repository": "https://github.com/r1tsuu/payload-enchants",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "require": "./src/index.ts",
+      "types": "./src/index.ts"
+    }
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "pnpm copyfiles && pnpm build:swc && pnpm build:types",
+    "build:swc": "swc ./src -d ./dist --config-file .swcrc",
+    "build:types": "tsc --emitDeclarationOnly --outDir dist",
+    "clean": "rimraf dist && rimraf tsconfig.tsbuildinfo",
+    "copyfiles": "copyfiles -u 1 \"src/**/*.{html,css,scss,ttf,woff,woff2,eot,svg,jpg,png,json}\" dist/",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix --ext .ts,.tsx src",
+    "prepublishOnly": "pnpm clean && pnpm build"
+  },
+  "devDependencies": {
+    "@payloadcms/db-postgres": "3.0.0-beta.25",
+    "payload": "3.0.0-beta.25"
+  },
+  "peerDependencies": {
+    "@payloadcms/ui": "^3.0.0-beta.25",
+    "@payloadcms/db-postgres": "^3.0.0-beta.25",
+    "payload": "^3.0.0-beta.25"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "import": "./dist/index.js",
+        "require": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      }
+    },
+    "main": "./dist/index.js",
+    "registry": "https://registry.npmjs.org/",
+    "types": "./dist/index.d.ts"
+  }
+}

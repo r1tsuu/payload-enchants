@@ -2,5 +2,6 @@ packages:
   # all packages in direct subdirs of packages/
   - 'packages/*'
   - 'test'
+  - 'test-postgres'
   # exclude packages that are inside test directories
   # - '!**/test/**'
