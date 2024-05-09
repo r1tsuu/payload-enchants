@@ -26,7 +26,11 @@ export const traverseFields = ({
       case 'email':
       case 'point':
       case 'richText':
-        if (field.localized) attachLocalizedField({ field, options });
+        if (field.localized)
+          attachLocalizedField({
+            field: field as Parameters<typeof attachLocalizedField>[0]['field'],
+            options,
+          });
         break;
 
       case 'array':

@@ -38,7 +38,8 @@ const seo =
           {
             admin: {
               components: {
-                Field: (props) => (
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                Field: ({ payload: _payload, ...props }) => (
                   <MetaTitle
                     {...props}
                     hasGenerateTitleAi={
@@ -58,7 +59,8 @@ const seo =
           {
             admin: {
               components: {
-                Field: (props) => (
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                Field: ({ payload: _payload, ...props }) => (
                   <MetaDescription
                     {...props}
                     hasGenerateDescriptionAi={
@@ -83,7 +85,8 @@ const seo =
                 {
                   admin: {
                     components: {
-                      Field: (props) => (
+                      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                      Field: ({ payload: _payload, ...props }) => (
                         <MetaImage
                           {...props}
                           hasGenerateImageFn={typeof pluginConfig?.generateImage === 'function'}
@@ -106,7 +109,8 @@ const seo =
           {
             admin: {
               components: {
-                Field: (props) => (
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                Field: ({ payload: _payload, ...props }) => (
                   <Preview
                     {...props}
                     hasGenerateURLFn={typeof pluginConfig?.generateURL === 'function'}

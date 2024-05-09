@@ -2,6 +2,7 @@ import type { RichTextAdapter } from 'payload/types';
 
 import { LocalizedField } from './components/LocalizedField';
 import type { BetterLocalizedFieldsOptions } from './types';
+import { getClientProps } from './utils/getClientProps';
 
 export const attachLocalizedFieldToEditor = ({
   editor,
@@ -21,7 +22,7 @@ export const attachLocalizedFieldToEditor = ({
   editor.FieldComponent = (props) => {
     return (
       <LocalizedField
-        {...props}
+        {...getClientProps(props)}
         customField={<incomingEditor.FieldComponent {...props} />}
         customTabButton={LocaleTabButtonCustom && <LocaleTabButtonCustom />}
         type='richText'
