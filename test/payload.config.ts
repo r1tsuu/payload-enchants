@@ -14,10 +14,6 @@ import { buildConfig } from 'payload/config';
 import { en } from 'payload/i18n/en';
 import { fileURLToPath } from 'url';
 
-import { copyOtherLocales } from './copyOtherLocalesHook';
-import { seed } from './seed';
-import { seedDocsReorderExamples } from './seedDocsReorderExamples';
-
 const filename = fileURLToPath(import.meta.url);
 
 const dirname = path.dirname(filename);
@@ -112,8 +108,25 @@ export default buildConfig({
           name: 'age',
           type: 'number',
         },
+        {
+          name: 'asd',
+          relationTo: 'users',
+          type: 'relationship',
+        },
       ],
       slug: 'better-use-as-title-test',
+    },
+    {
+      admin: {
+        useAsTitle: 'title',
+      },
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+        },
+      ],
+      slug: 'scheduled-docs',
     },
   ],
   db: mongooseAdapter({
@@ -153,13 +166,6 @@ export default buildConfig({
         },
       });
     }
-
-    // await seed({
-    //   isLexical,
-    //   payload,
-    // });
-
-    // await seedDocsReorderExamples(payload);
   },
   plugins: [
     docsReorder({
@@ -170,7 +176,7 @@ export default buildConfig({
       ],
     }),
     translator({
-      collections: ['posts', 'small-posts'],
+      collections: ['posts'],
       globals: [],
       resolvers: [
         copyResolver(),

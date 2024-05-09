@@ -25,6 +25,7 @@
     "@payloadcms/richtext-lexical": "3.0.0-beta.25",
     "@payloadcms/richtext-slate": "3.0.0-beta.25",
     "@payloadcms/translations": "3.0.0-beta.25",
+    "@payloadcms/plugin-relationship-object-ids": "../../payload/packages/plugin-relationship-object-ids",
     "@payloadcms/ui": "3.0.0-beta.25",
     "@swc/jest": "^0.2.36",
     "@types/jest": "^29.5.12",

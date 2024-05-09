@@ -1,7 +1,9 @@
 import type {
+  CollectionConfig,
   DateField,
   Payload,
   PayloadRequestWithData,
+  RelationshipField,
   SanitizedCollectionConfig,
 } from 'payload/types';
 
@@ -22,7 +24,9 @@ export type ScheduledPublishOptions = {
 };
 
 export type SanitizedOptions = {
+  ScheduledToPublishDocuments: CollectionConfig;
   collections: string[];
   publishedAtField: DateField;
   scheduledAccess: ScheduledAccess;
+  scheduledToPublishDocParent: RelationshipField;
 };

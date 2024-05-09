@@ -18,8 +18,8 @@ export const beforeOperation =
       and: [
         args.where ?? {},
         {
-          [options.publishedAtField.name]: {
-            greater_than_equal: new Date().toISOString(),
+          scheduledAt: {
+            less_than_equal: new Date().toISOString(),
           },
         },
       ],

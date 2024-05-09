@@ -11,6 +11,7 @@ export interface Config {
     users: User;
     posts: Post;
     'better-use-as-title-test': BetterUseAsTitleTest;
+    'scheduled-docs': ScheduledDoc;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -93,6 +94,17 @@ export interface BetterUseAsTitleTest {
   secondName?: string | null;
   age?: number | null;
   useAsTitle?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "scheduled-docs".
+ */
+export interface ScheduledDoc {
+  id: string;
+  title?: string | null;
+  publishedAt?: string | null;
   updatedAt: string;
   createdAt: string;
 }
