@@ -13,10 +13,6 @@ import { buildConfig } from 'payload/config';
 import { en } from 'payload/i18n/en';
 import { fileURLToPath } from 'url';
 
-import { copyOtherLocales } from './copyOtherLocalesHook';
-import { seed } from './seed';
-import { seedDocsReorderExamples } from './seedDocsReorderExamples';
-
 const filename = fileURLToPath(import.meta.url);
 
 const dirname = path.dirname(filename);
@@ -168,19 +164,19 @@ export default buildConfig({
         },
       ],
     }),
-    translator({
-      collections: ['posts', 'small-posts'],
-      globals: [],
-      resolvers: [
-        copyResolver(),
-        googleResolver({
-          apiKey: process.env.GOOGLE_API_KEY!,
-        }),
-        openAIResolver({
-          apiKey: process.env.OPENAI_KEY!,
-        }),
-      ],
-    }),
+    // translator({
+    //   collections: ['posts', 'small-posts'],
+    //   globals: [],
+    //   resolvers: [
+    //     copyResolver(),
+    //     googleResolver({
+    //       apiKey: process.env.GOOGLE_API_KEY!,
+    //     }),
+    //     openAIResolver({
+    //       apiKey: process.env.OPENAI_KEY!,
+    //     }),
+    //   ],
+    // }),
     betterLocalizedFields(),
     betterUseAsTitle({
       collections: [

@@ -1,13 +1,33 @@
 import type { Field } from 'payload/types';
+import { isReactClientComponent } from 'payload/utilities';
 
 import { LocalizedField } from './components/LocalizedField';
 import type { BetterLocalizedFieldsOptions } from './types';
+import { getClientProps } from './utils/getClientProps';
 
 export const attachLocalizedField = ({
   field,
   options,
 }: {
-  field: Field;
+  field: {
+    type:
+      | 'array'
+      | 'blocks'
+      | 'checkbox'
+      | 'code'
+      | 'date'
+      | 'email'
+      | 'group'
+      | 'json'
+      | 'number'
+      | 'point'
+      | 'radio'
+      | 'relationship'
+      | 'richText'
+      | 'select'
+      | 'text'
+      | 'textarea';
+  } & Field;
   options: BetterLocalizedFieldsOptions;
 }) => {
   field.admin = field.admin ?? {};
@@ -30,13 +50,23 @@ export const attachLocalizedField = ({
 
   field.admin.components = {
     ...(field.admin.components ?? {}),
-    Field: (props) => (
-      <LocalizedField
-        {...props}
-        {...(CustomFieldComponent && { customField: <CustomFieldComponent {...props} /> })}
-        customTabButton={LocaleTabButtonCustom && <LocaleTabButtonCustom />}
-        type={field.type}
-      />
-    ),
+    Field: (props) => {
+      const clientProps = getClientProps(props);
+
+      const isClientCustomComponent = isReactClientComponent(CustomFieldComponent);
+
+      return (
+        <LocalizedField
+          {...getClientProps(props)}
+          {...(CustomFieldComponent && {
+            customField: (
+              <CustomFieldComponent {...(isClientCustomComponent ? clientProps : props)} />
+            ),
+          })}
+          customTabButton={LocaleTabButtonCustom && <LocaleTabButtonCustom />}
+          type={field.type}
+        />
+      );
+    },
   };
 };

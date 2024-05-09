@@ -1,6 +1,8 @@
+import type { Row } from '@payloadcms/ui/fields/Row';
 import type { Field } from 'payload/types';
 
 import { LocalesDataProvider } from './providers/LocalesData/provider';
+import { getClientProps } from './utils/getClientProps';
 
 export const attachLocalesProvider = (entity: { fields: Field[] }) => {
   const mainFields = entity.fields.filter((each) => each.admin?.position !== 'sidebar');
@@ -11,7 +13,9 @@ export const attachLocalesProvider = (entity: { fields: Field[] }) => {
     {
       admin: {
         components: {
-          Field: (props) => <LocalesDataProvider {...props} />,
+          Field: (props) => (
+            <LocalesDataProvider {...(getClientProps(props) as React.ComponentProps<typeof Row>)} />
+          ),
         },
       },
       fields: mainFields,
