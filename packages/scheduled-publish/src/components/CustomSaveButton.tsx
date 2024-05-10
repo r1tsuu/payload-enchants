@@ -2,19 +2,20 @@
 
 import './index.scss';
 
-import { DefaultSaveButton } from '@payloadcms/ui/elements/Save';
 import type { ReactNode } from 'react';
 
 import { SchedulePublish } from './SchedulePublish';
 
 export const CustomSaveButton = ({
+  defaultSaveButton,
   incomingCustomSaveButton,
 }: {
+  defaultSaveButton: ReactNode;
   incomingCustomSaveButton: ReactNode;
 }) => {
   return (
     <>
-      {incomingCustomSaveButton ?? <DefaultSaveButton />}
+      {incomingCustomSaveButton ?? defaultSaveButton}
       <SchedulePublish />
     </>
   );

@@ -168,13 +168,13 @@ export default buildConfig({
     }
   },
   plugins: [
-    docsReorder({
-      collections: [
-        {
-          slug: 'docs-reoder-examples',
-        },
-      ],
-    }),
+    // docsReorder({
+    //   collections: [
+    //     {
+    //       slug: 'docs-reoder-examples',
+    //     },
+    //   ],
+    // }),
     // translator({
     //   collections: ['posts', 'small-posts'],
     //   globals: [],
@@ -188,29 +188,29 @@ export default buildConfig({
     //     }),
     //   ],
     // }),
-    translator({
-      collections: ['posts'],
-      globals: [],
-      resolvers: [
-        copyResolver(),
-        googleResolver({
-          apiKey: process.env.GOOGLE_API_KEY!,
-        }),
-        openAIResolver({
-          apiKey: process.env.OPENAI_KEY!,
-        }),
-      ],
-    }),
-    betterLocalizedFields(),
+    // translator({
+    //   collections: ['posts'],
+    //   globals: [],
+    //   resolvers: [
+    //     copyResolver(),
+    //     googleResolver({
+    //       apiKey: process.env.GOOGLE_API_KEY!,
+    //     }),
+    //     openAIResolver({
+    //       apiKey: process.env.OPENAI_KEY!,
+    //     }),
+    //   ],
+    // }),
+    // betterLocalizedFields(),
     scheduledPublish({ collections: ['scheduled-docs'] }),
-    betterUseAsTitle({
-      collections: [
-        {
-          slug: 'better-use-as-title-test',
-          useAsTitle: ({ data }) => `${data.firstName ?? ''} - ${data.secondName}, ${data.age} y.o`,
-        },
-      ],
-    }),
+    // betterUseAsTitle({
+    //   collections: [
+    //     {
+    //       slug: 'better-use-as-title-test',
+    //       useAsTitle: ({ data }) => `${data.firstName ?? ''} - ${data.secondName}, ${data.age} y.o`,
+    //     },
+    //   ],
+    // }),
   ],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

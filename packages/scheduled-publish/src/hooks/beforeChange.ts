@@ -4,16 +4,16 @@ import { deepMerge } from 'payload/utilities';
 import type { SanitizedOptions } from '../types';
 
 export const beforeChange =
-  (options: SanitizedOptions): CollectionBeforeChangeHook =>
+  ({ ScheduledToPublishDocuments }: SanitizedOptions): CollectionBeforeChangeHook =>
   async ({ collection, data, operation, originalDoc, req }) => {
     if (operation !== 'update' || !originalDoc) return;
 
     const docId = originalDoc.id as number | string;
 
     const {
-      docs: [lastScheduledVersion],
+      docs: [scheduledVersion],
     } = await req.payload.find({
-      collection: options.ScheduledToPublishDocuments.slug,
+      collection: ScheduledToPublishDocuments.slug,
       limit: 1,
       req,
       where: {
@@ -39,9 +39,9 @@ export const beforeChange =
 
     delete data.scheduledAt;
 
-    if (lastScheduledVersion) {
+    if (scheduledVersion) {
       const updatedScheduledDocumnentData = {
-        doc: deepMerge(lastScheduledVersion.doc, data),
+        doc: deepMerge(scheduledVersion.doc, data),
       } as Record<string, object | string>;
 
       if (scheduledAt) {
@@ -49,9 +49,9 @@ export const beforeChange =
       }
 
       await req.payload.update({
-        collection: options.ScheduledToPublishDocuments.slug,
+        collection: ScheduledToPublishDocuments.slug,
         data: updatedScheduledDocumnentData,
-        id: lastScheduledVersion.id,
+        id: scheduledVersion.id,
         req,
       });
 
@@ -60,7 +60,7 @@ export const beforeChange =
 
     if (scheduledAt) {
       await req.payload.create({
-        collection: options.ScheduledToPublishDocuments.slug,
+        collection: ScheduledToPublishDocuments.slug,
         data: {
           doc: deepMerge(originalDoc, data),
           isPublished: false,

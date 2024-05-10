@@ -12,7 +12,7 @@ export type ScheduledAccess = ({
   req,
 }: {
   collection: SanitizedCollectionConfig;
-  operationArgs: Parameters<Payload['find']>[0] | Parameters<Payload['findByID']>[0];
+  operationArgs?: Parameters<Payload['find']>[0] | Parameters<Payload['findByID']>[0];
   req: PayloadRequestWithData;
 }) => Promise<boolean | undefined> | boolean | undefined;
 
@@ -26,7 +26,5 @@ export type ScheduledPublishOptions = {
 export type SanitizedOptions = {
   ScheduledToPublishDocuments: CollectionConfig;
   collections: string[];
-  publishedAtField: DateField;
   scheduledAccess: ScheduledAccess;
-  scheduledToPublishDocParent: RelationshipField;
 };
