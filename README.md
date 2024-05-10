@@ -8,9 +8,11 @@
 
 #### 3. [Plugin Better Localized Fields](packages/better-localized-fields/) - Adds to every localized field locales tabs with a field's value on selected locale.
 
-#### 4. [Bump Payload CLI](packages/bump-payload/) - Bumps all Payload 3.0 related packages versions.
+#### 4. [Plugin Better Use-As-Title](packages/better-use-as-title) - Better version of `useAsTitle` property that accepts function with document data as argument.
 
-#### 5. [Plugin SEO](packages/seo) - Alternative version of [official](https://payloadcms.com/docs/plugins/seo) Payload plugin that comes with AI seo generating.
+#### 5. [Bump Payload CLI](packages/bump-payload/) - Bumps all Payload 3.0 related packages versions.
+
+#### 6. [Plugin SEO](packages/seo) - Alternative version of [official](https://payloadcms.com/docs/plugins/seo) Payload plugin that comes with AI seo generating.
 
 ## Note
 

@@ -1,6 +1,6 @@
 {
   "name": "@payload-enchants/better-use-as-title",
-  "version": "1.1.12",
+  "version": "1.1.13",
   "private": false,
   "bugs": "https://github.com/r1tsuu/payload-enchants/issues",
   "repository": "https://github.com/r1tsuu/payload-enchants",
@@ -28,15 +28,15 @@
     "prepublishOnly": "pnpm clean && pnpm build"
   },
   "devDependencies": {
-    "@payloadcms/ui": "3.0.0-beta.25",
+    "@payloadcms/ui": "3.0.0-beta.29",
     "@types/react": "18.2.64",
-    "payload": "3.0.0-beta.25",
+    "payload": "3.0.0-beta.29",
     "react": "18.2.0",
     "typescript": "^5.4.2"
   },
   "peerDependencies": {
-    "@payloadcms/ui": "^3.0.0-beta.25",
-    "payload": "^3.0.0-beta.25"
+    "@payloadcms/ui": "^3.0.0-beta.29",
+    "payload": "^3.0.0-beta.29"
   },
   "publishConfig": {
     "exports": {
