@@ -3,27 +3,61 @@
 import type { UploadInputProps } from '@payloadcms/ui/fields/Upload';
 import { UploadInput } from '@payloadcms/ui/fields/Upload';
 import { FieldLabel } from '@payloadcms/ui/forms/FieldLabel';
+import { useFieldProps } from '@payloadcms/ui/forms/FieldPropsProvider';
 import { useAllFormFields } from '@payloadcms/ui/forms/Form';
-import type { FieldType, Options } from '@payloadcms/ui/forms/useField';
 import { useField } from '@payloadcms/ui/forms/useField';
+import { withCondition } from '@payloadcms/ui/forms/withCondition';
 import { useConfig } from '@payloadcms/ui/providers/Config';
 import { useDocumentInfo } from '@payloadcms/ui/providers/DocumentInfo';
 import { useLocale } from '@payloadcms/ui/providers/Locale';
 import { useTranslation } from '@payloadcms/ui/providers/Translation';
 import React, { useCallback } from 'react';
 
-import type { GenerateImage } from '../types.js';
-import { Pill } from '../ui/Pill.js';
+import type { GenerateImage } from '../types';
+import { Pill } from '../ui/Pill';
 
 // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 type MetaImageProps = {
   hasGenerateImageFn: boolean;
 } & UploadInputProps;
 
-export const MetaImage: React.FC<MetaImageProps> = (props) => {
-  const { CustomLabel, hasGenerateImageFn, labelProps, relationTo, required } = props || {};
+const _MetaImage: React.FC<MetaImageProps> = (props) => {
+  const {
+    CustomDescription,
+    CustomError,
+    CustomLabel,
+    className,
+    descriptionProps,
+    errorProps,
+    hasGenerateImageFn,
+    label,
+    labelProps,
+    path: pathFromProps,
+    readOnly: readOnlyFromProps,
+    relationTo,
+    required,
+    style,
+    validate,
+    width,
+  } = props || {};
 
-  const field: FieldType<string> = useField(props as Options);
+  const { path: pathFromContext, readOnly: readOnlyFromContext } = useFieldProps();
+
+  const readOnly = readOnlyFromProps || readOnlyFromContext;
+
+  const memoizedValidate = useCallback(
+    (value, options) => {
+      if (typeof validate === 'function') {
+        return validate(value, { ...options, required });
+      }
+    },
+    [validate, required],
+  );
+
+  const { filterOptions, path, setValue, showError, value } = useField<string>({
+    path: pathFromContext || pathFromProps,
+    validate: memoizedValidate,
+  });
 
   const { t } = useTranslation();
 
@@ -33,7 +67,18 @@ export const MetaImage: React.FC<MetaImageProps> = (props) => {
 
   const docInfo = useDocumentInfo();
 
-  const { errorMessage, setValue, showError, value } = field;
+  const onChange = useCallback(
+    (incomingImage) => {
+      if (incomingImage !== null) {
+        const { id: incomingID } = incomingImage;
+
+        setValue(incomingID);
+      } else {
+        setValue(null);
+      }
+    },
+    [setValue],
+  );
 
   const regenerateImage = useCallback(async () => {
     if (!hasGenerateImageFn) return;
@@ -116,28 +161,27 @@ export const MetaImage: React.FC<MetaImageProps> = (props) => {
         }}
       >
         <UploadInput
-          CustomError={errorMessage}
+          CustomDescription={CustomDescription}
+          CustomError={CustomError}
+          CustomLabel={CustomLabel}
           api={api}
+          className={className}
           collection={collection}
-          filterOptions={{}}
-          label={undefined}
-          onChange={(incomingImage) => {
-            if (incomingImage !== null) {
-              const { id: incomingID } = incomingImage;
-
-              setValue(incomingID);
-            } else {
-              setValue(null);
-            }
-          }}
+          descriptionProps={descriptionProps}
+          errorProps={errorProps}
+          filterOptions={filterOptions}
+          label={label}
+          labelProps={labelProps}
+          onChange={onChange}
+          path={path}
+          readOnly={readOnly}
           relationTo={relationTo}
           required={required}
           serverURL={serverURL}
           showError={showError}
-          style={{
-            marginBottom: 0,
-          }}
+          style={style}
           value={value}
+          width={width}
         />
       </div>
       <div
@@ -156,3 +200,5 @@ export const MetaImage: React.FC<MetaImageProps> = (props) => {
     </div>
   );
 };
+
+export const MetaImage = withCondition(_MetaImage);

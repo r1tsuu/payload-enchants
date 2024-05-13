@@ -4,20 +4,20 @@ import type { Field, GroupField, TabsField, TextField } from 'payload/types';
 import { deepMerge } from 'payload/utilities';
 import React from 'react';
 
-import { MetaDescription } from './fields/MetaDescription.js';
-import { MetaImage } from './fields/MetaImage.js';
-import { MetaTitle } from './fields/MetaTitle.js';
-import { openaiMessage } from './openai/message.js';
-import { translations } from './translations/index.js';
+import { MetaDescription } from './fields/MetaDescription';
+import { MetaImage } from './fields/MetaImage';
+import { MetaTitle } from './fields/MetaTitle';
+import { openaiMessage } from './openai/message';
+import { translations } from './translations/index';
 import type {
   GenerateDescription,
   GenerateImage,
   GenerateTitle,
   GenerateURL,
   PluginConfig,
-} from './types.js';
-import { Overview } from './ui/Overview.js';
-import { Preview } from './ui/Preview.js';
+} from './types';
+import { Overview } from './ui/Overview';
+import { Preview } from './ui/Preview';
 
 const seo =
   (pluginConfig: PluginConfig) =>

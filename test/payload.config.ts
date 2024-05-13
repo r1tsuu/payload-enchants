@@ -1,6 +1,7 @@
 import { betterLocalizedFields } from '@payload-enchants/better-localized-fields';
 import { betterUseAsTitle } from '@payload-enchants/better-use-as-title';
 import { docsReorder } from '@payload-enchants/docs-reorder';
+import { seo } from '@payload-enchants/seo';
 import { translator } from '@payload-enchants/translator';
 import { copyResolver } from '@payload-enchants/translator/resolvers/copy';
 import { googleResolver } from '@payload-enchants/translator/resolvers/google';
@@ -90,6 +91,11 @@ export default buildConfig({
           name: 'someRich',
           type: 'richText',
         },
+        {
+          name: 'up',
+          relationTo: 'media',
+          type: 'upload',
+        },
       ],
       slug: 'posts',
     },
@@ -109,6 +115,11 @@ export default buildConfig({
         },
       ],
       slug: 'better-use-as-title-test',
+    },
+    {
+      fields: [],
+      slug: 'media',
+      upload: true,
     },
   ],
   db: mongooseAdapter({
@@ -157,6 +168,7 @@ export default buildConfig({
     // await seedDocsReorderExamples(payload);
   },
   plugins: [
+    seo({ collections: ['posts'], uploadsCollection: 'media' }),
     docsReorder({
       collections: [
         {

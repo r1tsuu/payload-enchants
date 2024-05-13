@@ -12,9 +12,9 @@ import { useLocale } from '@payloadcms/ui/providers/Locale';
 import { useTranslation } from '@payloadcms/ui/providers/Translation';
 import React, { useCallback } from 'react';
 
-import { defaults } from '../defaults.js';
-import type { GenerateDescription } from '../types.js';
-import { LengthIndicator } from '../ui/LengthIndicator.js';
+import { defaults } from '../defaults';
+import type { GenerateDescription } from '../types';
+import { LengthIndicator } from '../ui/LengthIndicator';
 
 const { maxLength, minLength } = defaults.description;
 
