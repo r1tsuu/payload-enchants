@@ -7,7 +7,7 @@ import { useTranslation } from '@payloadcms/ui/providers/Translation';
 import type { FormField, UIField } from 'payload/types';
 import React, { useEffect, useState } from 'react';
 
-import type { GenerateURL } from '../types.js';
+import type { GenerateURL } from '../types';
 
 // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 type PreviewProps = {

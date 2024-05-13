@@ -5,7 +5,7 @@ import { useTranslation } from '@payloadcms/ui/providers/Translation';
 import type { FormField } from 'payload/types';
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { defaults } from '../defaults.js';
+import { defaults } from '../defaults';
 
 const {
   description: { maxLength: maxDesc, minLength: minDesc },

@@ -19,6 +19,7 @@
     "@payload-enchants/better-use-as-title": "workspace:*",
     "@payload-enchants/docs-reorder": "workspace:*",
     "@payload-enchants/translator": "workspace:*",
+    "@payload-enchants/seo": "workspace:*",
     "@payloadcms/db-mongodb": "3.0.0-beta.29",
     "@payloadcms/next": "3.0.0-beta.29",
     "@payloadcms/richtext-lexical": "3.0.0-beta.29",

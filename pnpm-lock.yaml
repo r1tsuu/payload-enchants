@@ -217,6 +217,9 @@ importers:
       '@payload-enchants/docs-reorder':
         specifier: workspace:*
         version: link:../packages/docs-reorder
+      '@payload-enchants/seo':
+        specifier: workspace:*
+        version: link:../packages/seo
       '@payload-enchants/translator':
         specifier: workspace:*
         version: link:../packages/translator
