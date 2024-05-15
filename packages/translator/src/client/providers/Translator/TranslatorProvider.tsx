@@ -38,7 +38,7 @@ export const TranslatorProvider = ({ children }: { children: ReactNode }) => {
   ) => {
     if (!resolver) return '';
 
-    return t(`plugin-translator:resolver_${resolver}_${key}`);
+    return t(`plugin-translator:resolver_${resolver}_${key}` as Parameters<typeof t>[0]);
   };
 
   const locale = useLocale();

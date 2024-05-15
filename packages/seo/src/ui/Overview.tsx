@@ -58,6 +58,8 @@ export const Overview: React.FC = () => {
 
   const numberOfPasses = testResults.filter(Boolean).length;
 
+  type TArg = Parameters<typeof t>[0];
+
   return (
     <div
       style={{
@@ -65,7 +67,10 @@ export const Overview: React.FC = () => {
       }}
     >
       <div>
-        {t('plugin-seo:checksPassing', { current: numberOfPasses, max: testResults.length })}
+        {t('plugin-seo:checksPassing' as TArg, {
+          current: numberOfPasses,
+          max: testResults.length,
+        })}
       </div>
     </div>
   );

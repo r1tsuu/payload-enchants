@@ -176,19 +176,19 @@ export default buildConfig({
         },
       ],
     }),
-    // translator({
-    //   collections: ['posts', 'small-posts'],
-    //   globals: [],
-    //   resolvers: [
-    //     copyResolver(),
-    //     googleResolver({
-    //       apiKey: process.env.GOOGLE_API_KEY!,
-    //     }),
-    //     openAIResolver({
-    //       apiKey: process.env.OPENAI_KEY!,
-    //     }),
-    //   ],
-    // }),
+    translator({
+      collections: ['posts'],
+      globals: [],
+      resolvers: [
+        copyResolver(),
+        googleResolver({
+          apiKey: process.env.GOOGLE_API_KEY!,
+        }),
+        openAIResolver({
+          apiKey: process.env.OPENAI_KEY!,
+        }),
+      ],
+    }),
     betterLocalizedFields(),
     betterUseAsTitle({
       collections: [

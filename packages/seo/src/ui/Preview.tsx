@@ -55,16 +55,18 @@ export const Preview: React.FC<PreviewProps> = ({ hasGenerateURLFn }) => {
     }
   }, [fields, href, locale, docInfo, hasGenerateURLFn]);
 
+  type TArg = Parameters<typeof t>[0];
+
   return (
     <div>
-      <div>{t('plugin-seo:preview')}</div>
+      <div>{t('plugin-seo:preview' as TArg)}</div>
       <div
         style={{
           color: '#9A9A9A',
           marginBottom: '5px',
         }}
       >
-        {t('plugin-seo:previewDescription')}
+        {t('plugin-seo:previewDescription' as TArg)}
       </div>
       <div
         style={{

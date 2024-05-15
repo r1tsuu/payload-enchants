@@ -107,6 +107,8 @@ const CollectionDocsOrderContent = () => {
     });
   };
 
+  type TArg = Parameters<typeof t>[0];
+
   const save = async () => {
     const modifiedDocsData = data.docs
       .filter((doc) => typeof doc.modifiedTo === 'number' && doc.modifiedTo !== doc.docOrder)
@@ -128,11 +130,11 @@ const CollectionDocsOrderContent = () => {
     if (success) {
       setData((prev) => ({ ...prev, isLoading: true }));
       await getInitalData();
-      toast.success(t('pluginCollectionsDocsOrder:success'), {
+      toast.success(t('pluginCollectionsDocsOrder:success' as TArg), {
         position: 'bottom-center',
       });
     } else {
-      toast.success(t('pluginCollectionsDocsOrder:error'), {
+      toast.success(t('pluginCollectionsDocsOrder:error' as TArg), {
         position: 'bottom-center',
       });
     }
@@ -171,7 +173,7 @@ const CollectionDocsOrderContent = () => {
           isSelected={sortOrder === 'asc'}
           onChange={() => handleSortOrderChange('asc')}
           option={{
-            label: t('pluginCollectionsDocsOrder:asc'),
+            label: t('pluginCollectionsDocsOrder:asc' as TArg),
             value: 'asc',
           }}
           path='asc'
@@ -181,7 +183,7 @@ const CollectionDocsOrderContent = () => {
           isSelected={sortOrder === 'desc'}
           onChange={() => handleSortOrderChange('desc')}
           option={{
-            label: t('pluginCollectionsDocsOrder:desc'),
+            label: t('pluginCollectionsDocsOrder:desc' as TArg),
             value: 'desc',
           }}
           path='desc'
@@ -227,10 +229,12 @@ const CollectionDocsOrderContent = () => {
       <div className='order-buttons'>
         {data.isLoading
           ? 'Loading'
-          : `${t('pluginCollectionsDocsOrder:loaded')} ${data.docs.length}/${data.totalDocs}`}
-        {hasSave && <Button onClick={() => save()}>{t('pluginCollectionsDocsOrder:save')}</Button>}
+          : `${t('pluginCollectionsDocsOrder:loaded' as TArg)} ${data.docs.length}/${data.totalDocs}`}
+        {hasSave && (
+          <Button onClick={() => save()}>{t('pluginCollectionsDocsOrder:save' as TArg)}</Button>
+        )}
         {data.hasNextPage && (
-          <Button onClick={loadMore}>{t('pluginCollectionsDocsOrder:loadMore')}</Button>
+          <Button onClick={loadMore}>{t('pluginCollectionsDocsOrder:loadMore' as TArg)}</Button>
         )}
       </div>
     </div>
@@ -240,6 +244,7 @@ const CollectionDocsOrderContent = () => {
 export const CollectionDocsOrderButton = () => {
   const { t } = useTranslation();
 
+  type TArg = Parameters<typeof t>[0];
   // const params = useParams();
 
   // console.log(params);
@@ -247,7 +252,9 @@ export const CollectionDocsOrderButton = () => {
   return (
     <div className='gutter--left gutter--right collection-docs-order'>
       <Dialog
-        trigger={<button style={{ margin: 0 }}>{t('pluginCollectionsDocsOrder:sortItems')}</button>}
+        trigger={
+          <button style={{ margin: 0 }}>{t('pluginCollectionsDocsOrder:sortItems' as TArg)}</button>
+        }
       >
         <CollectionDocsOrderContent />
         {/* <ToastContainer /> */}

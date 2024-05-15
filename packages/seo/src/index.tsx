@@ -1,8 +1,8 @@
 import { addDataAndFileToRequest } from '@payloadcms/next/utilities';
+import { withMergedProps } from '@payloadcms/ui/elements/withMergedProps';
 import type { Config } from 'payload/config';
 import type { Field, GroupField, TabsField, TextField } from 'payload/types';
 import { deepMerge } from 'payload/utilities';
-import React from 'react';
 
 import { MetaDescription } from './fields/MetaDescription';
 import { MetaImage } from './fields/MetaImage';
@@ -38,17 +38,16 @@ const seo =
           {
             admin: {
               components: {
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                Field: ({ payload: _payload, ...props }) => (
-                  <MetaTitle
-                    {...props}
-                    hasGenerateTitleAi={
-                      typeof pluginConfig?.generateTitleAi === 'function' &&
-                      pluginConfig.openaiApiKey
-                    }
-                    hasGenerateTitleFn={typeof pluginConfig?.generateTitle === 'function'}
-                  />
-                ),
+                Field: withMergedProps({
+                  Component: MetaTitle,
+                  sanitizeServerOnlyProps: true,
+                  toMergeIntoProps: {
+                    hasGenerateTitleAi:
+                      typeof pluginConfig.generateTitleAi === 'function' &&
+                      pluginConfig.openaiApiKey,
+                    hasGenerateTitleFn: typeof pluginConfig?.generateTitle === 'function',
+                  },
+                }),
               },
             },
             localized: true,
@@ -59,19 +58,16 @@ const seo =
           {
             admin: {
               components: {
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                Field: ({ payload: _payload, ...props }) => (
-                  <MetaDescription
-                    {...props}
-                    hasGenerateDescriptionAi={
+                Field: withMergedProps({
+                  Component: MetaDescription,
+                  sanitizeServerOnlyProps: true,
+                  toMergeIntoProps: {
+                    hasGenerateTitleAi:
                       typeof pluginConfig.generateDescriptionAi === 'function' &&
-                      pluginConfig.openaiApiKey
-                    }
-                    hasGenerateDescriptionFn={
-                      typeof pluginConfig?.generateDescription === 'function'
-                    }
-                  />
-                ),
+                      pluginConfig.openaiApiKey,
+                    hasGenerateTitleFn: typeof pluginConfig?.generateDescription === 'function',
+                  },
+                }),
               },
             },
             localized: true,
@@ -86,12 +82,13 @@ const seo =
                   admin: {
                     components: {
                       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                      Field: ({ payload: _payload, ...props }) => (
-                        <MetaImage
-                          {...props}
-                          hasGenerateImageFn={typeof pluginConfig?.generateImage === 'function'}
-                        />
-                      ),
+                      Field: withMergedProps({
+                        Component: MetaImage,
+                        sanitizeServerOnlyProps: true,
+                        toMergeIntoProps: {
+                          hasGenerateImageFn: typeof pluginConfig?.generateImage === 'function',
+                        },
+                      }),
                     },
                     description:
                       'Maximum upload file size: 12MB. Recommended file size for images is <500KB.',
@@ -110,12 +107,13 @@ const seo =
             admin: {
               components: {
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                Field: ({ payload: _payload, ...props }) => (
-                  <Preview
-                    {...props}
-                    hasGenerateURLFn={typeof pluginConfig?.generateURL === 'function'}
-                  />
-                ),
+                Field: withMergedProps({
+                  Component: Preview,
+                  sanitizeServerOnlyProps: true,
+                  toMergeIntoProps: {
+                    hasGenerateURLFn: typeof pluginConfig?.generateURL === 'function',
+                  },
+                }),
               },
             },
             label: 'Preview',
