@@ -17,7 +17,7 @@ export const ResolverButton = ({
 
   return (
     <Button onClick={handleClick} size='small'>
-      {t(`plugin-translator:resolver_${resolverKey}_buttonLabel`)}
+      {t(`plugin-translator:resolver_${resolverKey}_buttonLabel` as Parameters<typeof t>[0])}
     </Button>
   );
 };

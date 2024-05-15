@@ -88,6 +88,8 @@ export const MetaTitle: React.FC<MetaTitleProps> = (props) => {
     setValue(generatedTitle || '');
   }, [fields, setValue, hasGenerateTitleAi, locale, docInfo]);
 
+  type TArg = Parameters<typeof t>[0];
+
   return (
     <div
       style={{
@@ -118,7 +120,7 @@ export const MetaTitle: React.FC<MetaTitleProps> = (props) => {
                 }}
                 type='button'
               >
-                {t('plugin-seo:autoGenerate')}
+                {t('plugin-seo:autoGenerate' as TArg)}
               </button>
             </React.Fragment>
           )}
@@ -138,7 +140,7 @@ export const MetaTitle: React.FC<MetaTitleProps> = (props) => {
                 }}
                 type='button'
               >
-                {t('plugin-seo:generateAi')}
+                {t('plugin-seo:generateAi' as TArg)}
               </button>
             </React.Fragment>
           )}
@@ -148,13 +150,13 @@ export const MetaTitle: React.FC<MetaTitleProps> = (props) => {
             color: '#9A9A9A',
           }}
         >
-          {t('plugin-seo:lengthTipTitle', { maxLength, minLength })}
+          {t('plugin-seo:lengthTipTitle' as TArg, { maxLength, minLength })}
           <a
             href='https://developers.google.com/search/docs/advanced/appearance/title-link#page-titles'
             rel='noopener noreferrer'
             target='_blank'
           >
-            {t('plugin-seo:bestPractices')}
+            {t('plugin-seo:bestPractices' as TArg)}
           </a>
           .
         </div>

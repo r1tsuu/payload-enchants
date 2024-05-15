@@ -109,6 +109,8 @@ const _MetaImage: React.FC<MetaImageProps> = (props) => {
 
   const collection = collections?.find((coll) => coll.slug === relationTo) || undefined;
 
+  type TArg = Parameters<typeof t>[0];
+
   return (
     <div
       style={{
@@ -139,7 +141,7 @@ const _MetaImage: React.FC<MetaImageProps> = (props) => {
                 }}
                 type='button'
               >
-                {t('plugin-seo:autoGenerate')}
+                {t('plugin-seo:autoGenerate' as TArg)}
               </button>
             </React.Fragment>
           )}
@@ -150,7 +152,7 @@ const _MetaImage: React.FC<MetaImageProps> = (props) => {
               color: '#9A9A9A',
             }}
           >
-            {t('plugin-seo:imageAutoGenerationTip')}
+            {t('plugin-seo:imageAutoGenerationTip' as TArg)}
           </div>
         )}
       </div>
@@ -194,7 +196,7 @@ const _MetaImage: React.FC<MetaImageProps> = (props) => {
         <Pill
           backgroundColor={hasImage ? 'green' : 'red'}
           color='white'
-          label={hasImage ? t('plugin-seo:good') : t('plugin-seo:noImage')}
+          label={hasImage ? t('plugin-seo:good' as TArg) : t('plugin-seo:noImage' as TArg)}
         />
       </div>
     </div>

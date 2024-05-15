@@ -93,6 +93,8 @@ export const MetaDescription: React.FC<MetaDescriptionProps> = (props) => {
     setValue(generatedDescription || '');
   }, [fields, setValue, hasGenerateDescriptionAi, locale, docInfo]);
 
+  type TArg = Parameters<typeof t>[0];
+
   return (
     <div
       style={{
@@ -123,7 +125,7 @@ export const MetaDescription: React.FC<MetaDescriptionProps> = (props) => {
                 }}
                 type='button'
               >
-                {t('plugin-seo:autoGenerate')}
+                {t('plugin-seo:autoGenerate' as TArg)}
               </button>
             </React.Fragment>
           )}
@@ -143,7 +145,7 @@ export const MetaDescription: React.FC<MetaDescriptionProps> = (props) => {
                 }}
                 type='button'
               >
-                {t('plugin-seo:generateAi')}
+                {t('plugin-seo:generateAi' as TArg)}
               </button>
             </React.Fragment>
           )}
@@ -153,13 +155,13 @@ export const MetaDescription: React.FC<MetaDescriptionProps> = (props) => {
             color: '#9A9A9A',
           }}
         >
-          {t('plugin-seo:lengthTipDescription', { maxLength, minLength })}
+          {t('plugin-seo:lengthTipDescription' as TArg, { maxLength, minLength })}
           <a
             href='https://developers.google.com/search/docs/advanced/appearance/snippet#meta-descriptions'
             rel='noopener noreferrer'
             target='_blank'
           >
-            {t('plugin-seo:bestPractices')}
+            {t('plugin-seo:bestPractices' as TArg)}
           </a>
         </div>
       </div>
