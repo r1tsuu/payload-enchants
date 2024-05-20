@@ -3,9 +3,11 @@ import type { CollectionConfig } from 'payload/types';
 import type { SanitizedArgsContext } from '../types';
 
 export const extendCollectionConfig = ({
+  cachedCollectionConfig,
   collection,
   ctx,
 }: {
+  cachedCollectionConfig: SanitizedArgsContext['collections'][0];
   collection: CollectionConfig;
   ctx: SanitizedArgsContext;
 }): CollectionConfig => {
@@ -25,6 +27,18 @@ export const extendCollectionConfig = ({
 
           ctx.revalidateTag(ctx.buildTagFindByID({ id: hookArgs.doc.id, slug }));
           ctx.revalidateTag(ctx.buildTagFind({ slug }));
+
+          for (const field of cachedCollectionConfig.findOneFields) {
+            const value = field.getFieldFromDoc(hookArgs.doc);
+
+            ctx.revalidateTag(
+              ctx.buildTagFindOne({
+                fieldName: field.name,
+                slug,
+                value,
+              }),
+            );
+          }
         },
       ],
       afterDelete: [

@@ -4,6 +4,7 @@ import { buildCount } from './operations/count';
 import { buildFind } from './operations/find';
 import { buildFindByID } from './operations/findByID';
 import { buildFindGlobal } from './operations/findGlobal';
+import { buildFindOne } from './operations/findOne';
 import { buildPlugin } from './plugin';
 import { sanitizedArgsContext } from './sanitizedArgsContext';
 import type { Args, CachedPayload, CachedPayloadResult } from './types';
@@ -30,6 +31,8 @@ export const buildCachedPayload = (args: Args): CachedPayloadResult => {
       payload,
     });
 
+    const findOne = buildFindOne({ ctx, findByID, payload });
+
     const count = buildCount({
       ctx,
       payload,
@@ -40,6 +43,7 @@ export const buildCachedPayload = (args: Args): CachedPayloadResult => {
       find,
       findByID,
       findGlobal,
+      findOne,
     };
   };
 

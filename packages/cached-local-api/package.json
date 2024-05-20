@@ -1,6 +1,6 @@
 {
   "name": "@payload-enchants/cached-local-api",
-  "version": "1.1.17",
+  "version": "1.1.18",
   "private": false,
   "bugs": "https://github.com/r1tsuu/payload-enchants/issues",
   "repository": "https://github.com/r1tsuu/payload-enchants",
@@ -28,9 +28,8 @@
     "prepublishOnly": "pnpm clean && pnpm build"
   },
   "devDependencies": {
-    "next": "14.3.0-canary.68",
     "payload": "3.0.0-beta.34",
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.5"
   },
   "peerDependencies": {
     "payload": "^3.0.0-beta.34"

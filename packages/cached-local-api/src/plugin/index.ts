@@ -15,7 +15,7 @@ export const buildPlugin = (ctx: SanitizedArgsContext): Plugin => {
 
         if (!cachedCollectionConfig) return collection;
 
-        return extendCollectionConfig({ collection, ctx });
+        return extendCollectionConfig({ cachedCollectionConfig, collection, ctx });
       }),
       globals: (config.globals ?? []).map((global) => {
         const cachedCollectionConfig = ctx.globals.find((each) => each.slug === global.slug);

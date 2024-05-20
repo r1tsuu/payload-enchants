@@ -171,7 +171,7 @@ export default buildConfig({
   },
   plugins: [
     cachedPayloadPlugin,
-    // seo({ collections: ['posts'], uploadsCollection: 'media' }),
+    seo({ collections: ['posts'], uploadsCollection: 'media' }),
     docsReorder({
       collections: [
         {
@@ -179,28 +179,28 @@ export default buildConfig({
         },
       ],
     }),
-    // translator({
-    //   collections: ['posts'],
-    //   globals: [],
-    //   resolvers: [
-    //     copyResolver(),
-    //     googleResolver({
-    //       apiKey: process.env.GOOGLE_API_KEY!,
-    //     }),
-    //     openAIResolver({
-    //       apiKey: process.env.OPENAI_KEY!,
-    //     }),
-    //   ],
-    // }),
-    // betterLocalizedFields(),
-    // betterUseAsTitle({
-    //   collections: [
-    //     {
-    //       slug: 'better-use-as-title-test',
-    //       useAsTitle: ({ data }) => `${data.firstName ?? ''} - ${data.secondName}, ${data.age} y.o`,
-    //     },
-    //   ],
-    // }),
+    translator({
+      collections: ['posts'],
+      globals: [],
+      resolvers: [
+        copyResolver(),
+        googleResolver({
+          apiKey: process.env.GOOGLE_API_KEY!,
+        }),
+        openAIResolver({
+          apiKey: process.env.OPENAI_KEY!,
+        }),
+      ],
+    }),
+    betterLocalizedFields(),
+    betterUseAsTitle({
+      collections: [
+        {
+          slug: 'better-use-as-title-test',
+          useAsTitle: ({ data }) => `${data.firstName ?? ''} - ${data.secondName}, ${data.age} y.o`,
+        },
+      ],
+    }),
   ],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

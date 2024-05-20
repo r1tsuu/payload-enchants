@@ -46,20 +46,22 @@ export const populate = async ({
 
   traverseFields({ data, fields, payload, populationList });
 
-  const collections = new Set(populationList.map((each) => each.collection));
+  const collections = new Set(populationList.map((each) => each.collection.slug));
 
   collections.forEach((collection) => {
     const ids = new Set(
-      populationList.filter((each) => each.collection === collection).map((each) => each.id),
+      populationList.filter((each) => each.collection.slug === collection).map((each) => each.id),
     );
+
+    console.log(ids);
 
     ids.forEach((id) => {
       populatedPromises.push(
         new Promise(async (resolve) => {
           const doc = await findByID({
-            collection: collection.slug as keyof GeneratedTypes['collections'],
+            collection: collection as keyof GeneratedTypes['collections'],
             context,
-            depth,
+            depth: depth - 1,
             disableErrors,
             draft,
             fallbackLocale,
@@ -69,7 +71,7 @@ export const populate = async ({
             showHiddenFields,
           });
 
-          return resolve({ collection: collection.slug, id, value: doc });
+          return resolve({ collection, id, value: doc });
         }),
       );
     });
@@ -86,11 +88,11 @@ export const populate = async ({
 
     item.ref[item.accessor] = populatedDoc;
 
-    if (depth > 0) {
+    if (depth > 1) {
       await populate({
         context,
         data: item.ref[item.accessor] as Record<string, unknown>,
-        depth: depth - 1,
+        depth: depth - 2,
         disableErrors,
         draft,
         fallbackLocale,

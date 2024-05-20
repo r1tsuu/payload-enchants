@@ -1,9 +1,8 @@
-// experimental (no support for richText)
-
 import type { Payload } from 'payload';
 import type { Field } from 'payload/types';
 import { tabHasName } from 'payload/types';
 
+import { traverseRichText } from './traverseRichText';
 import type { PopulationItem } from './types';
 
 export const traverseFields = ({
@@ -96,6 +95,12 @@ export const traverseFields = ({
           ref: data[field.name],
         });
       }
+    }
+
+    if (field.type === 'richText' && data[field.name]) {
+      traverseRichText({ data: data[field.name], payload, populationList });
+
+      return;
     }
 
     if (field.type === 'array' && Array.isArray(data[field.name])) {

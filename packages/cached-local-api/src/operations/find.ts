@@ -40,6 +40,7 @@ export const buildFind = ({
       args.pagination,
       args.overrideAccess,
       userKey,
+      args.sort,
       args.showHiddenFields,
       args.context,
       args.req?.transactionID,

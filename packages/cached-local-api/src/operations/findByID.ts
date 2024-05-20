@@ -2,7 +2,7 @@ import type { Payload } from 'payload';
 import { APIError } from 'payload/errors';
 
 import { populate } from '../populate';
-import type { FindByIDArgs, SanitizedArgsContext } from '../types';
+import type { FindByID, FindByIDArgs, SanitizedArgsContext } from '../types';
 
 export const buildFindByID = ({
   ctx,
@@ -10,7 +10,7 @@ export const buildFindByID = ({
 }: {
   ctx: SanitizedArgsContext;
   payload: Payload;
-}) => {
+}): FindByID => {
   return async function findByID(args: FindByIDArgs) {
     const hasInConfig = ctx.collections.some(({ slug }) => slug === args.collection);
 
