@@ -10,8 +10,11 @@ This package allows to cache the following operations:
 4. `findGlobal`
 5. `count`
 
-It also works with `depth` using a custom population method, meaning that when a related document changes, we aren't revalidating the current document, but instead the result of findByID for the related document if we should have it in the current depth.
-Currently there's no support for relations inside of Rich Text fields.
+### Features
+
+1. Revalidation of the needed data is handled automatically using `revalidateTag` on Create / Change / Delete.
+2. Respects revalidation of the related documents in the current depth value. In the context of a cached operation, this package replaces payload population handling.
+3. Adds cached findOne operation, to be used, for example, with the slug field.
 
 ## Install
 
