@@ -14,7 +14,7 @@
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --config=./jest.config.js"
   },
-  "devDependencies": {
+  "dependencies": {
     "@payload-enchants/better-localized-fields": "workspace:*",
     "@payload-enchants/better-use-as-title": "workspace:*",
     "@payload-enchants/docs-reorder": "workspace:*",

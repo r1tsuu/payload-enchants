@@ -32,6 +32,10 @@ export type FindGlobal = Payload['findGlobal'];
 
 export type FindGlobalArgs = Parameters<FindGlobal>[0];
 
+export type Count = Payload['count'];
+
+export type CountArgs = Parameters<Count>[0];
+
 export type Args = {
   collections?: Array<{ slug: keyof GeneratedTypes['collections'] }>;
   globals?: Array<{
@@ -41,6 +45,7 @@ export type Args = {
     buildTagFind?: (args: { slug: string }) => string;
     buildTagFindByID?: (args: { id: number | string; slug: string }) => string;
     buildTagFindGlobal?: (args: { slug: string }) => string;
+    shouldCacheCountOperation?: (args: CountArgs) => Promise<boolean> | boolean;
     shouldCacheFindByIDOperation?: (args: FindByIDArgs) => Promise<boolean> | boolean;
     shouldCacheFindGlobalOperation?: (args: FindGlobalArgs) => Promise<boolean> | boolean;
     shouldCacheFindOperation?: (args: FindArgs) => Promise<boolean> | boolean;
@@ -65,6 +70,7 @@ export type SanitizedArgsContext = {
   collections: Array<{ slug: string }>;
   globals: Array<{ slug: string }>;
   revalidateTag: (tag: string) => void;
+  shouldCacheCountOperation: (args: CountArgs) => Promise<boolean> | boolean;
   shouldCacheFindByIDOperation: (args: FindByIDArgs) => Promise<boolean> | boolean;
   shouldCacheFindGlobalOperation: (args: FindGlobalArgs) => Promise<boolean> | boolean;
   shouldCacheFindOperation: (args: FindArgs) => Promise<boolean> | boolean;
@@ -81,6 +87,7 @@ export type SanitizedArgsContext = {
 };
 
 export type CachedPayload = {
+  count: Count;
   find: Find;
   findByID: FindByID;
   findGlobal: FindGlobal;

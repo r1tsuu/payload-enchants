@@ -42,6 +42,7 @@ export const buildFind = ({
       userKey,
       args.showHiddenFields,
       args.context,
+      args.req?.transactionID,
     ];
 
     const result = await ctx.unstable_cache(

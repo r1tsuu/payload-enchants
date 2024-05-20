@@ -26,6 +26,7 @@ export const sanitizedArgsContext = (args: Args): SanitizedArgsContext => {
         slug: each.slug.toString(),
       };
     }),
+    shouldCacheCountOperation: args.options?.shouldCacheCountOperation ?? should,
     shouldCacheFindByIDOperation: args.options?.shouldCacheFindByIDOperation ?? should,
     shouldCacheFindGlobalOperation: args.options?.shouldCacheFindGlobalOperation ?? should,
     shouldCacheFindOperation: args.options?.shouldCacheFindOperation ?? should,

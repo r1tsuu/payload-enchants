@@ -14,6 +14,8 @@ import { buildConfig } from 'payload/config';
 import { en } from 'payload/i18n/en';
 import { fileURLToPath } from 'url';
 
+import { cachedPayloadPlugin } from './cached-local-api';
+
 const filename = fileURLToPath(import.meta.url);
 
 const dirname = path.dirname(filename);
@@ -168,37 +170,37 @@ export default buildConfig({
     // await seedDocsReorderExamples(payload);
   },
   plugins: [
-    seo({ collections: ['posts'], uploadsCollection: 'media' }),
+    cachedPayloadPlugin,
+    // seo({ collections: ['posts'], uploadsCollection: 'media' }),
     docsReorder({
       collections: [
         {
-          slug: 'docs-reoder-examples',
+          slug: 'posts',
         },
       ],
     }),
-
-    translator({
-      collections: ['posts'],
-      globals: [],
-      resolvers: [
-        copyResolver(),
-        googleResolver({
-          apiKey: process.env.GOOGLE_API_KEY!,
-        }),
-        openAIResolver({
-          apiKey: process.env.OPENAI_KEY!,
-        }),
-      ],
-    }),
-    betterLocalizedFields(),
-    betterUseAsTitle({
-      collections: [
-        {
-          slug: 'better-use-as-title-test',
-          useAsTitle: ({ data }) => `${data.firstName ?? ''} - ${data.secondName}, ${data.age} y.o`,
-        },
-      ],
-    }),
+    // translator({
+    //   collections: ['posts'],
+    //   globals: [],
+    //   resolvers: [
+    //     copyResolver(),
+    //     googleResolver({
+    //       apiKey: process.env.GOOGLE_API_KEY!,
+    //     }),
+    //     openAIResolver({
+    //       apiKey: process.env.OPENAI_KEY!,
+    //     }),
+    //   ],
+    // }),
+    // betterLocalizedFields(),
+    // betterUseAsTitle({
+    //   collections: [
+    //     {
+    //       slug: 'better-use-as-title-test',
+    //       useAsTitle: ({ data }) => `${data.firstName ?? ''} - ${data.secondName}, ${data.age} y.o`,
+    //     },
+    //   ],
+    // }),
   ],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

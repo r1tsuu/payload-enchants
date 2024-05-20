@@ -32,6 +32,7 @@ export const buildFindGlobal = ({
       user,
       args.showHiddenFields,
       args.context,
+      args.req?.transactionID,
     ];
 
     const doc = await ctx.unstable_cache(

@@ -1,5 +1,6 @@
 import type { Payload } from 'payload';
 
+import { buildCount } from './operations/count';
 import { buildFind } from './operations/find';
 import { buildFindByID } from './operations/findByID';
 import { buildFindGlobal } from './operations/findGlobal';
@@ -17,11 +18,25 @@ export const buildCachedPayload = (args: Args): CachedPayloadResult => {
   const getCachedPayload = function (payload: Payload): CachedPayload {
     const findByID = buildFindByID({ ctx, payload });
 
-    const find = buildFind({ ctx, findByID, payload });
+    const find = buildFind({
+      ctx,
+      findByID,
+      payload,
+    });
 
-    const findGlobal = buildFindGlobal({ ctx, findByID, payload });
+    const findGlobal = buildFindGlobal({
+      ctx,
+      findByID,
+      payload,
+    });
+
+    const count = buildCount({
+      ctx,
+      payload,
+    });
 
     return {
+      count,
       find,
       findByID,
       findGlobal,

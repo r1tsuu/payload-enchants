@@ -22,7 +22,6 @@ export const populate = async ({
 }: {
   context?: RequestContext;
   currentDepth?: number;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: Record<string, any>;
   depth: number;
   disableErrors?: boolean;
@@ -37,7 +36,6 @@ export const populate = async ({
 }) => {
   if (!depth) return;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const populationList: PopulationItem[] = [];
 
   const populatedPromises: Promise<{
