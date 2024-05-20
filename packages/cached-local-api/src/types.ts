@@ -69,6 +69,7 @@ export type Args = {
   globals?: Array<{
     slug: keyof GeneratedTypes['globals'];
   }>;
+  loggerDebug?: boolean;
   options?: {
     buildTagFind?: (args: { slug: string }) => string;
     buildTagFindByID?: (args: { id: number | string; slug: string }) => string;
@@ -99,8 +100,14 @@ export type SanitizedArgsContext = {
   buildTagFindGlobal: (args: { slug: string }) => string;
   buildTagFindOne: (args: { fieldName: string; slug: string; value: unknown }) => string;
   collections: Array<{ findOneFields: Required<FindOneFieldConfig>[]; slug: string }>;
+  debugLog: (args: { message: string; payload: Payload }) => void;
   globals: Array<{ slug: string }>;
   revalidateTag: (tag: string) => void;
+  revalidateTags: (args: {
+    operation: 'CREATE' | 'DELETE' | 'UPDATE';
+    payload: Payload;
+    tags: string[];
+  }) => void;
   shouldCacheCountOperation: (args: CountArgs) => Promise<boolean> | boolean;
   shouldCacheFindByIDOperation: (args: FindByIDArgs) => Promise<boolean> | boolean;
   shouldCacheFindGlobalOperation: (args: FindGlobalArgs) => Promise<boolean> | boolean;

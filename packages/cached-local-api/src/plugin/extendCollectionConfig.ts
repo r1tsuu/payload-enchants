@@ -6,6 +6,44 @@ import type {
 
 import type { SanitizedArgsContext } from '../types';
 
+const buildFindOneTags = ({
+  cachedCollectionConfig,
+  collection: { slug },
+  ctx,
+  hookArgs,
+}: {
+  cachedCollectionConfig: SanitizedArgsContext['collections'][0];
+  collection: CollectionConfig;
+  ctx: SanitizedArgsContext;
+  hookArgs: Parameters<CollectionAfterChangeHook | CollectionAfterDeleteHook>[0];
+}) => {
+  const previousDoc = (hookArgs as Parameters<CollectionAfterChangeHook>[0]).previousDoc;
+
+  return cachedCollectionConfig.findOneFields
+    .map((field) => {
+      const currentTag = ctx.buildTagFindOne({
+        fieldName: field.name,
+        slug,
+        value: field.getFieldFromDoc(hookArgs.doc),
+      });
+
+      const tags: string[] = [currentTag];
+
+      if (previousDoc) {
+        const previousTag = ctx.buildTagFindOne({
+          fieldName: field.name,
+          slug,
+          value: field.getFieldFromDoc(previousDoc),
+        });
+
+        if (currentTag !== previousDoc) tags.push(previousTag);
+      }
+
+      return tags;
+    })
+    .flat();
+};
+
 const executeHook = async ({
   cachedCollectionConfig,
   collection,
@@ -19,7 +57,8 @@ const executeHook = async ({
   hookArgs: Parameters<CollectionAfterChangeHook | CollectionAfterDeleteHook>[0];
   type: 'afterChange' | 'afterDelete';
 }) => {
-  if (!!hookArgs.doc?.id) return;
+  if (!hookArgs.doc.id) return;
+
   const shouldFunction =
     type === 'afterDelete' ? ctx.shouldRevalidateOnDelete : ctx.shouldRevalidateOnChange;
 
@@ -29,20 +68,24 @@ const executeHook = async ({
 
   const { slug } = collection;
 
-  ctx.revalidateTag(ctx.buildTagFindByID({ id: hookArgs.doc.id, slug: slug as string }));
-  ctx.revalidateTag(ctx.buildTagFind({ slug }));
+  const tags = [
+    ctx.buildTagFindByID({ id: hookArgs.doc.id, slug: slug as string }),
+    ctx.buildTagFind({ slug }),
+    ...buildFindOneTags({ cachedCollectionConfig, collection, ctx, hookArgs }),
+  ];
 
-  for (const field of cachedCollectionConfig.findOneFields) {
-    const value = field.getFieldFromDoc(hookArgs.doc);
+  let operation: 'CREATE' | 'DELETE' | 'UPDATE';
 
-    ctx.revalidateTag(
-      ctx.buildTagFindOne({
-        fieldName: field.name,
-        slug,
-        value,
-      }),
-    );
-  }
+  if (type === 'afterDelete') operation = 'DELETE';
+  else if ((hookArgs as Parameters<CollectionAfterChangeHook>[0]).operation === 'create')
+    operation = 'CREATE';
+  else operation = 'UPDATE';
+
+  ctx.revalidateTags({
+    operation,
+    payload: hookArgs.req.payload,
+    tags,
+  });
 };
 
 export const extendCollectionConfig = ({

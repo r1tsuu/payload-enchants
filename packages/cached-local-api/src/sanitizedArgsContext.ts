@@ -12,7 +12,7 @@ const defaultBuildTagFindOne: SanitizedArgsContext['buildTagFindOne'] = ({
   fieldName,
   slug,
   value,
-}) => `${slug}-${fieldName}-${value}`;
+}) => `${slug}-${fieldName}-${JSON.stringify(value)}`;
 
 const defaultBuildWhere: NonNullable<FindOneFieldConfig['buildWhere']> = ({
   fieldName,
@@ -55,11 +55,22 @@ export const sanitizedArgsContext = (args: Args): SanitizedArgsContext => {
         slug: each.slug.toString(),
       };
     }),
+    debugLog: ({ message, payload }) => {
+      if (!args.loggerDebug) return;
+
+      payload.logger.info(`[Cached Local API] - ${message}`);
+    },
     globals: (args.globals ?? []).map((each) => {
       return {
         slug: each.slug.toString(),
       };
     }),
+    revalidateTags: function ({ operation, payload, tags }) {
+      tags.forEach((tag) => {
+        this.revalidateTag(tag);
+        this.debugLog({ message: `Revalidated tag - ${tag}, Operation - ${operation}`, payload });
+      });
+    },
     shouldCacheCountOperation: args.options?.shouldCacheCountOperation ?? should,
     shouldCacheFindByIDOperation: args.options?.shouldCacheFindByIDOperation ?? should,
     shouldCacheFindGlobalOperation: args.options?.shouldCacheFindGlobalOperation ?? should,

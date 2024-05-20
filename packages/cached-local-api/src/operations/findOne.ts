@@ -66,6 +66,12 @@ export const buildFindOne = ({
       userKey = [user.collection, user.id];
     }
 
+    const tag = ctx.buildTagFindOne({
+      fieldName: field.name,
+      slug: args.collection as string,
+      value: args.value,
+    });
+
     const keys = [
       args.collection,
       args.draft,
@@ -77,6 +83,7 @@ export const buildFindOne = ({
       args.sort,
       args.context,
       args.req?.transactionID,
+      tag,
     ];
 
     const doc = await ctx.unstable_cache(
@@ -91,7 +98,7 @@ export const buildFindOne = ({
       },
       [JSON.stringify(keys)],
       {
-        tags: [ctx.buildTagFind({ slug: args.collection as string })],
+        tags: [tag],
       },
     )();
 

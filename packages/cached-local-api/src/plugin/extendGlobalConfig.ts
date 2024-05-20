@@ -18,12 +18,15 @@ export const extendGlobalConfig = ({
       afterChange: [
         ...(global.hooks?.afterChange ?? []),
         async (hookArgs) => {
-          if (!!hookArgs.doc?.id) return;
           const shouldValidate = await ctx.shouldRevalidateGlobalOnChange(hookArgs);
 
           if (!shouldValidate) return;
 
-          ctx.revalidateTag(ctx.buildTagFindGlobal({ slug }));
+          ctx.revalidateTags({
+            operation: 'UPDATE',
+            payload: hookArgs.req.payload,
+            tags: [ctx.buildTagFindGlobal({ slug })],
+          });
         },
       ],
     },
