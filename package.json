@@ -1,6 +1,6 @@
 {
   "name": "payload-enchants",
-  "version": "1.1.17",
+  "version": "1.1.18",
   "private": true,
   "description": "",
   "keywords": [],
@@ -27,26 +27,27 @@
     "test": "cd test && pnpm test"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "^14.1.4",
-    "@swc/cli": "^0.1.62",
-    "@swc/core": "^1.4.16",
+    "@next/eslint-plugin-next": "^14.2.3",
+    "@swc/cli": "^0.1.65",
+    "@swc/core": "^1.5.7",
     "@types/eslint": "8.56.6",
-    "@types/node": "^20.11.25",
-    "@typescript-eslint/eslint-plugin": "^6.7.5",
-    "@typescript-eslint/parser": "^6.7.5",
+    "@types/node": "^20.12.12",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
     "copyfiles": "^2.4.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.0",
-    "eslint-plugin-import": "^2.28.1",
-    "eslint-plugin-perfectionist": "^2.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-perfectionist": "^2.10.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "jest": "^29.7.0",
+    "npkill": "^0.11.3",
     "prettier": "^3.2.5",
-    "prettier-plugin-css-order": "^2.0.1",
-    "rimraf": "^5.0.5",
+    "prettier-plugin-css-order": "^2.1.2",
+    "rimraf": "^5.0.7",
     "sort-package-json": "^2.10.0",
-    "tsx": "^4.7.1",
+    "tsx": "^4.10.5",
     "turbo": "^1.13.3",
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.5"
   }
 }

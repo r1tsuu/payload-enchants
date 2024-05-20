@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "composite": true, // Make sure typescript knows that this module depends on their references
+    "noEmit": false /* Do not emit outputs. */,
+    "emitDeclarationOnly": true,
+    "outDir": "./dist" /* Specify an output folder for all emitted files. */,
+    "rootDir": "./src" /* Specify the root folder within your source files. */,
+    "declaration": true,
+    "declarationMap": true,
+    "allowJs": true,
+    "checkJs": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "preserve",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "skipLibCheck": true,
+    "moduleResolution": "Bundler",
+    "module": "ES6",
+    "sourceMap": true,
+    "strict": true,
+    "incremental": true,
+    "isolatedModules": true,
+    "target": "ESNext"
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts", "src/**/*.json"],
+  "exclude": ["dist", "build", "node_modules"]
+}

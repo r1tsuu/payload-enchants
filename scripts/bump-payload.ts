@@ -14,6 +14,7 @@ const packageJsonPaths = [
   './packages/translator/package.json',
   './packages/better-localized-fields/package.json',
   './packages/better-use-as-title/package.json',
+  './packages/cached-local-api/package.json',
   './packages/seo/package.json',
   './test/package.json',
 ];
@@ -31,6 +32,9 @@ const bumpDeps = ({
   Object.keys(deps).forEach((packageName) => {
     if (packageName === 'payload' || packageName.startsWith('@payloadcms/')) {
       deps[packageName] = shouldMatchVersion ? version : `^${version}`;
+      if (deps[packageName].startsWith('v')) {
+        deps[packageName] = deps[packageName].substring(1);
+      }
     }
   });
 };

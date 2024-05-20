@@ -14,6 +14,8 @@ import { buildConfig } from 'payload/config';
 import { en } from 'payload/i18n/en';
 import { fileURLToPath } from 'url';
 
+import { cachedPayloadPlugin } from './cached-local-api';
+
 const filename = fileURLToPath(import.meta.url);
 
 const dirname = path.dirname(filename);
@@ -96,6 +98,10 @@ export default buildConfig({
           relationTo: 'media',
           type: 'upload',
         },
+        {
+          name: 'slug',
+          type: 'text',
+        },
       ],
       slug: 'posts',
     },
@@ -168,11 +174,12 @@ export default buildConfig({
     // await seedDocsReorderExamples(payload);
   },
   plugins: [
+    cachedPayloadPlugin,
     seo({ collections: ['posts'], uploadsCollection: 'media' }),
     docsReorder({
       collections: [
         {
-          slug: 'docs-reoder-examples',
+          slug: 'posts',
         },
       ],
     }),
