@@ -176,6 +176,7 @@ export default buildConfig({
         },
       ],
     }),
+
     translator({
       collections: ['posts'],
       globals: [],

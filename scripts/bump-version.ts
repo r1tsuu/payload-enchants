@@ -53,6 +53,7 @@ const packageJsonPaths = [
   './packages/better-use-as-title/package.json',
   './packages/bump-payload/package.json',
   './packages/seo/package.json',
+  './packages/cached-local-api/package.json',
   './test/package.json',
 ];
 

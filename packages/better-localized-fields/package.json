@@ -43,20 +43,18 @@
     "prepublishOnly": "pnpm clean && pnpm build"
   },
   "devDependencies": {
-    "@payloadcms/next": "3.0.0-beta.32",
-    "@payloadcms/translations": "3.0.0-beta.32",
-    "@payloadcms/ui": "3.0.0-beta.32",
+    "@payloadcms/next": "3.0.0-beta.34",
+    "@payloadcms/translations": "3.0.0-beta.34",
+    "@payloadcms/ui": "3.0.0-beta.34",
     "@types/react": "18.2.64",
-    "payload": "3.0.0-beta.32",
-    "react": "18.2.0"
+    "payload": "3.0.0-beta.34"
   },
   "peerDependencies": {
-    "@payloadcms/next": "^3.0.0-beta.32",
-    "@payloadcms/translations": "^3.0.0-beta.32",
-    "@payloadcms/ui": "^3.0.0-beta.32",
+    "@payloadcms/next": "^3.0.0-beta.34",
+    "@payloadcms/translations": "^3.0.0-beta.34",
+    "@payloadcms/ui": "^3.0.0-beta.34",
     "flatley": "^5.2.0",
-    "payload": "^3.0.0-beta.32",
-    "react": "^18.2.0"
+    "payload": "^3.0.0-beta.34"
   },
   "publishConfig": {
     "exports": {
