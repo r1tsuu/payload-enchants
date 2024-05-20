@@ -10,14 +10,14 @@ This package allows to cache the following operations:
 4. `findGlobal`
 5. `count`
 
-It also works with relationships using a custom population method, meaning that when a related document changes, we aren't revalidating the current document, but instead the result of findByID for the related document.
+It also works with `depth` using a custom population method, meaning that when a related document changes, we aren't revalidating the current document, but instead the result of findByID for the related document if we should have it in the current depth.
 Currently there's no support for relations inside of Rich Text fields.
 
 ## Install
 
 `pnpm add @payload-enchants/cached-local-api`
 
-Add to the separated file
+Add to the separated file (see below for the config type)
 
 ```ts
 import { buildCachedPayload } from '@payload-enchants/cached-local-api';
@@ -25,11 +25,14 @@ import { revalidateTag, unstable_cache } from 'next/cache';
 
 export const { cachedPayloadPlugin, getCachedPayload } = buildCachedPayload({
   // collections list to cache
-  collections: [{ slug: 'posts' }],
-  // globals list to cache
+  collections: [
+    {
+      findOneFields: ['slug'],
+      slug: 'posts',
+    },
+  ],
   globals: [{ slug: 'header' }],
   revalidateTag,
-  // options, details are below
   options: {},
   unstable_cache,
 });
@@ -62,6 +65,26 @@ const Page = async () => {
   const cachedPayload = getCachedPayload(payload);
 
   const posts = await cachedPayload.find({ collection: 'posts' });
+
+  const postBySlug = await cachedPayload.findOne({ collection: 'posts', value: 'home', depth: 2 });
+
+  // In this case it's not required as `slug` field is the first item in `findOneFields` array.
+  const postBySlugExplict = await cachedPayload.findOne({
+    collection: 'posts',
+    field: 'slug',
+    value: 'home',
+  });
+
+  // by id
+  if (postBySlug) {
+    const postByID = await cachedPayload.findByID({
+      collection: 'posts',
+      id: postBySlug?.id ?? '',
+    });
+  }
+
+  // count
+  const { totalDocs } = await cachedPayload.count({ collection: 'posts' });
 
   return (
     <div>

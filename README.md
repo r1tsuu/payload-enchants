@@ -4,7 +4,7 @@
 
 #### 1. [Plugin Translator](packages/translator/) - automatic content translations / copying from other locales
 
-#### 2. [Cached Local API](packages/cached-local-api/) - cache and automatically revalidate the Local API operations with support of relations using Next.js `unstable_cache`
+#### 2. [Cached Local API](packages/cached-local-api/) - cache and automatically revalidate the Local API operations with support of `depth` using Next.js `unstable_cache`
 
 #### 3. [Plugin Docs Reorder](packages/docs-reorder/) - reordering documents in a collection list view
 

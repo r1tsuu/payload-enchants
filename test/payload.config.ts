@@ -98,6 +98,10 @@ export default buildConfig({
           relationTo: 'media',
           type: 'upload',
         },
+        {
+          name: 'slug',
+          type: 'text',
+        },
       ],
       slug: 'posts',
     },
