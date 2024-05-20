@@ -21,8 +21,6 @@ export const traverseRichText = ({
       const isRelationship = key === 'value' && 'relationTo' in data;
 
       if (isRelationship) {
-        console.log('here', data);
-
         const id = data[key] && typeof data[key] === 'object' ? data[key].id : data[key];
 
         const collection = payload.collections[data.relationTo]?.config;

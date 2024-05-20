@@ -51,19 +51,19 @@ export type Count = Payload['count'];
 export type CountArgs = Parameters<Count>[0];
 
 export type FindOneFieldConfig = {
-  /** @default "where: {equals: value }" */
-  buildWhere?: (valueToSearch: unknown) => Where;
-
-  /** @default "doc[fieldName]" */
+  buildWhere?: (args: {
+    args: FindOneArgs<any>;
+    fieldName: string;
+    shouldCache: boolean;
+    value: unknown;
+  }) => Where;
   getFieldFromDoc?: (doc: Record<string, any>) => unknown;
   name: string;
 };
 
 export type Args = {
   collections?: Array<{
-    /** array with the fields to use in findOne (name or config, see below) */
     findOneFields?: (FindOneFieldConfig | string)[];
-
     slug: keyof GeneratedTypes['collections'];
   }>;
   globals?: Array<{

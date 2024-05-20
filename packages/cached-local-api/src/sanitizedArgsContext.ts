@@ -14,12 +14,14 @@ const defaultBuildTagFindOne: SanitizedArgsContext['buildTagFindOne'] = ({
   value,
 }) => `${slug}-${fieldName}-${value}`;
 
-const defaultBuildWhere: (fieldName: string) => NonNullable<FindOneFieldConfig['buildWhere']> =
-  (fieldName) => (value) => ({
-    [fieldName]: {
-      equals: value,
-    },
-  });
+const defaultBuildWhere: NonNullable<FindOneFieldConfig['buildWhere']> = ({
+  fieldName,
+  value,
+}) => ({
+  [fieldName]: {
+    equals: value,
+  },
+});
 
 const defaultGetFieldFromDoc: (
   fieldName: string,
@@ -39,13 +41,13 @@ export const sanitizedArgsContext = (args: Args): SanitizedArgsContext => {
         findOneFields: (each.findOneFields ?? []).map((each) => {
           if (typeof each === 'object')
             return {
-              buildWhere: each.buildWhere ?? defaultBuildWhere(each.name),
+              buildWhere: each.buildWhere ?? defaultBuildWhere,
               getFieldFromDoc: each.getFieldFromDoc ?? defaultGetFieldFromDoc(each.name),
               name: each.name,
             };
 
           return {
-            buildWhere: defaultBuildWhere(each),
+            buildWhere: defaultBuildWhere,
             getFieldFromDoc: defaultGetFieldFromDoc(each),
             name: each,
           };

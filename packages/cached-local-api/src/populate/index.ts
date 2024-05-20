@@ -53,8 +53,6 @@ export const populate = async ({
       populationList.filter((each) => each.collection.slug === collection).map((each) => each.id),
     );
 
-    console.log(ids);
-
     ids.forEach((id) => {
       populatedPromises.push(
         new Promise(async (resolve) => {
