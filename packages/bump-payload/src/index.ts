@@ -44,11 +44,15 @@ export const bin = async () => {
       >,
   );
 
-  const latest = releases.find((release) => release.tag_name.includes('3.0.0'))?.tag_name;
+  let latest = releases.find((release) => release.tag_name.includes('3.0.0'))?.tag_name;
 
   if (!latest) {
     console.error('Release was not found');
     process.exit(1);
+  }
+
+  if (latest.startsWith('v')) {
+    latest = latest.substring(1);
   }
 
   console.log(`Found a latest Payload 3.0 version - ${latest}`);
