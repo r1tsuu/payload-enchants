@@ -35,9 +35,9 @@ export const buildFindOne = ({
         { field: 'args.field', message: 'Invalid findOne field' + args.field },
       ]);
 
-    const where = field.buildWhere(args.value);
-
     const shouldCache = await ctx.shouldCacheFindOperation(args);
+
+    const where = field.buildWhere({ args, fieldName: field.name, shouldCache, value: args.value });
 
     const fullArgs = {
       ...args,

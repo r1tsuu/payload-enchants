@@ -129,10 +129,12 @@ export type Args = {
 };
 
 export type FindOneFieldConfig = {
-  /** @default "where: { equals: value }" */
-  buildWhere?: (valueToSearch: unknown) => Where;
-
-  /** @default "doc[fieldName]" */
+  buildWhere?: (args: {
+    args: FindOneArgs<any>;
+    fieldName: string;
+    shouldCache: boolean;
+    value: unknown;
+  }) => Where;
   getFieldFromDoc?: (doc: Record<string, any>) => unknown;
   name: string;
 };
