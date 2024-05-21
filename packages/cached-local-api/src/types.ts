@@ -61,11 +61,14 @@ export type FindOneFieldConfig = {
   name: string;
 };
 
+export type Extension = (args: Omit<Args, 'extensions'>) => Omit<Args, 'extensions'>;
+
 export type Args = {
   collections?: Array<{
     findOneFields?: (FindOneFieldConfig | string)[];
     slug: keyof GeneratedTypes['collections'];
   }>;
+  extensions?: Extension[];
   globals?: Array<{
     slug: keyof GeneratedTypes['globals'];
   }>;
@@ -78,7 +81,7 @@ export type Args = {
     shouldCacheCountOperation?: (args: CountArgs) => Promise<boolean> | boolean;
     shouldCacheFindByIDOperation?: (args: FindByIDArgs) => Promise<boolean> | boolean;
     shouldCacheFindGlobalOperation?: (args: FindGlobalArgs) => Promise<boolean> | boolean;
-    shouldCacheFindOneOperation?: (args: FindOneArgs<any>) => Promise<boolean | boolean>;
+    shouldCacheFindOneOperation?: (args: FindOneArgs<any>) => Promise<boolean> | boolean;
     shouldCacheFindOperation?: (args: FindArgs) => Promise<boolean> | boolean;
     shouldRevalidateGlobalOnChange?: (
       args: Parameters<GlobalAfterChangeHook>[0],
@@ -104,7 +107,7 @@ export type SanitizedArgsContext = {
   globals: Array<{ slug: string }>;
   revalidateTag: (tag: string) => void;
   revalidateTags: (args: {
-    operation: 'CREATE' | 'DELETE' | 'UPDATE';
+    operation: 'CREATE' | 'DELETE' | 'DELETE-BULK' | 'UPDATE' | 'UPDATE-BULK';
     payload: Payload;
     tags: string[];
   }) => void;

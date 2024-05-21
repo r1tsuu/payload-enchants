@@ -46,8 +46,14 @@ export const buildFind = ({
       args.req?.transactionID,
     ];
 
+    let cacheHit = true;
+
+    const start = Date.now();
+
     const result = await ctx.unstable_cache(
       () => {
+        cacheHit = false;
+
         return payload.find({ ...args, depth: 0 });
       },
       [JSON.stringify(keys)],
@@ -55,6 +61,18 @@ export const buildFind = ({
         tags: [ctx.buildTagFind({ slug: args.collection as string })],
       },
     )();
+
+    if (cacheHit) {
+      ctx.debugLog({
+        message: `Cache HIT, operation: find, collection: ${args.collection.toString()}`,
+        payload,
+      });
+    } else {
+      ctx.debugLog({
+        message: `Cache skipped, operation: find, collection: ${args.collection.toString()}, execution time - ${Date.now() - start} MS`,
+        payload,
+      });
+    }
 
     const depth = args.depth ?? payload.config.defaultDepth;
 

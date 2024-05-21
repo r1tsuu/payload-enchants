@@ -35,7 +35,7 @@ export const buildFindOne = ({
         { field: 'args.field', message: 'Invalid findOne field' + args.field },
       ]);
 
-    const shouldCache = await ctx.shouldCacheFindOperation(args);
+    const shouldCache = await ctx.shouldCacheFindOneOperation(args);
 
     const where = field.buildWhere({ args, fieldName: field.name, shouldCache, value: args.value });
 
@@ -86,8 +86,13 @@ export const buildFindOne = ({
       tag,
     ];
 
+    let cacheHit = true;
+
+    const start = Date.now();
+
     const doc = await ctx.unstable_cache(
       async () => {
+        cacheHit = false;
         const {
           docs: [doc],
         } = await payload.find({ ...fullArgs, depth: 0 });
@@ -101,6 +106,18 @@ export const buildFindOne = ({
         tags: [tag],
       },
     )();
+
+    if (cacheHit) {
+      ctx.debugLog({
+        message: `Cache HIT, operation: findOne, collection: ${args.collection.toString()}, field: ${field.name}, field-value: ${args.value}`,
+        payload,
+      });
+    } else {
+      ctx.debugLog({
+        message: `Cache skipped, operation: findOne, collection: ${args.collection.toString()}, field: ${field.name}, field-value: ${args.value}, execution time - ${Date.now() - start} MS`,
+        payload,
+      });
+    }
 
     const depth = args.depth ?? payload.config.defaultDepth;
 

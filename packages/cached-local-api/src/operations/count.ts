@@ -35,8 +35,14 @@ export const buildCount = ({
       args.req?.transactionID,
     ];
 
+    let cacheHit = true;
+
+    const start = Date.now();
+
     const result = await ctx.unstable_cache(
       () => {
+        cacheHit = false;
+
         return payload.count({ ...args, depth: 0 });
       },
       [JSON.stringify(keys)],
@@ -44,6 +50,18 @@ export const buildCount = ({
         tags: [ctx.buildTagFind({ slug: args.collection as string })],
       },
     )();
+
+    if (cacheHit) {
+      ctx.debugLog({
+        message: `Cache HIT, operation: count, collection: ${args.collection.toString()}`,
+        payload,
+      });
+    } else {
+      ctx.debugLog({
+        message: `Cache skipped, operation: cound, collection: ${args.collection.toString()}, execution time - ${Date.now() - start} MS`,
+        payload,
+      });
+    }
 
     return result;
   };

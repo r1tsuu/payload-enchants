@@ -44,7 +44,7 @@ const buildFindOneTags = ({
     .flat();
 };
 
-const executeHook = async ({
+const executeSingleDocHook = async ({
   cachedCollectionConfig,
   collection,
   ctx,
@@ -62,17 +62,11 @@ const executeHook = async ({
   const shouldFunction =
     type === 'afterDelete' ? ctx.shouldRevalidateOnDelete : ctx.shouldRevalidateOnChange;
 
-  const shouldValidate = await shouldFunction(hookArgs as any);
+  const shouldRevalidate = await shouldFunction(hookArgs as any);
 
-  if (!shouldValidate) return;
+  if (!shouldRevalidate) return;
 
   const { slug } = collection;
-
-  const tags = [
-    ctx.buildTagFindByID({ id: hookArgs.doc.id, slug: slug as string }),
-    ctx.buildTagFind({ slug }),
-    ...buildFindOneTags({ cachedCollectionConfig, collection, ctx, hookArgs }),
-  ];
 
   let operation: 'CREATE' | 'DELETE' | 'UPDATE';
 
@@ -80,6 +74,16 @@ const executeHook = async ({
   else if ((hookArgs as Parameters<CollectionAfterChangeHook>[0]).operation === 'create')
     operation = 'CREATE';
   else operation = 'UPDATE';
+
+  if (hookArgs.context.shouldRevalidate && (operation === 'UPDATE' || operation === 'DELETE')) {
+    hookArgs.context.shouldRevalidate = true;
+    hookArgs.context.tagFind = ctx.buildTagFind({ slug });
+  }
+
+  const tags = [
+    ctx.buildTagFindByID({ id: hookArgs.doc.id, slug: slug as string }),
+    ...buildFindOneTags({ cachedCollectionConfig, collection, ctx, hookArgs }),
+  ];
 
   ctx.revalidateTags({
     operation,
@@ -104,7 +108,7 @@ export const extendCollectionConfig = ({
       afterChange: [
         ...(collection.hooks?.afterChange ?? []),
         async (hookArgs) => {
-          await executeHook({
+          await executeSingleDocHook({
             cachedCollectionConfig,
             collection,
             ctx,
@@ -116,13 +120,31 @@ export const extendCollectionConfig = ({
       afterDelete: [
         ...(collection.hooks?.afterDelete ?? []),
         async (hookArgs) => {
-          await executeHook({
+          await executeSingleDocHook({
             cachedCollectionConfig,
             collection,
             ctx,
             hookArgs,
             type: 'afterDelete',
           });
+        },
+      ],
+      afterOperation: [
+        (args) => {
+          if (args.operation !== 'update' && args.operation !== 'delete') return args.result;
+          const {
+            req: { context, payload },
+          } = args;
+
+          if (context.shouldRevalidate && typeof context.tagFind === 'string') {
+            ctx.revalidateTags({
+              operation: args.operation === 'update' ? 'UPDATE-BULK' : 'DELETE-BULK',
+              payload,
+              tags: [context.tagFind],
+            });
+          }
+
+          return args.result;
         },
       ],
     },

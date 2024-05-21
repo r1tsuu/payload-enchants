@@ -35,8 +35,14 @@ export const buildFindGlobal = ({
       args.req?.transactionID,
     ];
 
+    let cacheHit = true;
+
+    const start = Date.now();
+
     const doc = await ctx.unstable_cache(
       () => {
+        cacheHit = false;
+
         return payload.findGlobal({ ...args, depth: 0 });
       },
       [JSON.stringify(keys)],
@@ -44,6 +50,18 @@ export const buildFindGlobal = ({
         tags: [ctx.buildTagFindGlobal({ slug: args.slug as string })],
       },
     )();
+
+    if (cacheHit) {
+      ctx.debugLog({
+        message: `Cache HIT, operation: findGlobal, global: ${args.slug.toString()}`,
+        payload,
+      });
+    } else {
+      ctx.debugLog({
+        message: `Cache skipped, operation: findGlobal, global: ${args.slug.toString()},execution time - ${Date.now() - start} MS`,
+        payload,
+      });
+    }
 
     const depth = args.depth ?? payload.config.defaultDepth;
 
