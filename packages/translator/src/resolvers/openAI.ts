@@ -9,6 +9,7 @@ export type OpenAIPrompt = (args: {
 
 export type OpenAIResolverConfig = {
   apiKey: string;
+  baseUrl?: string;
   /**
    * How many texts to include into 1 request
    * @default 100
@@ -35,6 +36,7 @@ const defaultPromt: OpenAIPrompt = ({ localeFrom, localeTo, texts }) => {
 
 export const openAIResolver = ({
   apiKey,
+  baseUrl,
   chunkLength = 100,
   model = 'gpt-3.5-turbo',
   promt = defaultPromt,
@@ -42,7 +44,7 @@ export const openAIResolver = ({
   return {
     key: 'openai',
     resolve: async ({ localeFrom, localeTo, req, texts }) => {
-      const apiUrl = 'https://api.openai.com/v1/chat/completions';
+      const apiUrl = `${baseUrl || 'https://api.openai.com'}/v1/chat/completions`;
 
       try {
         const respones: {
