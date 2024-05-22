@@ -34,6 +34,8 @@ export const { cachedPayloadPlugin, getCachedPayload } = buildCachedPayload({
       slug: 'posts',
     },
   ],
+  // Log when revalidation runs or operation cache HIT / SKIP
+  loggerDebug: true,
   globals: [{ slug: 'header' }],
   revalidateTag,
   options: {},
