@@ -62,9 +62,9 @@ export const populate = async ({
             depth: depth - 1,
             disableErrors,
             draft,
-            fallbackLocale,
+            fallbackLocale: fallbackLocale as GeneratedTypes['locale'],
             id,
-            locale,
+            locale: locale as GeneratedTypes['locale'],
             req,
             showHiddenFields,
           });
