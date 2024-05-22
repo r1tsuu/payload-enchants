@@ -69,7 +69,7 @@ export const buildFind = ({
       });
     } else {
       ctx.debugLog({
-        message: `Cache skipped, operation: find, collection: ${args.collection.toString()}, execution time - ${Date.now() - start} MS`,
+        message: `Cache SKIP, operation: find, collection: ${args.collection.toString()}, execution time - ${Date.now() - start} MS`,
         payload,
       });
     }

@@ -60,7 +60,7 @@ export const buildFindGlobal = ({
       });
     } else {
       ctx.debugLog({
-        message: `Cache skipped, operation: findGlobal, global: ${args.slug.toString()},execution time - ${Date.now() - start} MS`,
+        message: `Cache SKIP, operation: findGlobal, global: ${args.slug.toString()},execution time - ${Date.now() - start} MS`,
         payload,
       });
     }

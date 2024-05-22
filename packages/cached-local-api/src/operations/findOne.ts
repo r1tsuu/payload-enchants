@@ -114,7 +114,7 @@ export const buildFindOne = ({
       });
     } else {
       ctx.debugLog({
-        message: `Cache skipped, operation: findOne, collection: ${args.collection.toString()}, field: ${field.name}, field-value: ${args.value}, execution time - ${Date.now() - start} MS`,
+        message: `Cache SKIP, operation: findOne, collection: ${args.collection.toString()}, field: ${field.name}, field-value: ${args.value}, execution time - ${Date.now() - start} MS`,
         payload,
       });
     }

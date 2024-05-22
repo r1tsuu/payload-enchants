@@ -62,7 +62,7 @@ export const buildFindByID = ({
       });
     } else {
       ctx.debugLog({
-        message: `Cache skipped, operation: findByID, collection: ${args.collection.toString()}, id: ${args.id}, execution time - ${Date.now() - start} MS`,
+        message: `Cache SKIP, operation: findByID, collection: ${args.collection.toString()}, id: ${args.id}, execution time - ${Date.now() - start} MS`,
         payload,
       });
     }
