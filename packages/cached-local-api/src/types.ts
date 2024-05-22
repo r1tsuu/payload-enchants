@@ -1,4 +1,5 @@
 import type { GeneratedTypes, Payload } from 'payload';
+import type payload from 'payload';
 import type { Plugin } from 'payload/config';
 import type {
   CollectionAfterChangeHook,
@@ -23,7 +24,9 @@ type UnstableCache = <T extends Callback>(
 
 export type Find = Payload['find'];
 
-export type FindArgs = Parameters<Find>[0];
+export type FindArgs<T extends keyof GeneratedTypes['collections']> = Parameters<
+  typeof payload.find<T>
+>[0];
 
 export type FindOneArgs<T extends keyof GeneratedTypes['collections']> = {
   /** @default first field from the fields array */
@@ -40,15 +43,21 @@ export type FindOne = <T extends keyof GeneratedTypes['collections']>(
 
 export type FindByID = Payload['findByID'];
 
-export type FindByIDArgs = Parameters<FindByID>[0];
+export type FindByIDArgs<T extends keyof GeneratedTypes['collections']> = Parameters<
+  typeof payload.findByID<T>
+>[0];
 
 export type FindGlobal = Payload['findGlobal'];
 
-export type FindGlobalArgs = Parameters<FindGlobal>[0];
+export type FindGlobalArgs<T extends keyof GeneratedTypes['globals']> = Parameters<
+  typeof payload.findGlobal<T>
+>[0];
 
 export type Count = Payload['count'];
 
-export type CountArgs = Parameters<Count>[0];
+export type CountArgs<T extends keyof GeneratedTypes['collections']> = Parameters<
+  typeof payload.count<T>
+>[0];
 
 export type FindOneFieldConfig = {
   buildWhere?: (args: {
@@ -78,11 +87,11 @@ export type Args = {
     buildTagFindByID?: (args: { id: number | string; slug: string }) => string;
     buildTagFindGlobal?: (args: { slug: string }) => string;
     buildTagFindOne?: (args: { fieldName: string; slug: string }) => string;
-    shouldCacheCountOperation?: (args: CountArgs) => Promise<boolean> | boolean;
-    shouldCacheFindByIDOperation?: (args: FindByIDArgs) => Promise<boolean> | boolean;
-    shouldCacheFindGlobalOperation?: (args: FindGlobalArgs) => Promise<boolean> | boolean;
+    shouldCacheCountOperation?: (args: CountArgs<any>) => Promise<boolean> | boolean;
+    shouldCacheFindByIDOperation?: (args: FindByIDArgs<any>) => Promise<boolean> | boolean;
+    shouldCacheFindGlobalOperation?: (args: FindGlobalArgs<any>) => Promise<boolean> | boolean;
     shouldCacheFindOneOperation?: (args: FindOneArgs<any>) => Promise<boolean> | boolean;
-    shouldCacheFindOperation?: (args: FindArgs) => Promise<boolean> | boolean;
+    shouldCacheFindOperation?: (args: FindArgs<any>) => Promise<boolean> | boolean;
     shouldRevalidateGlobalOnChange?: (
       args: Parameters<GlobalAfterChangeHook>[0],
     ) => Promise<boolean> | boolean;
@@ -111,11 +120,11 @@ export type SanitizedArgsContext = {
     payload: Payload;
     tags: string[];
   }) => void;
-  shouldCacheCountOperation: (args: CountArgs) => Promise<boolean> | boolean;
-  shouldCacheFindByIDOperation: (args: FindByIDArgs) => Promise<boolean> | boolean;
-  shouldCacheFindGlobalOperation: (args: FindGlobalArgs) => Promise<boolean> | boolean;
+  shouldCacheCountOperation: (args: CountArgs<any>) => Promise<boolean> | boolean;
+  shouldCacheFindByIDOperation: (args: FindByIDArgs<any>) => Promise<boolean> | boolean;
+  shouldCacheFindGlobalOperation: (args: FindGlobalArgs<any>) => Promise<boolean> | boolean;
   shouldCacheFindOneOperation: (args: FindOneArgs<any>) => Promise<boolean> | boolean;
-  shouldCacheFindOperation: (args: FindArgs) => Promise<boolean> | boolean;
+  shouldCacheFindOperation: (args: FindArgs<any>) => Promise<boolean> | boolean;
   shouldRevalidateGlobalOnChange: (
     args: Parameters<GlobalAfterChangeHook>[0],
   ) => Promise<boolean> | boolean;

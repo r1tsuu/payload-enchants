@@ -1,4 +1,4 @@
-import type { Payload } from 'payload';
+import type { GeneratedTypes, Payload } from 'payload';
 
 import { populate } from '../populate';
 import type { Find, FindArgs, FindByID, SanitizedArgsContext } from '../types';
@@ -12,7 +12,7 @@ export const buildFind = ({
   findByID: FindByID;
   payload: Payload;
 }): Find => {
-  return async function find(args: FindArgs) {
+  return async function find<T extends keyof GeneratedTypes['collections']>(args: FindArgs<T>) {
     const shouldCache = await ctx.shouldCacheFindOperation(args);
 
     if (!shouldCache) return payload.find(args);

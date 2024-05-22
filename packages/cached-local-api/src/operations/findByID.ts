@@ -1,4 +1,4 @@
-import type { Payload } from 'payload';
+import type { GeneratedTypes, Payload } from 'payload';
 import { APIError } from 'payload/errors';
 
 import { populate } from '../populate';
@@ -11,7 +11,9 @@ export const buildFindByID = ({
   ctx: SanitizedArgsContext;
   payload: Payload;
 }): FindByID => {
-  return async function findByID(args: FindByIDArgs) {
+  return async function findByID<T extends keyof GeneratedTypes['collections']>(
+    args: FindByIDArgs<T>,
+  ) {
     const hasInConfig = ctx.collections.some(({ slug }) => slug === args.collection);
 
     const shouldCache = hasInConfig && (await ctx.shouldCacheFindByIDOperation(args));
