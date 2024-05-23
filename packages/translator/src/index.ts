@@ -2,7 +2,7 @@
 import type { Plugin } from 'payload/config';
 import { deepMerge } from 'payload/utilities';
 
-import { CustomSaveButton } from './client/components/CustomSaveButton';
+import { CustomButton } from './client/components/CustomButton';
 import { translations } from './i18n-translations';
 import { translateEndpoint } from './translate/endpoint';
 import { translateOperation } from './translate/operation';
@@ -38,7 +38,8 @@ export const translator: (pluginConfig: TranslatorConfig) => Plugin = (pluginCon
                 ...(collection.admin?.components ?? {}),
                 edit: {
                   ...(collection.admin?.components?.edit ?? {}),
-                  SaveButton: CustomSaveButton,
+                  PublishButton: CustomButton('publish'),
+                  SaveButton: CustomButton('save'),
                 },
               },
             },
@@ -70,7 +71,8 @@ export const translator: (pluginConfig: TranslatorConfig) => Plugin = (pluginCon
                 ...(global.admin?.components ?? {}),
                 elements: {
                   ...(global.admin?.components?.elements ?? {}),
-                  SaveButton: CustomSaveButton,
+                  PublishButton: CustomButton('publish'),
+                  SaveButton: CustomButton('save'),
                 },
               },
             },

@@ -16,7 +16,7 @@ export const InjectCustomUseAsTitle = () => {
     serverURL,
   } = useConfig();
 
-  const timeout = useRef<NodeJS.Timeout>();
+  const timeout = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     timeout.current = setTimeout(() => {

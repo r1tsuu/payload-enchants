@@ -143,7 +143,7 @@ export const LocalizedField = withCondition(
                     <div>
                       <div>
                         {customField ? (
-                          cloneElement(customField as ReactElement, { readOnly: true })
+                          cloneElement(customField as ReactElement, { readOnly: true } as any)
                         ) : (
                           <FieldComponent readOnly {...(fieldComponentProps as any)} />
                         )}

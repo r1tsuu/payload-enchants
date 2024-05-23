@@ -174,15 +174,15 @@ export default buildConfig({
     // await seedDocsReorderExamples(payload);
   },
   plugins: [
-    cachedPayloadPlugin,
-    seo({ collections: ['posts'], uploadsCollection: 'media' }),
-    docsReorder({
-      collections: [
-        {
-          slug: 'posts',
-        },
-      ],
-    }),
+    // cachedPayloadPlugin,
+    // seo({ collections: ['posts'], uploadsCollection: 'media' }),
+    // docsReorder({
+    //   collections: [
+    //     {
+    //       slug: 'posts',
+    //     },
+    //   ],
+    // }),
     translator({
       collections: ['posts'],
       globals: [],
@@ -197,14 +197,14 @@ export default buildConfig({
       ],
     }),
     betterLocalizedFields(),
-    betterUseAsTitle({
-      collections: [
-        {
-          slug: 'better-use-as-title-test',
-          useAsTitle: ({ data }) => `${data.firstName ?? ''} - ${data.secondName}, ${data.age} y.o`,
-        },
-      ],
-    }),
+    // betterUseAsTitle({
+    //   collections: [
+    //     {
+    //       slug: 'better-use-as-title-test',
+    //       useAsTitle: ({ data }) => `${data.firstName ?? ''} - ${data.secondName}, ${data.age} y.o`,
+    //     },
+    //   ],
+    // }),
   ],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

@@ -1,6 +1,6 @@
 {
   "name": "@payload-enchants/translator",
-  "version": "1.1.23",
+  "version": "1.1.24",
   "private": false,
   "bugs": "https://github.com/r1tsuu/payload-enchants/issues",
   "repository": "https://github.com/r1tsuu/payload-enchants",
@@ -56,19 +56,19 @@
     "bson-objectid": "^2.0.4"
   },
   "devDependencies": {
-    "@payloadcms/translations": "3.0.0-beta.35",
-    "@payloadcms/ui": "3.0.0-beta.35",
-    "@types/react": "18.3.2",
-    "@types/react-dom": "18.3.0",
-    "payload": "3.0.0-beta.35",
+    "@payloadcms/translations": "3.0.0-beta.36",
+    "@payloadcms/ui": "3.0.0-beta.36",
+    "@types/react": "npm:types-react@19.0.0-beta.2",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-beta.2",
+    "payload": "3.0.0-beta.36",
     "typescript": "^5.4.5",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react": "19.0.0-rc-f994737d14-20240522",
+    "react-dom": "19.0.0-rc-f994737d14-20240522"
   },
   "peerDependencies": {
-    "@payloadcms/translations": "^3.0.0-beta.35",
-    "@payloadcms/ui": "^3.0.0-beta.35",
-    "payload": "^3.0.0-beta.35"
+    "@payloadcms/translations": "^3.0.0-beta.36",
+    "@payloadcms/ui": "^3.0.0-beta.36",
+    "payload": "^3.0.0-beta.36"
   },
   "publishConfig": {
     "exports": {
