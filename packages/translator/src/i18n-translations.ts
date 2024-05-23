@@ -48,4 +48,28 @@ export const translations = {
         'Успішно перекладено. Натисніть "Зберегти", щоб застосувати зміни.',
     },
   },
+  zh: {
+    'plugin-translator': {
+      resolver_copy_buttonLabel: '从其他语言复制',
+      resolver_copy_errorMessage: '尝试翻译数据时发生错误',
+      resolver_copy_modalTitle: '选择要复制的语言',
+      resolver_copy_submitButtonLabelEmpty: '仅复制空字段',
+      resolver_copy_submitButtonLabelFull: '复制全部',
+      resolver_copy_successMessage: '复制成功。按下“保存”以应用更改。',
+
+      resolver_google_buttonLabel: '谷歌翻译',
+      resolver_google_errorMessage: '尝试翻译数据时发生错误',
+      resolver_google_modalTitle: '选择要翻译的语言',
+      resolver_google_submitButtonLabelEmpty: '仅翻译空字段',
+      resolver_google_submitButtonLabelFull: '翻译全部',
+      resolver_google_successMessage: '翻译成功。按下“保存”以应用更改。',
+
+      resolver_openai_buttonLabel: 'AI翻译',
+      resolver_openai_errorMessage: '尝试翻译数据时发生错误',
+      resolver_openai_modalTitle: '选择要翻译的语言',
+      resolver_openai_submitButtonLabelEmpty: '仅翻译空字段',
+      resolver_openai_submitButtonLabelFull: '翻译全部',
+      resolver_openai_successMessage: '翻译成功。按下“保存”以应用更改。',
+    },
+  },
 };
