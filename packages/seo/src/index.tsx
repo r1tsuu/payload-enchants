@@ -62,10 +62,11 @@ const seo =
                   Component: MetaDescription,
                   sanitizeServerOnlyProps: true,
                   toMergeIntoProps: {
-                    hasGenerateTitleAi:
+                    hasGenerateDescriptionAi:
                       typeof pluginConfig.generateDescriptionAi === 'function' &&
                       pluginConfig.openaiApiKey,
-                    hasGenerateTitleFn: typeof pluginConfig?.generateDescription === 'function',
+                    hasGenerateDescriptionFn:
+                      typeof pluginConfig?.generateDescription === 'function',
                   },
                 }),
               },
