@@ -37,10 +37,6 @@ export const attachLocalizedField = ({
   if (field.type === 'richText') {
     field.admin = {
       ...field.admin,
-      custom: {
-        ...(field.admin?.custom ?? {}),
-        localized: field.localized,
-      },
     };
   }
 

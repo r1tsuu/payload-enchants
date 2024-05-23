@@ -95,7 +95,7 @@ export const openAIResolver = ({
           const content = data?.choices?.[0]?.message?.content;
 
           if (!content) {
-            req.payload.logger.info(
+            req.payload.logger.error(
               `An error occurred when trying to translate the data using OpenAI API - missing content in the response`,
             );
 
@@ -107,8 +107,9 @@ export const openAIResolver = ({
           const translatedChunk: string[] = JSON.parse(content);
 
           if (!Array.isArray(translatedChunk)) {
-            req.payload.logger.info({
+            req.payload.logger.error({
               data: translatedChunk,
+              fullContent: content,
               message: `An error occurred when trying to translate the data using OpenAI API - parsed content is not an array`,
             });
 
@@ -119,9 +120,11 @@ export const openAIResolver = ({
 
           for (const text of translatedChunk) {
             if (typeof text !== 'string') {
-              req.payload.logger.info({
+              req.payload.logger.error({
+                chunkData: translatedChunk,
                 data: text,
-                message: `An error occurred when trying to translate the data using OpenAI API - parsed content is not an array`,
+                fullContent: content,
+                message: `An error occurred when trying to translate the data using OpenAI API - parsed content is not a string`,
               });
 
               return {

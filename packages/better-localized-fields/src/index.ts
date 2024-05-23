@@ -1,7 +1,7 @@
 import type { Plugin } from 'payload/config';
 
 import { attachLocalesProvider } from './attachLocalesProvider';
-import { attachLocalizedFieldToEditor } from './attachLocalizedFieldToEditor';
+// import { attachLocalizedFieldToEditor } from './attachLocalizedFieldToEditor';
 import { traverseFields } from './traverseFields';
 import type { BetterLocalizedFieldsOptions as BetterLocalizedFieldsOptions } from './types';
 
@@ -22,12 +22,12 @@ export const betterLocalizedFields =
 
     return {
       ...config,
-      editor: async ({ config: sanitizedConfig }) => {
-        const editor = await config.editor({ config: sanitizedConfig });
+      // editor: async ({ config: sanitizedConfig }) => {
+      //   const editor = await config.editor({ config: sanitizedConfig });
 
-        attachLocalizedFieldToEditor({ editor, options });
+      //   attachLocalizedFieldToEditor({ editor, options });
 
-        return editor;
-      },
+      //   return editor;
+      // },
     };
   };
