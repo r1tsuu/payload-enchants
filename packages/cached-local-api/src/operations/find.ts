@@ -1,6 +1,6 @@
 import type { GeneratedTypes, Payload } from 'payload';
 
-import { populate } from '../populate';
+import { populateDocRelationships } from '../populate';
 import type { Find, FindArgs, FindByID, SanitizedArgsContext } from '../types';
 import { chunkArray } from '../utils/chunkArray';
 
@@ -44,7 +44,6 @@ export const buildFind = ({
       args.sort,
       args.showHiddenFields,
       args.context,
-      args.req?.transactionID,
     ];
 
     let cacheHit = true;
@@ -78,12 +77,12 @@ export const buildFind = ({
     const depth = args.depth ?? payload.config.defaultDepth;
 
     if (depth > 0) {
-      const batches = chunkArray(result.docs, 15);
+      const batches = chunkArray(result.docs, 35);
 
       for (const batch of batches) {
         await Promise.all(
           batch.map((doc) =>
-            populate({
+            populateDocRelationships({
               context: args.context,
               data: doc,
               depth,
@@ -94,7 +93,7 @@ export const buildFind = ({
               findByID,
               locale: args.locale || undefined,
               payload,
-              req: args.req,
+
               showHiddenFields: args.showHiddenFields,
             }),
           ),

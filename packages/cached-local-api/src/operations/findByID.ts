@@ -1,7 +1,7 @@
 import type { GeneratedTypes, Payload } from 'payload';
 import { APIError } from 'payload/errors';
 
-import { populate } from '../populate';
+import { populateDocRelationships } from '../populate';
 import type { FindByID, FindByIDArgs, SanitizedArgsContext } from '../types';
 
 export const buildFindByID = ({
@@ -36,7 +36,6 @@ export const buildFindByID = ({
       user,
       args.showHiddenFields,
       args.context,
-      args.req?.transactionID,
     ];
 
     let cacheHit = true;
@@ -47,7 +46,7 @@ export const buildFindByID = ({
       () => {
         cacheHit = false;
 
-        return payload.findByID({ ...args, depth: 0 });
+        return payload.findByID({ ...args, depth: 1 });
       },
       [JSON.stringify(keys)],
       {
@@ -72,20 +71,21 @@ export const buildFindByID = ({
     if (depth > payload.config.maxDepth)
       throw new APIError(`maxDepth ${depth} - ${payload.config.maxDepth}`);
 
-    await populate({
-      context: args.context,
-      data: doc,
-      depth,
-      disableErrors: args.disableErrors,
-      draft: args.draft,
-      fallbackLocale: args.fallbackLocale || undefined,
-      fields: payload.collections[args.collection].config.fields,
-      findByID,
-      locale: args.locale || undefined,
-      payload,
-      req: args.req,
-      showHiddenFields: args.showHiddenFields,
-    });
+    if (depth > 0)
+      await populateDocRelationships({
+        context: args.context,
+        data: doc,
+        depth,
+        disableErrors: args.disableErrors,
+        draft: args.draft,
+        fallbackLocale: args.fallbackLocale || undefined,
+        fields: payload.collections[args.collection].config.fields,
+        findByID,
+        locale: args.locale || undefined,
+        payload,
+        req: args.req,
+        showHiddenFields: args.showHiddenFields,
+      });
 
     return doc;
   };

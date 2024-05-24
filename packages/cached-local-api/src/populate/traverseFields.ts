@@ -25,6 +25,7 @@ export const traverseFields = ({
         Array.isArray(data[field.name])
       ) {
         data[field.name].forEach((id: number | string, index: number) => {
+          if (typeof id !== 'number' || typeof id !== 'string') return;
           const { config: collection } = payload.collections[field.relationTo as string];
 
           populationList.push({
@@ -55,6 +56,7 @@ export const traverseFields = ({
             },
             index: number,
           ) => {
+            if (typeof value !== 'number' || typeof value !== 'string') return;
             const { config: collection } = payload.collections[relationTo as string];
 
             populationList.push({

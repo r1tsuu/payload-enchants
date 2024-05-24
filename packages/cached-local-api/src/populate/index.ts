@@ -1,12 +1,13 @@
 // experimental
 
-import type { GeneratedTypes, Payload, RequestContext } from 'payload';
+import { type GeneratedTypes, type Payload, type RequestContext } from 'payload';
 import type { Field, PayloadRequestWithData } from 'payload/types';
 
+import type { Populate } from '../types';
 import { traverseFields } from './traverseFields';
 import type { PopulationItem } from './types';
 
-export const populate = async ({
+export const populateDocRelationships = async ({
   context,
   data,
   depth,
@@ -17,6 +18,7 @@ export const populate = async ({
   findByID,
   locale,
   payload,
+  populate,
   req,
   showHiddenFields,
 }: {
@@ -31,10 +33,11 @@ export const populate = async ({
   findByID: Payload['findByID'];
   locale?: string;
   payload: Payload;
+  populate?: Populate;
   req?: PayloadRequestWithData;
   showHiddenFields?: boolean;
 }) => {
-  if (!depth) return;
+  if (!depth && !populateDocRelationships) return;
 
   const populationList: PopulationItem[] = [];
 
@@ -87,7 +90,7 @@ export const populate = async ({
     item.ref[item.accessor] = populatedDoc;
 
     if (depth > 1) {
-      await populate({
+      await populateDocRelationships({
         context,
         data: item.ref[item.accessor] as Record<string, unknown>,
         depth: depth - 2,
@@ -98,6 +101,7 @@ export const populate = async ({
         findByID,
         locale,
         payload,
+        populate,
         req,
         showHiddenFields,
       });
