@@ -2,6 +2,7 @@ import type { GeneratedTypes, Payload } from 'payload';
 
 import { populate } from '../populate';
 import type { Find, FindArgs, FindByID, SanitizedArgsContext } from '../types';
+import { chunkArray } from '../utils/chunkArray';
 
 export const buildFind = ({
   ctx,
@@ -76,23 +77,30 @@ export const buildFind = ({
 
     const depth = args.depth ?? payload.config.defaultDepth;
 
-    if (depth > 0)
-      for (const doc of result.docs) {
-        await populate({
-          context: args.context,
-          data: doc,
-          depth,
-          disableErrors: args.disableErrors,
-          draft: args.draft,
-          fallbackLocale: args.fallbackLocale ?? undefined,
-          fields: payload.collections[args.collection].config.fields,
-          findByID,
-          locale: args.locale || undefined,
-          payload,
-          req: args.req,
-          showHiddenFields: args.showHiddenFields,
-        });
+    if (depth > 0) {
+      const chunks = chunkArray(result.docs, 35);
+
+      for (const docs of chunks) {
+        await Promise.all(
+          docs.map((doc) =>
+            populate({
+              context: args.context,
+              data: doc,
+              depth,
+              disableErrors: args.disableErrors,
+              draft: args.draft,
+              fallbackLocale: args.fallbackLocale ?? undefined,
+              fields: payload.collections[args.collection].config.fields,
+              findByID,
+              locale: args.locale || undefined,
+              payload,
+              req: args.req,
+              showHiddenFields: args.showHiddenFields,
+            }),
+          ),
+        );
       }
+    }
 
     return result;
   };
