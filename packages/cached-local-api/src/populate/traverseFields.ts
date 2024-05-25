@@ -22,10 +22,10 @@ export const traverseFields = ({
         'hasMany' in field &&
         typeof field.relationTo === 'string' &&
         typeof field.hasMany &&
-        Array.isArray(data[field.name])
+        Array.isArray(data?.[field.name])
       ) {
         data[field.name].forEach((id: number | string, index: number) => {
-          if (typeof id !== 'number' || typeof id !== 'string') return;
+          if (typeof id !== 'number' && typeof id !== 'string') return;
           const { config: collection } = payload.collections[field.relationTo as string];
 
           populationList.push({
@@ -56,7 +56,7 @@ export const traverseFields = ({
             },
             index: number,
           ) => {
-            if (typeof value !== 'number' || typeof value !== 'string') return;
+            if (typeof value !== 'number' && typeof value !== 'string') return;
             const { config: collection } = payload.collections[relationTo as string];
 
             populationList.push({
@@ -72,7 +72,7 @@ export const traverseFields = ({
       }
 
       if (
-        (typeof data[field.name] === 'string' || typeof data[field.name] === 'number') &&
+        (typeof data?.[field.name] === 'string' || typeof data?.[field.name] === 'number') &&
         typeof field.relationTo === 'string'
       ) {
         const { config: collection } = payload.collections[field.relationTo as string];
@@ -86,26 +86,34 @@ export const traverseFields = ({
       }
 
       if (
-        data[field.name] &&
+        data?.[field.name] &&
         typeof data[field.name] === 'object' &&
         Array.isArray(field.relationTo)
       ) {
-        populationList.push({
-          accessor: 'value',
-          collection: data[field.name].relationTo,
-          id: data[field.name].value,
-          ref: data[field.name],
-        });
+        const relationTo = data[field.name].relationTo;
+
+        const { config: collection } = payload.collections[relationTo as string];
+
+        if (
+          typeof data[field.name].value === 'string' ||
+          typeof data[field.name].value === 'number'
+        )
+          populationList.push({
+            accessor: 'value',
+            collection,
+            id: data[field.name].value,
+            ref: data[field.name],
+          });
       }
     }
 
-    if (field.type === 'richText' && data[field.name]) {
+    if (field.type === 'richText' && data?.[field.name]) {
       traverseRichText({ data: data[field.name], payload, populationList });
 
       return;
     }
 
-    if (field.type === 'array' && Array.isArray(data[field.name])) {
+    if (field.type === 'array' && Array.isArray(data?.[field.name])) {
       for (const item of data[field.name]) {
         if (item && typeof item === 'object')
           traverseFields({ data: item, fields: field.fields, payload, populationList });
@@ -114,7 +122,7 @@ export const traverseFields = ({
       return;
     }
 
-    if (field.type === 'blocks' && Array.isArray(data[field.name])) {
+    if (field.type === 'blocks' && Array.isArray(data?.[field.name])) {
       for (const item of data[field.name]) {
         const blockType = item?.blockType;
 

@@ -36,6 +36,7 @@ export const buildFindByID = ({
       user,
       args.showHiddenFields,
       args.context,
+      args.disableErrors,
     ];
 
     let cacheHit = true;
@@ -76,7 +77,6 @@ export const buildFindByID = ({
         context: args.context,
         data: doc,
         depth,
-        disableErrors: args.disableErrors,
         draft: args.draft,
         fallbackLocale: args.fallbackLocale || undefined,
         fields: payload.collections[args.collection].config.fields,

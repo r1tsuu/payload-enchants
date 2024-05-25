@@ -11,7 +11,6 @@ export const populateDocRelationships = async ({
   context,
   data,
   depth,
-  disableErrors,
   draft,
   fallbackLocale,
   fields,
@@ -26,7 +25,6 @@ export const populateDocRelationships = async ({
   currentDepth?: number;
   data: Record<string, any>;
   depth: number;
-  disableErrors?: boolean;
   draft?: boolean;
   fallbackLocale?: string;
   fields: Field[];
@@ -63,7 +61,7 @@ export const populateDocRelationships = async ({
             collection: collection as keyof GeneratedTypes['collections'],
             context,
             depth: depth - 1,
-            disableErrors,
+            disableErrors: true,
             draft,
             fallbackLocale: fallbackLocale as GeneratedTypes['locale'],
             id,
@@ -94,7 +92,6 @@ export const populateDocRelationships = async ({
         context,
         data: item.ref[item.accessor] as Record<string, unknown>,
         depth: depth - 2,
-        disableErrors,
         draft,
         fallbackLocale,
         fields: item.collection.fields,
