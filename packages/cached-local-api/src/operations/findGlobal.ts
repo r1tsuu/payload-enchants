@@ -1,6 +1,6 @@
 import type { GeneratedTypes, Payload } from 'payload';
 
-import { populate } from '../populate';
+import { populateDocRelationships } from '../populate';
 import type { FindByID, FindGlobal, FindGlobalArgs, SanitizedArgsContext } from '../types';
 
 export const buildFindGlobal = ({
@@ -33,8 +33,6 @@ export const buildFindGlobal = ({
       args.overrideAccess,
       user,
       args.showHiddenFields,
-      args.context,
-      args.req?.transactionID,
     ];
 
     let cacheHit = true;
@@ -70,7 +68,7 @@ export const buildFindGlobal = ({
     const global = payload.config.globals.find((each) => each.slug === args.slug)!;
 
     if (depth > 0)
-      await populate({
+      await populateDocRelationships({
         context: args.context,
         data: doc,
         depth,

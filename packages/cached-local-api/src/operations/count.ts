@@ -32,7 +32,6 @@ export const buildCount = ({
       args.overrideAccess,
       userKey,
       args.context,
-      args.req?.transactionID,
     ];
 
     let cacheHit = true;

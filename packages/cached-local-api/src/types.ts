@@ -1,6 +1,7 @@
 import type { GeneratedTypes, Payload } from 'payload';
 import type payload from 'payload';
 import type { Plugin } from 'payload/config';
+import type { PaginatedDocs } from 'payload/database';
 import type {
   CollectionAfterChangeHook,
   CollectionAfterDeleteHook,
@@ -22,15 +23,24 @@ type UnstableCache = <T extends Callback>(
   },
 ) => T;
 
-export type Find = Payload['find'];
+export type Select = string[];
 
-export type FindArgs<T extends keyof GeneratedTypes['collections']> = Parameters<
-  typeof payload.find<T>
->[0];
+export type Populate = Record<string, Select | true>;
+
+export type Find = <T extends keyof GeneratedTypes['collections']>(
+  args: FindArgs<T>,
+) => Promise<PaginatedDocs<GeneratedTypes['collections'][T]>>;
+
+export type FindArgs<T extends keyof GeneratedTypes['collections']> = {
+  populate?: Populate;
+  select?: Select;
+} & Parameters<typeof payload.find<T>>[0];
 
 export type FindOneArgs<T extends keyof GeneratedTypes['collections']> = {
   /** @default first field from the fields array */
   field?: string;
+  populate?: Populate;
+  select?: Select;
   value: string;
   // eslint-disable-next-line perfectionist/sort-intersection-types
 } & Omit<Parameters<Find>[0], 'limit' | 'page' | 'pagination' | 'where'> & {
@@ -41,17 +51,23 @@ export type FindOne = <T extends keyof GeneratedTypes['collections']>(
   args: FindOneArgs<T>,
 ) => Promise<GeneratedTypes['collections'][T] | null>;
 
-export type FindByID = Payload['findByID'];
+export type FindByID = <T extends keyof GeneratedTypes['collections']>(
+  args: FindByIDArgs<T>,
+) => Promise<GeneratedTypes['collections'][T]>;
 
-export type FindByIDArgs<T extends keyof GeneratedTypes['collections']> = Parameters<
-  typeof payload.findByID<T>
->[0];
+export type FindByIDArgs<T extends keyof GeneratedTypes['collections']> = {
+  populate?: Populate;
+  select?: Select;
+} & Parameters<typeof payload.findByID<T>>[0];
 
-export type FindGlobal = Payload['findGlobal'];
+export type FindGlobal = <T extends keyof GeneratedTypes['globals']>(
+  args: FindGlobalArgs<T>,
+) => Promise<GeneratedTypes['globals'][T]>;
 
-export type FindGlobalArgs<T extends keyof GeneratedTypes['globals']> = Parameters<
-  typeof payload.findGlobal<T>
->[0];
+export type FindGlobalArgs<T extends keyof GeneratedTypes['globals']> = {
+  populate?: Populate;
+  select?: Select;
+} & Parameters<typeof payload.findGlobal<T>>[0];
 
 export type Count = Payload['count'];
 

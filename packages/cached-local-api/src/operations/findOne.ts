@@ -1,7 +1,7 @@
 import type { GeneratedTypes, Payload } from 'payload';
 import { ValidationError } from 'payload/errors';
 
-import { populate } from '../populate';
+import { populateDocRelationships } from '../populate';
 import type { FindByID, FindOneArgs, SanitizedArgsContext } from '../types';
 
 export const buildFindOne = ({
@@ -82,8 +82,8 @@ export const buildFindOne = ({
       args.showHiddenFields,
       args.sort,
       args.context,
-      args.req?.transactionID,
-      tag,
+      args.field,
+      args.value,
     ];
 
     let cacheHit = true;
@@ -122,7 +122,7 @@ export const buildFindOne = ({
     const depth = args.depth ?? payload.config.defaultDepth;
 
     if (depth > 0 && doc)
-      await populate({
+      await populateDocRelationships({
         context: args.context,
         data: doc,
         depth,
