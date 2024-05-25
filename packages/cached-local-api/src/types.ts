@@ -25,7 +25,14 @@ type UnstableCache = <T extends Callback>(
 
 export type Select = string[];
 
-export type Populate = Record<string, Select | true>;
+export type Populate = Record<
+  string,
+  | {
+      populate?: Populate;
+      select?: Select;
+    }
+  | true
+>;
 
 export type Find = <T extends keyof GeneratedTypes['collections']>(
   args: FindArgs<T>,

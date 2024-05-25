@@ -47,7 +47,7 @@ export const buildFindByID = ({
       () => {
         cacheHit = false;
 
-        return payload.findByID({ ...args, depth: 1 });
+        return payload.findByID({ ...args, depth: 0 });
       },
       [JSON.stringify(keys)],
       {
@@ -72,20 +72,23 @@ export const buildFindByID = ({
     if (depth > payload.config.maxDepth)
       throw new APIError(`maxDepth ${depth} - ${payload.config.maxDepth}`);
 
-    if (depth > 0)
-      await populateDocRelationships({
-        context: args.context,
-        data: doc,
-        depth,
-        draft: args.draft,
-        fallbackLocale: args.fallbackLocale || undefined,
-        fields: payload.collections[args.collection].config.fields,
-        findByID,
-        locale: args.locale || undefined,
-        payload,
-        req: args.req,
-        showHiddenFields: args.showHiddenFields,
-      });
+    payload.logger.info(args.populate);
+
+    await populateDocRelationships({
+      context: args.context,
+      data: doc,
+      depth,
+      draft: args.draft,
+      fallbackLocale: args.fallbackLocale || undefined,
+      fields: payload.collections[args.collection].config.fields,
+      findByID,
+      locale: args.locale || undefined,
+      payload,
+      populate: args.populate,
+      req: args.req,
+      select: args.select,
+      showHiddenFields: args.showHiddenFields,
+    });
 
     return doc;
   };

@@ -3,10 +3,14 @@
 import { type GeneratedTypes, type Payload, type RequestContext } from 'payload';
 import type { Field, PayloadRequestWithData } from 'payload/types';
 
-import type { Populate } from '../types';
+import type { FindByID, Populate, Select } from '../types';
 import { traverseFields } from './traverseFields';
 import type { PopulationItem } from './types';
 
+/**
+ * Populate relationships
+ * Apply `select`
+ */
 export const populateDocRelationships = async ({
   context,
   data,
@@ -19,6 +23,7 @@ export const populateDocRelationships = async ({
   payload,
   populate,
   req,
+  select,
   showHiddenFields,
 }: {
   context?: RequestContext;
@@ -28,33 +33,51 @@ export const populateDocRelationships = async ({
   draft?: boolean;
   fallbackLocale?: string;
   fields: Field[];
-  findByID: Payload['findByID'];
+  findByID: FindByID;
   locale?: string;
   payload: Payload;
   populate?: Populate;
   req?: PayloadRequestWithData;
+  select?: Select;
   showHiddenFields?: boolean;
 }) => {
-  if (!depth && !populateDocRelationships) return;
+  if (!depth && !populate && !select) return;
 
   const populationList: PopulationItem[] = [];
 
   const populatedPromises: Promise<{
     collection: string;
     id: number | string;
+    populate?: Populate;
+    select?: Select;
     value: unknown;
   }>[] = [];
 
-  traverseFields({ data, fields, payload, populationList });
+  traverseFields({ data, fields, payload, populate, populationList });
+
+  if (populationList.length === 0) return;
 
   const collections = new Set(populationList.map((each) => each.collection.slug));
 
   collections.forEach((collection) => {
-    const ids = new Set(
-      populationList.filter((each) => each.collection.slug === collection).map((each) => each.id),
+    const itemsToPopulate = new Set(
+      populationList
+        .filter((each) => each.collection.slug === collection)
+        .map((each) =>
+          JSON.stringify({
+            id: each.id,
+            populate: each.populate,
+          }),
+        ),
     );
 
-    ids.forEach((id) => {
+    itemsToPopulate.forEach((itemString) => {
+      const { id, populate, select } = JSON.parse(itemString) as {
+        id: string;
+        populate?: Populate;
+        select?: Select;
+      };
+
       populatedPromises.push(
         new Promise(async (resolve) => {
           const doc = await findByID({
@@ -66,11 +89,13 @@ export const populateDocRelationships = async ({
             fallbackLocale: fallbackLocale as GeneratedTypes['locale'],
             id,
             locale: locale as GeneratedTypes['locale'],
+            populate,
             req,
+            select,
             showHiddenFields,
           });
 
-          return resolve({ collection, id, value: doc });
+          return resolve({ collection, id, populate, value: doc });
         }),
       );
     });
@@ -80,14 +105,24 @@ export const populateDocRelationships = async ({
 
   for (const item of populationList) {
     const populatedDoc = populated.find(
-      (each) => each.collection === item.collection.slug && each.id === item.id,
+      (each) =>
+        each.collection === item.collection.slug &&
+        JSON.stringify({
+          id: each.id,
+          populate: each.populate,
+          select: each.select,
+        }) ===
+          JSON.stringify({
+            id: item.id,
+            populate: item.populate,
+          }),
     )?.value;
 
     if (!populatedDoc) continue;
 
     item.ref[item.accessor] = populatedDoc;
 
-    if (depth > 1) {
+    if (depth > 1 || item.populate) {
       await populateDocRelationships({
         context,
         data: item.ref[item.accessor] as Record<string, unknown>,
@@ -98,7 +133,7 @@ export const populateDocRelationships = async ({
         findByID,
         locale,
         payload,
-        populate,
+        populate: item.populate,
         req,
         showHiddenFields,
       });

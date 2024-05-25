@@ -92,6 +92,8 @@ export const buildFind = ({
               findByID,
               locale: args.locale || undefined,
               payload,
+              populate: args.populate,
+              select: args.select,
               showHiddenFields: args.showHiddenFields,
             }),
           ),

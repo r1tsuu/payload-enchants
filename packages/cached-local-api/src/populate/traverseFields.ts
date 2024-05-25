@@ -2,22 +2,40 @@ import type { Payload } from 'payload';
 import type { Field } from 'payload/types';
 import { tabHasName } from 'payload/types';
 
+import type { Populate } from '../types';
 import { traverseRichText } from './traverseRichText';
 import type { PopulationItem } from './types';
 
 export const traverseFields = ({
   data,
+  depth,
+  fieldPrefix = '',
   fields,
   payload,
+  populate,
   populationList,
 }: {
   data: Record<string, any>;
+  depth?: number;
+  fieldPrefix?: string;
   fields: Field[];
   payload: Payload;
+  populate?: Populate;
   populationList: PopulationItem[];
 }) => {
   fields.forEach((field) => {
     if (field.type === 'relationship' || field.type === 'upload') {
+      const fieldInPopulate = populate?.[`${fieldPrefix}${field.name}`];
+
+      let fieldPopulate: Populate | undefined = undefined;
+
+      if (populate) {
+        if (!fieldInPopulate) return;
+        if (typeof fieldInPopulate !== 'boolean') {
+          fieldPopulate = fieldInPopulate.populate;
+        }
+      }
+
       if (
         'hasMany' in field &&
         typeof field.relationTo === 'string' &&
@@ -28,12 +46,14 @@ export const traverseFields = ({
           if (typeof id !== 'number' && typeof id !== 'string') return;
           const { config: collection } = payload.collections[field.relationTo as string];
 
-          populationList.push({
-            accessor: index,
-            collection,
-            id,
-            ref: data[field.name],
-          });
+          if (depth || fieldPopulate)
+            populationList.push({
+              accessor: index,
+              collection,
+              id,
+              populate: fieldPopulate,
+              ref: data[field.name],
+            });
         });
 
         return;
@@ -59,12 +79,14 @@ export const traverseFields = ({
             if (typeof value !== 'number' && typeof value !== 'string') return;
             const { config: collection } = payload.collections[relationTo as string];
 
-            populationList.push({
-              accessor: 'value',
-              collection,
-              id: value,
-              ref: data[field.name][index],
-            });
+            if (depth || fieldPopulate)
+              populationList.push({
+                accessor: 'value',
+                collection,
+                id: value,
+                populate: fieldPopulate,
+                ref: data[field.name][index],
+              });
           },
         );
 
@@ -77,12 +99,14 @@ export const traverseFields = ({
       ) {
         const { config: collection } = payload.collections[field.relationTo as string];
 
-        populationList.push({
-          accessor: field.name,
-          collection,
-          id: data[field.name],
-          ref: data,
-        });
+        if (depth || fieldPopulate)
+          populationList.push({
+            accessor: field.name,
+            collection,
+            id: data[field.name],
+            populate: fieldPopulate,
+            ref: data,
+          });
       }
 
       if (
@@ -97,17 +121,22 @@ export const traverseFields = ({
         if (
           typeof data[field.name].value === 'string' ||
           typeof data[field.name].value === 'number'
-        )
-          populationList.push({
-            accessor: 'value',
-            collection,
-            id: data[field.name].value,
-            ref: data[field.name],
-          });
+        ) {
+          if (depth || fieldPopulate)
+            populationList.push({
+              accessor: 'value',
+              collection,
+              id: data[field.name].value,
+              populate: fieldPopulate,
+              ref: data[field.name],
+            });
+        }
       }
     }
 
     if (field.type === 'richText' && data?.[field.name]) {
+      if (populate && !populate[data[field.name]]) return;
+
       traverseRichText({ data: data[field.name], payload, populationList });
 
       return;
@@ -115,8 +144,14 @@ export const traverseFields = ({
 
     if (field.type === 'array' && Array.isArray(data?.[field.name])) {
       for (const item of data[field.name]) {
-        if (item && typeof item === 'object')
-          traverseFields({ data: item, fields: field.fields, payload, populationList });
+        traverseFields({
+          data: item,
+          fieldPrefix: `${fieldPrefix}${field.name}.`,
+          fields: field.fields,
+          payload,
+          populate,
+          populationList,
+        });
       }
 
       return;
@@ -130,14 +165,28 @@ export const traverseFields = ({
 
         const block = field.blocks.find((each) => each.slug === blockType)!;
 
-        traverseFields({ data: item, fields: block.fields, payload, populationList });
+        traverseFields({
+          data: item,
+          fieldPrefix: `${fieldPrefix}${field.name}.blockType_${block.slug}.`,
+          fields: block.fields,
+          payload,
+          populate,
+          populationList,
+        });
       }
 
       return;
     }
 
     if (field.type === 'group' && data[field.name] && typeof data[field.name] === 'object') {
-      traverseFields({ data: data[field.name], fields: field.fields, payload, populationList });
+      traverseFields({
+        data: data[field.name],
+        fieldPrefix: `${fieldPrefix}${field.name}.`,
+        fields: field.fields,
+        payload,
+        populate,
+        populationList,
+      });
 
       return;
     }
@@ -152,7 +201,16 @@ export const traverseFields = ({
       field.tabs.forEach((tab) => {
         const tabData = tabHasName(tab) ? data[tab.name] : data;
 
-        if (tabData) traverseFields({ data: tabData, fields: tab.fields, payload, populationList });
+        const tabPopulatePrefix = tabHasName(tab) ? `${fieldPrefix}.${tab.name}.` : fieldPrefix;
+
+        traverseFields({
+          data: tabData,
+          fieldPrefix: tabPopulatePrefix,
+          fields: tab.fields,
+          payload,
+          populate,
+          populationList,
+        });
       });
     }
   });
