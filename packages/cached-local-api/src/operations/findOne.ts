@@ -126,7 +126,6 @@ export const buildFindOne = ({
         context: args.context,
         data: doc,
         depth,
-        disableErrors: args.disableErrors,
         draft: args.draft,
         fallbackLocale: args.fallbackLocale ?? undefined,
         fields: payload.collections[args.collection].config.fields,
