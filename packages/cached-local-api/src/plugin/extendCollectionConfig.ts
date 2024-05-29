@@ -75,11 +75,6 @@ const executeSingleDocHook = async ({
     operation = 'CREATE';
   else operation = 'UPDATE';
 
-  if (hookArgs.context.shouldRevalidate && (operation === 'UPDATE' || operation === 'DELETE')) {
-    hookArgs.context.shouldRevalidate = true;
-    hookArgs.context.tagFind = ctx.buildTagFind({ slug });
-  }
-
   const tags = [
     ctx.buildTagFindByID({ id: hookArgs.doc.id, slug: slug as string }),
     ...buildFindOneTags({ cachedCollectionConfig, collection, ctx, hookArgs }),
@@ -115,6 +110,11 @@ export const extendCollectionConfig = ({
             hookArgs,
             type: 'afterChange',
           });
+          ctx.revalidateTags({
+            operation: 'UPDATE-BULK',
+            payload: hookArgs.req.payload,
+            tags: [ctx.buildTagFind({ slug: collection.slug })],
+          });
         },
       ],
       afterDelete: [
@@ -126,6 +126,11 @@ export const extendCollectionConfig = ({
             ctx,
             hookArgs,
             type: 'afterDelete',
+          });
+          ctx.revalidateTags({
+            operation: 'DELETE-BULK',
+            payload: hookArgs.req.payload,
+            tags: [ctx.buildTagFind({ slug: collection.slug })],
           });
         },
       ],
