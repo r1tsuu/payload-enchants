@@ -1,15 +1,15 @@
 import type { GeneratedTypes, Payload } from 'payload';
 
 import { populateDocRelationships } from '../populate';
-import type { FindByID, FindGlobal, FindGlobalArgs, SanitizedArgsContext } from '../types';
+import type { FindGlobal, FindGlobalArgs, SanitizedArgsContext } from '../types';
 
 export const buildFindGlobal = ({
   ctx,
-  findByID,
+  find,
   payload,
 }: {
   ctx: SanitizedArgsContext;
-  findByID: FindByID;
+  find: Payload['find'];
   payload: Payload;
 }): FindGlobal => {
   return async function findGlobal<T extends keyof GeneratedTypes['globals']>(
@@ -70,12 +70,13 @@ export const buildFindGlobal = ({
     if (depth > 0)
       await populateDocRelationships({
         context: args.context,
+        ctx,
         data: doc,
         depth,
         draft: args.draft,
         fallbackLocale: args.fallbackLocale || undefined,
         fields: global.fields,
-        findByID,
+        find,
         locale: args.locale || undefined,
         payload,
         req: args.req,

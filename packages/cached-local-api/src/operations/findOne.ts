@@ -2,15 +2,15 @@ import type { GeneratedTypes, Payload } from 'payload';
 import { ValidationError } from 'payload/errors';
 
 import { populateDocRelationships } from '../populate';
-import type { FindByID, FindOneArgs, SanitizedArgsContext } from '../types';
+import type { FindOneArgs, SanitizedArgsContext } from '../types';
 
 export const buildFindOne = ({
   ctx,
-  findByID,
+  find,
   payload,
 }: {
   ctx: SanitizedArgsContext;
-  findByID: FindByID;
+  find: Payload['find'];
   payload: Payload;
 }) => {
   return async function findOne<T extends keyof GeneratedTypes['collections']>(
@@ -124,12 +124,13 @@ export const buildFindOne = ({
     if (depth > 0 && doc)
       await populateDocRelationships({
         context: args.context,
+        ctx,
         data: doc,
         depth,
         draft: args.draft,
         fallbackLocale: args.fallbackLocale ?? undefined,
         fields: payload.collections[args.collection].config.fields,
-        findByID,
+        find,
         locale: args.locale || undefined,
         payload,
         req: args.req,

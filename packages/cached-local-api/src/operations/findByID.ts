@@ -6,9 +6,11 @@ import type { FindByID, FindByIDArgs, SanitizedArgsContext } from '../types';
 
 export const buildFindByID = ({
   ctx,
+  find,
   payload,
 }: {
   ctx: SanitizedArgsContext;
+  find: Payload['find'];
   payload: Payload;
 }): FindByID => {
   return async function findByID<T extends keyof GeneratedTypes['collections']>(
@@ -35,7 +37,6 @@ export const buildFindByID = ({
       args.overrideAccess,
       user,
       args.showHiddenFields,
-      args.context,
       args.disableErrors,
     ];
 
@@ -47,7 +48,7 @@ export const buildFindByID = ({
       () => {
         cacheHit = false;
 
-        return payload.findByID({ ...args, depth: 1 });
+        return payload.findByID({ ...args, depth: 0 });
       },
       [JSON.stringify(keys)],
       {
@@ -57,7 +58,7 @@ export const buildFindByID = ({
 
     if (cacheHit) {
       ctx.debugLog({
-        message: `Cache HIT, operation: findByID, collection: ${args.collection.toString()}, id: ${args.id}`,
+        message: `Cache HIT, operation: findByID, collection: ${args.collection.toString()}, id: ${args.id}, execution time - ${Date.now() - start} MS`,
         payload,
       });
     } else {
@@ -75,12 +76,13 @@ export const buildFindByID = ({
     if (depth > 0)
       await populateDocRelationships({
         context: args.context,
+        ctx,
         data: doc,
         depth,
         draft: args.draft,
         fallbackLocale: args.fallbackLocale || undefined,
         fields: payload.collections[args.collection].config.fields,
-        findByID,
+        find,
         locale: args.locale || undefined,
         payload,
         req: args.req,

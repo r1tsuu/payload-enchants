@@ -9,3 +9,9 @@ export type PopulationItem = {
   } & Record<string, unknown>;
   ref: Record<string, unknown>;
 };
+
+export type PopulatedPromises = Promise<{
+  collection: string;
+  id: number | string;
+  value: unknown;
+}>[];

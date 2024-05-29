@@ -17,21 +17,20 @@ export const buildCachedPayload = (args: Args): CachedPayloadResult => {
   const plugin = buildPlugin(ctx);
 
   const getCachedPayload = function (payload: Payload): CachedPayload {
-    const findByID = buildFindByID({ ctx, payload });
-
     const find = buildFind({
       ctx,
-      findByID,
       payload,
     });
+
+    const findByID = buildFindByID({ ctx, find, payload });
 
     const findGlobal = buildFindGlobal({
       ctx,
-      findByID,
+      find,
       payload,
     });
 
-    const findOne = buildFindOne({ ctx, findByID, payload });
+    const findOne = buildFindOne({ ctx, find, payload });
 
     const count = buildCount({
       ctx,

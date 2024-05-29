@@ -115,8 +115,9 @@ export const traverseFields = ({
 
     if (field.type === 'array' && Array.isArray(data?.[field.name])) {
       for (const item of data[field.name]) {
-        if (item && typeof item === 'object')
+        if (item && typeof item === 'object') {
           traverseFields({ data: item, fields: field.fields, payload, populationList });
+        }
       }
 
       return;

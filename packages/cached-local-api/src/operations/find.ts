@@ -1,16 +1,14 @@
 import type { GeneratedTypes, Payload } from 'payload';
 
 import { populateDocRelationships } from '../populate';
-import type { Find, FindArgs, FindByID, SanitizedArgsContext } from '../types';
+import type { Find, FindArgs, SanitizedArgsContext } from '../types';
 import { chunkArray } from '../utils/chunkArray';
 
 export const buildFind = ({
   ctx,
-  findByID,
   payload,
 }: {
   ctx: SanitizedArgsContext;
-  findByID: FindByID;
   payload: Payload;
 }): Find => {
   return async function find<T extends keyof GeneratedTypes['collections']>(args: FindArgs<T>) {
@@ -43,7 +41,6 @@ export const buildFind = ({
       userKey,
       args.sort,
       args.showHiddenFields,
-      args.context,
     ];
 
     let cacheHit = true;
@@ -58,7 +55,9 @@ export const buildFind = ({
       },
       [JSON.stringify(keys)],
       {
-        tags: [ctx.buildTagFind({ slug: args.collection as string })],
+        tags: Array.isArray(args.context?.tags)
+          ? args.context.tags
+          : [ctx.buildTagFind({ slug: args.collection as string })],
       },
     )();
 
@@ -84,12 +83,13 @@ export const buildFind = ({
           batch.map((doc) =>
             populateDocRelationships({
               context: args.context,
+              ctx,
               data: doc,
               depth,
               draft: args.draft,
               fallbackLocale: args.fallbackLocale ?? undefined,
               fields: payload.collections[args.collection].config.fields,
-              findByID,
+              find,
               locale: args.locale || undefined,
               payload,
               showHiddenFields: args.showHiddenFields,
