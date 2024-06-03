@@ -44,7 +44,7 @@ const buildFindOneTags = ({
     .flat();
 };
 
-const executeSingleDocHook = async ({
+const executeSingleDocHook = ({
   cachedCollectionConfig,
   collection,
   ctx,
@@ -58,13 +58,6 @@ const executeSingleDocHook = async ({
   type: 'afterChange' | 'afterDelete';
 }) => {
   if (!hookArgs.doc.id) return;
-
-  const shouldFunction =
-    type === 'afterDelete' ? ctx.shouldRevalidateOnDelete : ctx.shouldRevalidateOnChange;
-
-  const shouldRevalidate = await shouldFunction(hookArgs as any);
-
-  if (!shouldRevalidate) return;
 
   const { slug } = collection;
 
@@ -103,13 +96,16 @@ export const extendCollectionConfig = ({
       afterChange: [
         ...(collection.hooks?.afterChange ?? []),
         async (hookArgs) => {
-          await executeSingleDocHook({
+          if (!(await ctx.shouldRevalidateOnChange(hookArgs))) return;
+
+          executeSingleDocHook({
             cachedCollectionConfig,
             collection,
             ctx,
             hookArgs,
             type: 'afterChange',
           });
+
           ctx.revalidateTags({
             operation: 'UPDATE-BULK',
             payload: hookArgs.req.payload,
@@ -120,36 +116,21 @@ export const extendCollectionConfig = ({
       afterDelete: [
         ...(collection.hooks?.afterDelete ?? []),
         async (hookArgs) => {
-          await executeSingleDocHook({
+          if (!(await ctx.shouldRevalidateOnDelete(hookArgs))) return;
+
+          executeSingleDocHook({
             cachedCollectionConfig,
             collection,
             ctx,
             hookArgs,
             type: 'afterDelete',
           });
+
           ctx.revalidateTags({
             operation: 'DELETE-BULK',
             payload: hookArgs.req.payload,
             tags: [ctx.buildTagFind({ slug: collection.slug })],
           });
-        },
-      ],
-      afterOperation: [
-        (args) => {
-          if (args.operation !== 'update' && args.operation !== 'delete') return args.result;
-          const {
-            req: { context, payload },
-          } = args;
-
-          if (context.shouldRevalidate && typeof context.tagFind === 'string') {
-            ctx.revalidateTags({
-              operation: args.operation === 'update' ? 'UPDATE-BULK' : 'DELETE-BULK',
-              payload,
-              tags: [context.tagFind],
-            });
-          }
-
-          return args.result;
         },
       ],
     },
