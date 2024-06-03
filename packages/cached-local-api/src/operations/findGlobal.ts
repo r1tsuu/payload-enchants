@@ -67,6 +67,8 @@ export const buildFindGlobal = ({
 
     const global = payload.config.globals.find((each) => each.slug === args.slug)!;
 
+    const populatedDocsMap = new Map<string, Record<string, any>>();
+
     if (depth > 0)
       await populateDocRelationships({
         context: args.context,
@@ -79,6 +81,7 @@ export const buildFindGlobal = ({
         find,
         locale: args.locale || undefined,
         payload,
+        populatedDocsMap,
         req: args.req,
         showHiddenFields: args.showHiddenFields,
       });

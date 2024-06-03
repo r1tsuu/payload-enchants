@@ -1,9 +1,9 @@
 // experimental
 
 import { type GeneratedTypes, type Payload, type RequestContext } from 'payload';
-import type { Field, PayloadRequestWithData, TypeWithID } from 'payload/types';
+import type { Field, PayloadRequestWithData } from 'payload/types';
 
-import type { Populate, SanitizedArgsContext } from '../types';
+import type { Find, SanitizedArgsContext } from '../types';
 import { traverseFields } from './traverseFields';
 import type { PopulationItem } from './types';
 
@@ -17,10 +17,12 @@ export const populateDocRelationships = async ({
   fields,
   find,
   locale,
+  overrideAccess,
   payload,
-  populate,
+  populatedDocsMap,
   req,
   showHiddenFields,
+  user,
 }: {
   context?: RequestContext;
   ctx: SanitizedArgsContext;
@@ -30,25 +32,16 @@ export const populateDocRelationships = async ({
   draft?: boolean;
   fallbackLocale?: string;
   fields: Field[];
-  find: Payload['find'];
+  find: Find;
   locale?: string;
+  overrideAccess?: boolean;
   payload: Payload;
-  populate?: Populate;
-  populatedDocs?: {
-    collection: string;
-    id: number | string;
-    value: unknown;
-  }[];
+  populatedDocsMap: Map<string, Record<string, any>>;
   req?: PayloadRequestWithData;
   showHiddenFields?: boolean;
+  user?: Record<string, any>;
 }) => {
-  if (!depth && !populateDocRelationships) return;
-
-  const populatedDocs = (context?.populatedDocs ?? []) as {
-    collection: string;
-    id: number | string;
-    value: any;
-  }[];
+  if (!depth) return;
 
   const populationList: PopulationItem[] = [];
 
@@ -67,10 +60,7 @@ export const populateDocRelationships = async ({
         .filter(
           (each) =>
             each.collection.slug === collection &&
-            populatedDocs.findIndex(
-              (populated) =>
-                populated.id === each.id && populated.collection === each.collection.slug,
-            ) === -1,
+            !populatedDocsMap.has(`${collection}-${each.id}`),
         )
         .map((each) => {
           return each.id;
@@ -81,23 +71,24 @@ export const populateDocRelationships = async ({
       new Promise(async (resolve) => {
         const { docs } = await find({
           collection: collection as keyof GeneratedTypes['collections'],
-          context: {
-            ...(context ?? {}),
-            populatedDocs,
-            tags: Array.from(ids).map((each) =>
-              ctx.buildTagFindByID({
-                id: each,
-                slug: collection,
-              }),
-            ),
-          },
+          context,
           depth: depth - 1,
           disableErrors: true,
           draft,
           fallbackLocale: fallbackLocale as GeneratedTypes['locale'],
           locale: locale as GeneratedTypes['locale'],
+          overrideAccess,
+          pagination: false,
+          populatedDocsMap,
           req,
           showHiddenFields,
+          tags: Array.from(ids).map((each) =>
+            ctx.buildTagFindByID({
+              id: each,
+              slug: collection,
+            }),
+          ),
+          user,
           where: {
             id: {
               in: Array.from(ids),
@@ -105,52 +96,46 @@ export const populateDocRelationships = async ({
           },
         });
 
+        for (const doc of docs) {
+          populatedDocsMap.set(`${collection}-${doc.id}`, doc);
+        }
+
         return resolve({ collection, docs });
       }),
     );
   });
 
-  const populated = await Promise.all(populatedPromises);
+  await Promise.all(populatedPromises);
 
-  for (const populatedItem of populated) {
-    for (const doc of populatedItem.docs) {
-      populatedDocs.push({
-        collection: populatedItem.collection,
-        id: (doc as TypeWithID).id,
-        value: doc,
-      });
-    }
-  }
+  await Promise.all(
+    populationList.map(async (item) => {
+      const populatedDoc = populatedDocsMap.get(`${item.collection.slug}-${item.id}`);
 
-  for (const item of populationList) {
-    const populatedDoc = populatedDocs.find(
-      (each) => each.collection === item.collection.slug && each.id === item.id,
-    );
+      if (!populatedDoc || typeof populatedDoc !== 'object') {
+        return;
+      }
 
-    if (!populatedDoc?.value) continue;
+      item.ref[item.accessor] = populatedDoc;
 
-    item.ref[item.accessor] = populatedDoc.value;
-
-    if (depth > 1) {
-      await populateDocRelationships({
-        context: {
-          ...context,
-          populatedDocs,
-        },
-        ctx,
-        data: item.ref[item.accessor] as Record<string, unknown>,
-        depth: depth - 2,
-        draft,
-        fallbackLocale,
-        fields: item.collection.fields,
-        find,
-        locale,
-        payload,
-        populate,
-        populatedDocs,
-        req,
-        showHiddenFields,
-      });
-    }
-  }
+      if (depth > 1) {
+        await populateDocRelationships({
+          context,
+          ctx,
+          data: item.ref[item.accessor] as Record<string, unknown>,
+          depth: depth - 2,
+          draft,
+          fallbackLocale,
+          fields: item.collection.fields,
+          find,
+          locale,
+          overrideAccess,
+          payload,
+          populatedDocsMap,
+          req,
+          showHiddenFields,
+          user,
+        });
+      }
+    }),
+  );
 };

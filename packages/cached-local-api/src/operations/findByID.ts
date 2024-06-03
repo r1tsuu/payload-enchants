@@ -73,6 +73,8 @@ export const buildFindByID = ({
     if (depth > payload.config.maxDepth)
       throw new APIError(`maxDepth ${depth} - ${payload.config.maxDepth}`);
 
+    const populatedDocsMap = new Map<string, Record<string, any>>();
+
     if (depth > 0)
       await populateDocRelationships({
         context: args.context,
@@ -85,6 +87,7 @@ export const buildFindByID = ({
         find,
         locale: args.locale || undefined,
         payload,
+        populatedDocsMap,
         req: args.req,
         showHiddenFields: args.showHiddenFields,
       });

@@ -33,7 +33,9 @@ export type Find = <T extends keyof GeneratedTypes['collections']>(
 
 export type FindArgs<T extends keyof GeneratedTypes['collections']> = {
   populate?: Populate;
+  populatedDocsMap?: Map<string, Record<string, any>>;
   select?: Select;
+  tags?: string[];
 } & Parameters<typeof payload.find<T>>[0];
 
 export type FindOneArgs<T extends keyof GeneratedTypes['collections']> = {

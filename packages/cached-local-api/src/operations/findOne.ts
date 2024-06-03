@@ -121,6 +121,8 @@ export const buildFindOne = ({
 
     const depth = args.depth ?? payload.config.defaultDepth;
 
+    const populatedDocsMap = new Map<string, Record<string, any>>();
+
     if (depth > 0 && doc)
       await populateDocRelationships({
         context: args.context,
@@ -133,6 +135,7 @@ export const buildFindOne = ({
         find,
         locale: args.locale || undefined,
         payload,
+        populatedDocsMap,
         req: args.req,
         showHiddenFields: args.showHiddenFields,
       });

@@ -55,9 +55,7 @@ export const buildFind = ({
       },
       [JSON.stringify(keys)],
       {
-        tags: Array.isArray(args.context?.tags)
-          ? args.context.tags
-          : [ctx.buildTagFind({ slug: args.collection as string })],
+        tags: args.tags ?? [ctx.buildTagFind({ slug: args.collection as string })],
       },
     )();
 
@@ -72,6 +70,8 @@ export const buildFind = ({
         payload,
       });
     }
+
+    const populatedDocsMap = args.populatedDocsMap ?? new Map<string, Record<string, any>>();
 
     const depth = args.depth ?? payload.config.defaultDepth;
 
@@ -92,6 +92,7 @@ export const buildFind = ({
               find,
               locale: args.locale || undefined,
               payload,
+              populatedDocsMap,
               showHiddenFields: args.showHiddenFields,
             }),
           ),
