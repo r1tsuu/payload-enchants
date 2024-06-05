@@ -131,6 +131,8 @@ export const traverseFields = ({
 
         const block = field.blocks.find((each) => each.slug === blockType)!;
 
+        if (!block) continue;
+
         traverseFields({ data: item, fields: block.fields, payload, populationList });
       }
 

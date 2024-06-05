@@ -1,5 +1,4 @@
 import ObjectID from 'bson-objectid';
-import { APIError } from 'payload/errors';
 import { type Field, tabHasName } from 'payload/types';
 
 import { isEmpty } from '../utils/isEmpty';
@@ -140,7 +139,7 @@ export const traverseFields = ({
 
           const block = field.blocks.find((each) => each.slug === item.blockType);
 
-          if (!block) throw new APIError(`Block with slug ${item.blockType} is not found`);
+          if (!block) return;
 
           traverseFields({
             dataFrom,
