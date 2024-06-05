@@ -31,22 +31,22 @@
     "bson-objectid": "^2.0.4"
   },
   "devDependencies": {
-    "@payloadcms/translations": "3.0.0-beta.36",
-    "@payloadcms/ui": "3.0.0-beta.36",
+    "@payloadcms/translations": "3.0.0-beta.41",
+    "@payloadcms/ui": "3.0.0-beta.41",
     "@types/react": "npm:types-react@19.0.0-beta.2",
     "@types/react-dom": "npm:types-react-dom@19.0.0-beta.2",
     "openai": "^4.47.1",
-    "payload": "3.0.0-beta.36",
+    "payload": "3.0.0-beta.41",
     "typescript": "^5.4.5",
     "react": "19.0.0-rc-f994737d14-20240522",
     "react-dom": "19.0.0-rc-f994737d14-20240522"
   },
   "peerDependencies": {
-    "@payloadcms/next": "^3.0.0-beta.36",
-    "@payloadcms/translations": "^3.0.0-beta.36",
-    "@payloadcms/ui": "^3.0.0-beta.36",
+    "@payloadcms/next": "^3.0.0-beta.41",
+    "@payloadcms/translations": "^3.0.0-beta.41",
+    "@payloadcms/ui": "^3.0.0-beta.41",
     "openai": "^4.30.0",
-    "payload": "^3.0.0-beta.36"
+    "payload": "^3.0.0-beta.41"
   },
   "publishConfig": {
     "exports": {
