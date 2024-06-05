@@ -206,6 +206,9 @@ export const traverseFields = ({
         const richTextDataFrom = siblingDataFrom[field.name] as object;
 
         siblingDataTranslated[field.name] = richTextDataFrom;
+        
+        if (!richTextDataFrom) break;
+        
         const isSlate = Array.isArray(richTextDataFrom);
 
         const isLexical = 'root' in richTextDataFrom;
