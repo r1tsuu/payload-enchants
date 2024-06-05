@@ -119,7 +119,7 @@ export const openAIResolver = ({
           }
 
           for (const text of translatedChunk) {
-            if (typeof text !== 'string') {
+            if (text !== null && typeof text !== 'string') {
               req.payload.logger.error({
                 chunkData: translatedChunk,
                 data: text,
