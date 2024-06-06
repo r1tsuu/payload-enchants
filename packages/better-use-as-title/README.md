@@ -1,7 +1,6 @@
 # Better `useAsTitle` property for Payload 3.0
+
 [screen-capture.webm](https://github.com/r1tsuu/payload-enchants/assets/64744993/ba3a8e37-3f5e-48a4-ac25-9ea81bc43b01)
-
-
 
 ## Install
 
@@ -43,7 +42,9 @@ export default buildConfig({
 ```
 
 ## Note for data that already exist
+
 You would need to write a custom script that updates all your docs like this
+
 ```
 payload.update({
   collection: 'posts',
