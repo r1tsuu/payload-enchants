@@ -1,13 +1,13 @@
 import { toast } from '@payloadcms/ui/elements';
 import { useModal } from '@payloadcms/ui/elements/Modal';
-import { useAllFormFields } from '@payloadcms/ui/forms/Form';
+import { useAllFormFields, useForm } from '@payloadcms/ui/forms/Form';
 import { useConfig } from '@payloadcms/ui/providers/Config';
 import { useDocumentInfo } from '@payloadcms/ui/providers/DocumentInfo';
 import { useLocale } from '@payloadcms/ui/providers/Locale';
 import { useTranslation } from '@payloadcms/ui/providers/Translation';
 import { getFormState } from '@payloadcms/ui/utilities/getFormState';
 import { reduceFieldsToValues } from '@payloadcms/ui/utilities/reduceFieldsToValues';
-import { type ReactNode, useMemo, useState } from 'react';
+import { type ReactNode, useEffect, useMemo, useState } from 'react';
 
 import type { TranslateResolver } from '../../../resolvers/types';
 import type { TranslateArgs } from '../../../translate/types';
@@ -22,6 +22,8 @@ export const TranslatorProvider = ({ children }: { children: ReactNode }) => {
   const [data, dispatch] = useAllFormFields();
 
   const { collectionSlug, globalSlug, id } = useDocumentInfo();
+
+  const { setModified } = useForm();
 
   const modal = useModal();
 
@@ -69,15 +71,16 @@ export const TranslatorProvider = ({ children }: { children: ReactNode }) => {
 
   const localesOptions = localization.locales.filter((each) => each.code !== locale.code);
 
-  const [localeToTranslateFrom, setLocaleToTranslateFrom] = useState(() => {
+  const [localeToTranslateFrom, setLocaleToTranslateFrom] = useState<string>('');
+
+  useEffect(() => {
     const defaultFromOptions = localesOptions.find(
       (each) => localization.defaultLocale === each.code,
     );
 
-    if (defaultFromOptions) return defaultFromOptions.code;
-
-    return localesOptions[0].code;
-  });
+    if (defaultFromOptions) setLocaleToTranslateFrom(defaultFromOptions.code);
+    setLocaleToTranslateFrom(localesOptions[0].code);
+  }, [locale]);
 
   const closeTranslator = () => modal.closeModal(modalSlug);
 
@@ -118,7 +121,10 @@ export const TranslatorProvider = ({ children }: { children: ReactNode }) => {
       type: 'REPLACE_STATE',
     });
 
-    if (resolverConfig) toast.success(resolverT('successMessage'));
+    if (resolverConfig) {
+      setModified(true);
+      toast.success(resolverT('successMessage'));
+    }
     closeTranslator();
   };
 
