@@ -17,6 +17,43 @@ export type TranslateOperationArgs = (
 ) &
   TranslateArgs;
 
+// target nested elements with potentially duplicated IDs that are not blocks
+function objNeedsNewId(val: unknown): val is { id: string } {
+  return (
+    typeof val === 'object' &&
+    val !== null &&
+    'id' in val &&
+    !('blockType' in val) &&
+    typeof val.id === 'string'
+  );
+}
+
+function stripNodeIds(obj) {
+  // recursive function to iterate through nested properties
+  const recurse = (item) => {
+    if (Array.isArray(item)) {
+      // recurse through each element in the array
+      item.forEach((subItem) => {
+        recurse(subItem);
+      });
+    } else if (typeof item === 'object' && item !== null) {
+      // check if the object has an 'id' attr
+      if (objNeedsNewId(item)) {
+        const newId = new ObjectID().toHexString();
+        item.id = newId;
+      }
+
+      // recurse through each property
+      Object.entries(item).forEach(([, value]) => {
+        recurse(value);
+      });
+    }
+  };
+
+  // Start the iteration with the root object
+  recurse(obj);
+}
+
 export const translateOperation = async (args: TranslateOperationArgs) => {
   const req: PayloadRequest =
     'req' in args
@@ -83,6 +120,8 @@ export const translateOperation = async (args: TranslateOperationArgs) => {
     resolveResult.translatedTexts.forEach((translated, index) => {
       valuesToTranslate[index].onTranslate(translated);
     });
+
+    stripNodeIds(translatedData);
 
     if (args.update) {
       await updateEntity({
