@@ -1,3 +1,4 @@
+import ObjectID from 'bson-objectid';
 import { APIError } from 'payload/errors';
 import type { Payload, PayloadRequest } from 'payload/types';
 
@@ -9,11 +10,11 @@ import { updateEntity } from './updateEntity';
 
 export type TranslateOperationArgs = (
   | {
-      payload: Payload;
-    }
+    payload: Payload;
+  }
   | {
-      req: PayloadRequest;
-    }
+    req: PayloadRequest;
+  }
 ) &
   TranslateArgs;
 
@@ -28,9 +29,9 @@ function objNeedsNewId(val: unknown): val is { id: string } {
   );
 }
 
-function stripNodeIds(obj) {
+function stripNodeIds(obj: unknown) {
   // recursive function to iterate through nested properties
-  const recurse = (item) => {
+  const recurse = (item: unknown) => {
     if (Array.isArray(item)) {
       // recurse through each element in the array
       item.forEach((subItem) => {
@@ -40,6 +41,7 @@ function stripNodeIds(obj) {
       // check if the object has an 'id' attr
       if (objNeedsNewId(item)) {
         const newId = new ObjectID().toHexString();
+
         item.id = newId;
       }
 
@@ -59,8 +61,8 @@ export const translateOperation = async (args: TranslateOperationArgs) => {
     'req' in args
       ? args.req
       : ({
-          payload: args.payload,
-        } as PayloadRequest);
+        payload: args.payload,
+      } as PayloadRequest);
 
   const { collectionSlug, globalSlug, id, locale, localeFrom, overrideAccess } = args;
 
