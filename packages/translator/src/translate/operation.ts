@@ -1,4 +1,3 @@
-import ObjectID from 'bson-objectid';
 import { APIError } from 'payload/errors';
 import type { Payload, PayloadRequest } from 'payload/types';
 
@@ -10,59 +9,21 @@ import { updateEntity } from './updateEntity';
 
 export type TranslateOperationArgs = (
   | {
-    payload: Payload;
-  }
+      payload: Payload;
+    }
   | {
-    req: PayloadRequest;
-  }
+      req: PayloadRequest;
+    }
 ) &
   TranslateArgs;
-
-// target nested elements with potentially duplicated IDs that are not blocks
-function objNeedsNewId(val: unknown): val is { id: string } {
-  return (
-    typeof val === 'object' &&
-    val !== null &&
-    'id' in val &&
-    !('blockType' in val) &&
-    typeof val.id === 'string'
-  );
-}
-
-function stripNodeIds(obj: unknown) {
-  // recursive function to iterate through nested properties
-  const recurse = (item: unknown) => {
-    if (Array.isArray(item)) {
-      // recurse through each element in the array
-      item.forEach((subItem) => {
-        recurse(subItem);
-      });
-    } else if (typeof item === 'object' && item !== null) {
-      // check if the object has an 'id' attr
-      if (objNeedsNewId(item)) {
-        const newId = new ObjectID().toHexString();
-
-        item.id = newId;
-      }
-
-      // recurse through each property
-      Object.entries(item).forEach(([, value]) => {
-        recurse(value);
-      });
-    }
-  };
-
-  // Start the iteration with the root object
-  recurse(obj);
-}
 
 export const translateOperation = async (args: TranslateOperationArgs) => {
   const req: PayloadRequest =
     'req' in args
       ? args.req
       : ({
-        payload: args.payload,
-      } as PayloadRequest);
+          payload: args.payload,
+        } as PayloadRequest);
 
   const { collectionSlug, globalSlug, id, locale, localeFrom, overrideAccess } = args;
 
@@ -123,7 +84,9 @@ export const translateOperation = async (args: TranslateOperationArgs) => {
       valuesToTranslate[index].onTranslate(translated);
     });
 
-    stripNodeIds(translatedData);
+    // stripNodeIds(translatedData);
+
+    req.payload.logger.info(translatedData);
 
     if (args.update) {
       await updateEntity({
