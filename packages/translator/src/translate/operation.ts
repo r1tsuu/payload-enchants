@@ -84,10 +84,6 @@ export const translateOperation = async (args: TranslateOperationArgs) => {
       valuesToTranslate[index].onTranslate(translated);
     });
 
-    // stripNodeIds(translatedData);
-
-    req.payload.logger.info(translatedData);
-
     if (args.update) {
       await updateEntity({
         collectionSlug,
