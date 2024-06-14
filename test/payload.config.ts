@@ -1,20 +1,16 @@
-import { betterLocalizedFields } from '@payload-enchants/better-localized-fields';
-import { betterUseAsTitle } from '@payload-enchants/better-use-as-title';
-import { docsReorder } from '@payload-enchants/docs-reorder';
-import { seo } from '@payload-enchants/seo';
+// import { betterLocalizedFields } from '@payload-enchants/better-localized-fields';
 import { translator } from '@payload-enchants/translator';
 import { copyResolver } from '@payload-enchants/translator/resolvers/copy';
 import { googleResolver } from '@payload-enchants/translator/resolvers/google';
 import { openAIResolver } from '@payload-enchants/translator/resolvers/openAI';
 import { mongooseAdapter } from '@payloadcms/db-mongodb';
+import { postgresAdapter } from '@payloadcms/db-postgres';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import { slateEditor } from '@payloadcms/richtext-slate';
 import path from 'path';
 import { buildConfig } from 'payload/config';
 import { en } from 'payload/i18n/en';
 import { fileURLToPath } from 'url';
-
-import { cachedPayloadPlugin } from './cached-local-api';
 
 const filename = fileURLToPath(import.meta.url);
 
@@ -89,6 +85,34 @@ export default buildConfig({
           type: 'blocks',
         },
         {
+          blocks: [
+            {
+              fields: [
+                {
+                  fields: [
+                    {
+                      fields: [
+                        {
+                          localized: true,
+                          name: 'text',
+                          type: 'text',
+                        },
+                      ],
+                      name: 'group',
+                      type: 'group',
+                    },
+                  ],
+                  name: 'arr',
+                  type: 'array',
+                },
+              ],
+              slug: 'test',
+            },
+          ],
+          name: 'deep',
+          type: 'blocks',
+        },
+        {
           localized: true,
           name: 'someRich',
           type: 'richText',
@@ -128,9 +152,16 @@ export default buildConfig({
       upload: true,
     },
   ],
-  db: mongooseAdapter({
-    url: process.env.MONGODB_URI || '',
-  }),
+  db:
+    process.env.USE_POSTGRES === 'true'
+      ? postgresAdapter({
+          pool: {
+            connectionString: process.env.POSTGRES_URI!,
+          },
+        })
+      : mongooseAdapter({
+          url: process.env.MONGODB_URI || '',
+        }),
   editor: isLexical ? lexicalEditor({}) : slateEditor({}),
   globals: [
     {
@@ -196,7 +227,7 @@ export default buildConfig({
         }),
       ],
     }),
-    betterLocalizedFields(),
+    // betterLocalizedFields(),
     // betterUseAsTitle({
     //   collections: [
     //     {
