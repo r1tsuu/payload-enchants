@@ -22,6 +22,7 @@
     "@payload-enchants/seo": "workspace:*",
     "@payload-enchants/translator": "workspace:*",
     "@payloadcms/db-mongodb": "3.0.0-beta.41",
+    "@payloadcms/db-postgres": "3.0.0-beta.41",
     "@payloadcms/next": "3.0.0-beta.41",
     "@payloadcms/richtext-lexical": "3.0.0-beta.41",
     "@payloadcms/richtext-slate": "3.0.0-beta.41",

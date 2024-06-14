@@ -87,17 +87,11 @@ export const traverseFields = ({
 
         const arrayDataTranslated = [] as { id: string }[];
 
-        const currentArrayDataInTranslated = Array.isArray(siblingDataTranslated[field.name])
-          ? (siblingDataTranslated[field.name] as { id: string }[])
-          : undefined;
-
         arrayDataFrom.forEach((item, index) => {
-          const currentArrayItemInTranslated = currentArrayDataInTranslated?.[index];
-
           arrayDataTranslated.push({
-            // ensure ids are different, Postgres doesn't like the same.
-            ...(currentArrayItemInTranslated ?? {}),
-            id: currentArrayItemInTranslated?.id ?? ObjectID().toHexString(),
+            ...(item ?? {}),
+            // ensure ids are different if localized
+            id: field.localized || !item.id ? ObjectID().toHexString() : item.id,
           });
 
           traverseFields({
@@ -121,20 +115,13 @@ export const traverseFields = ({
 
         if (isEmpty(blockDataFrom)) break;
 
-        const currentBlockDataInTranslated = Array.isArray(siblingDataTranslated[field.name])
-          ? (siblingDataTranslated[field.name] as { id: string }[])
-          : undefined;
-
         const blockDataTranslated = [] as { blockType: string; id: string }[];
 
         blockDataFrom.forEach((item, index) => {
-          const currentBlockItemInTranslated = currentBlockDataInTranslated?.[index];
-
           blockDataTranslated.push({
-            blockType: item.blockType,
-            // ensure ids are different, needed with Postgres
-            ...(currentBlockItemInTranslated ?? {}),
-            id: currentBlockItemInTranslated?.id ?? ObjectID().toHexString(),
+            ...item,
+            // ensure ids are different if localized
+            id: field.localized || !item.id ? ObjectID().toHexString() : item.id,
           });
 
           const block = field.blocks.find((each) => each.slug === item.blockType);
@@ -193,7 +180,7 @@ export const traverseFields = ({
         if (emptyOnly && siblingDataTranslated[field.name]) return;
 
         // do not translate the block ID or admin-facing label
-        if (field.name === 'blockName' || field.name === 'id')  {
+        if (field.name === 'blockName' || field.name === 'id') {
           break;
         }
 
