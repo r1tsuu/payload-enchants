@@ -176,13 +176,11 @@ export const traverseFields = ({
 
       case 'text':
       case 'textarea':
-        if (field.name === 'blockName' || field.name === 'id') break;
-
         if (!field.localized && !localizedParent && isEmpty(siblingDataFrom[field.name])) return;
         if (emptyOnly && siblingDataTranslated[field.name]) return;
 
         // do not translate the block ID or admin-facing label
-        if (field.name === 'blockName' || field.name === 'id')  {
+        if (field.name === 'blockName' || field.name === 'id') {
           break;
         }
 
