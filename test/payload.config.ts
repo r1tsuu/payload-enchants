@@ -40,6 +40,14 @@ export default buildConfig({
           type: 'text',
         },
         {
+          custom: {
+            translatorSkip: true,
+          },
+          localized: true,
+          name: 'skip',
+          type: 'text',
+        },
+        {
           localized: true,
           name: 'checkbox',
           type: 'checkbox',

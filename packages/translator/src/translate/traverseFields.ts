@@ -85,22 +85,25 @@ export const traverseFields = ({
 
         if (isEmpty(arrayDataFrom)) break;
 
-        const arrayDataTranslated = [] as { id: string }[];
+        let arrayDataTranslated =
+          (siblingDataTranslated[field.name] as { id: string }[] | undefined) ?? [];
 
-        arrayDataFrom.forEach((item, index) => {
-          arrayDataTranslated.push({
-            ...(item ?? {}),
-            // ensure ids are different if localized
-            id: field.localized || !item.id ? ObjectID().toHexString() : item.id,
-          });
+        if (field.localized || localizedParent) {
+          if (arrayDataTranslated.length > 0 && emptyOnly) break;
 
+          arrayDataTranslated = arrayDataFrom.map(() => ({
+            id: ObjectID().toHexString(),
+          }));
+        }
+
+        arrayDataTranslated.forEach((item, index) => {
           traverseFields({
             dataFrom,
             emptyOnly,
             fields: field.fields,
             localizedParent: localizedParent ?? field.localized,
-            siblingDataFrom: item,
-            siblingDataTranslated: arrayDataTranslated[index],
+            siblingDataFrom: arrayDataFrom[index],
+            siblingDataTranslated: item,
             translatedData,
             valuesToTranslate,
           });
@@ -111,19 +114,24 @@ export const traverseFields = ({
         break;
 
       case 'blocks':
-        const blockDataFrom = siblingDataFrom[field.name] as { blockType: string; id: string }[];
+        const blocksDataFrom = siblingDataFrom[field.name] as { blockType: string; id: string }[];
 
-        if (isEmpty(blockDataFrom)) break;
+        if (isEmpty(blocksDataFrom)) break;
 
-        const blockDataTranslated = [] as { blockType: string; id: string }[];
+        let blocksDataTranslated =
+          (siblingDataTranslated[field.name] as { blockType: string; id: string }[] | undefined) ??
+          [];
 
-        blockDataFrom.forEach((item, index) => {
-          blockDataTranslated.push({
-            ...item,
-            // ensure ids are different if localized
-            id: field.localized || !item.id ? ObjectID().toHexString() : item.id,
-          });
+        if (field.localized || localizedParent) {
+          if (blocksDataTranslated.length > 0 && emptyOnly) break;
 
+          blocksDataTranslated = blocksDataFrom.map(({ blockType }) => ({
+            blockType,
+            id: ObjectID().toHexString(),
+          }));
+        }
+
+        blocksDataTranslated.forEach((item, index) => {
           const block = field.blocks.find((each) => each.slug === item.blockType);
 
           if (!block) return;
@@ -132,15 +140,15 @@ export const traverseFields = ({
             dataFrom,
             emptyOnly,
             fields: block.fields,
-            localizedParent,
-            siblingDataFrom: item,
-            siblingDataTranslated: blockDataTranslated[index],
+            localizedParent: localizedParent ?? field.localized,
+            siblingDataFrom: blocksDataFrom[index],
+            siblingDataTranslated: item,
             translatedData,
             valuesToTranslate,
           });
         });
 
-        siblingDataTranslated[field.name] = blockDataTranslated;
+        siblingDataTranslated[field.name] = blocksDataTranslated;
 
         break;
 
@@ -176,6 +184,8 @@ export const traverseFields = ({
 
       case 'text':
       case 'textarea':
+        if (field.custom && typeof field.custom === 'object' && field.custom.translatorSkip) return;
+
         if (!field.localized && !localizedParent && isEmpty(siblingDataFrom[field.name])) return;
         if (emptyOnly && siblingDataTranslated[field.name]) return;
 
