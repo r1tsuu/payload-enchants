@@ -125,9 +125,13 @@ export const buildFindOne = ({
       depth = payload.config.maxDepth;
     }
 
-    const populatedDocsMap = new Map<string, Record<string, any>>();
+    if (depth > 0 && doc) {
+      const populatedDocsMap = new Map<string, Record<string, any>>();
 
-    if (depth > 0 && doc)
+      const docKey = `${args.collection.toString()}-${doc.id}`;
+
+      if (!populatedDocsMap.has(docKey)) populatedDocsMap.set(docKey, doc);
+
       await populateDocRelationships({
         context: args.context,
         ctx,
@@ -142,6 +146,7 @@ export const buildFindOne = ({
         req: args.req,
         showHiddenFields: args.showHiddenFields,
       });
+    }
 
     return doc;
   };

@@ -78,9 +78,13 @@ export const buildFindByID = ({
     if (depth > payload.config.maxDepth)
       throw new APIError(`maxDepth ${depth} - ${payload.config.maxDepth}`);
 
-    const populatedDocsMap = new Map<string, Record<string, any>>();
+    if (depth > 0) {
+      const populatedDocsMap = new Map<string, Record<string, any>>();
 
-    if (depth > 0)
+      const docKey = `${args.collection.toString()}-${doc.id}`;
+
+      if (!populatedDocsMap.has(docKey)) populatedDocsMap.set(docKey, doc);
+
       await populateDocRelationships({
         context: args.context,
         ctx,
@@ -95,6 +99,7 @@ export const buildFindByID = ({
         req: args.req,
         showHiddenFields: args.showHiddenFields,
       });
+    }
 
     return doc;
   };

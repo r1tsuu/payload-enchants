@@ -77,7 +77,7 @@ export const populateDocRelationships = async ({
           collection: collection as keyof GeneratedTypes['collections'],
           context,
           currentDepth: depth,
-          depth: depth - 1,
+          depth: 0,
           disableErrors: true,
           draft,
           fallbackLocale: fallbackLocale as GeneratedTypes['locale'],
