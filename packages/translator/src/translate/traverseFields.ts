@@ -217,23 +217,37 @@ export const traverseFields = ({
 
         if (!isSlate && !isLexical) break;
 
-        const root = (
-          isLexical
-            ? (siblingDataTranslated[field.name] as Record<string, unknown>).root
-            : (siblingDataTranslated[field.name] as unknown[])?.[0]
-        ) as Record<string, unknown>;
+        if (isLexical) {
+          const root = (siblingDataTranslated[field.name] as Record<string, unknown>)
+            ?.root as Record<string, unknown>;
 
-        traverseRichText({
-          onText: (siblingData) => {
-            valuesToTranslate.push({
-              onTranslate: (translated: string) => {
-                siblingData.text = translated;
+          if (root)
+            traverseRichText({
+              onText: (siblingData) => {
+                valuesToTranslate.push({
+                  onTranslate: (translated: string) => {
+                    siblingData.text = translated;
+                  },
+                  value: siblingData.text,
+                });
               },
-              value: siblingData.text,
+              root,
             });
-          },
-          root,
-        });
+        } else {
+          for (const root of siblingDataTranslated[field.name] as unknown[]) {
+            traverseRichText({
+              onText: (siblingData) => {
+                valuesToTranslate.push({
+                  onTranslate: (translated: string) => {
+                    siblingData.text = translated;
+                  },
+                  value: siblingData.text,
+                });
+              },
+              root: root as Record<string, unknown>,
+            });
+          }
+        }
 
         break;
 
