@@ -167,8 +167,5 @@ export type Options = {
   shouldRevalidateOnDelete?: (
     args: Parameters<CollectionAfterDeleteHook>[0],
   ) => Promise<boolean> | boolean;
-
-  // Completely disable caching in any operation
-  disableCache?: boolean;
 };
 ```

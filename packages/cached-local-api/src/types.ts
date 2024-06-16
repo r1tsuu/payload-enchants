@@ -105,7 +105,6 @@ export type Args = {
     buildTagFindByID?: (args: { id: number | string; slug: string }) => string;
     buildTagFindGlobal?: (args: { slug: string }) => string;
     buildTagFindOne?: (args: { fieldName: string; slug: string }) => string;
-    disableCache?: boolean;
     shouldCacheCountOperation?: (args: CountArgs<any>) => Promise<boolean> | boolean;
     shouldCacheFindByIDOperation?: (args: FindByIDArgs<any>) => Promise<boolean> | boolean;
     shouldCacheFindGlobalOperation?: (args: FindGlobalArgs<any>) => Promise<boolean> | boolean;
@@ -132,7 +131,6 @@ export type SanitizedArgsContext = {
   buildTagFindOne: (args: { fieldName: string; slug: string; value: unknown }) => string;
   collections: Array<{ findOneFields: Required<FindOneFieldConfig>[]; slug: string }>;
   debugLog: (args: { message: string; payload: Payload }) => void;
-  disableCache: boolean;
   globals: Array<{ slug: string }>;
   revalidateTag: (tag: string) => void;
   revalidateTags: (args: {

@@ -10,10 +10,11 @@ import type { PopulationItem } from './types';
 export const populateDocRelationships = async ({
   context,
   ctx,
+  data,
   depth,
-  docs,
   draft,
   fallbackLocale,
+  fields,
   find,
   locale,
   overrideAccess,
@@ -26,10 +27,11 @@ export const populateDocRelationships = async ({
   context?: RequestContext;
   ctx: SanitizedArgsContext;
   currentDepth?: number;
+  data: Record<string, any>;
   depth: number;
-  docs: { data: any; fields: Field[] }[];
   draft?: boolean;
   fallbackLocale?: string;
+  fields: Field[];
   find: Find;
   locale?: string;
   overrideAccess?: boolean;
@@ -41,15 +43,9 @@ export const populateDocRelationships = async ({
 }) => {
   if (!depth) return;
 
-  const populationLists = docs.map((doc) => {
-    const populationList: PopulationItem[] = [];
+  const populationList: PopulationItem[] = [];
 
-    traverseFields({ data: doc.data, fields: doc.fields, payload, populationList });
-
-    return { doc, populationList };
-  });
-
-  const populationList = populationLists.flatMap((each) => each.populationList);
+  traverseFields({ data, fields, payload, populationList });
 
   const populatedPromises: Promise<{
     collection: string;
@@ -76,7 +72,6 @@ export const populateDocRelationships = async ({
         const { docs } = await find({
           collection: collection as keyof GeneratedTypes['collections'],
           context,
-          currentDepth: depth,
           depth: depth - 1,
           disableErrors: true,
           draft,
@@ -110,41 +105,37 @@ export const populateDocRelationships = async ({
     );
   });
 
-  for (const promise of populatedPromises) {
-    await promise;
-  }
+  await Promise.all(populatedPromises);
 
-  const nextDepthData = [] as { data: any; fields: Field[] }[];
+  await Promise.all(
+    populationList.map(async (item) => {
+      const populatedDoc = populatedDocsMap.get(`${item.collection.slug}-${item.id}`);
 
-  for (const item of populationList) {
-    const populatedDoc = populatedDocsMap.get(`${item.collection.slug}-${item.id}`);
+      if (!populatedDoc || typeof populatedDoc !== 'object') {
+        return;
+      }
 
-    if (!populatedDoc || typeof populatedDoc !== 'object') {
-      return;
-    }
+      item.ref[item.accessor] = populatedDoc;
 
-    item.ref[item.accessor] = populatedDoc;
-
-    if (depth > 1)
-      nextDepthData.push({ data: item.ref[item.accessor], fields: item.collection.fields });
-  }
-
-  if (depth > 1) {
-    await populateDocRelationships({
-      context,
-      ctx,
-      depth: depth - 2,
-      docs: nextDepthData,
-      draft,
-      fallbackLocale,
-      find,
-      locale,
-      overrideAccess,
-      payload,
-      populatedDocsMap,
-      req,
-      showHiddenFields,
-      user,
-    });
-  }
+      if (depth > 1) {
+        await populateDocRelationships({
+          context,
+          ctx,
+          data: item.ref[item.accessor] as Record<string, unknown>,
+          depth: depth - 2,
+          draft,
+          fallbackLocale,
+          fields: item.collection.fields,
+          find,
+          locale,
+          overrideAccess,
+          payload,
+          populatedDocsMap,
+          req,
+          showHiddenFields,
+          user,
+        });
+      }
+    }),
+  );
 };

@@ -10,7 +10,7 @@ export const buildCount = ({
   payload: Payload;
 }): Count => {
   return async function count<T extends keyof GeneratedTypes['collections']>(args: CountArgs<T>) {
-    const shouldCache = (await ctx.shouldCacheCountOperation(args)) && !ctx.disableCache;
+    const shouldCache = await ctx.shouldCacheCountOperation(args);
 
     if (!shouldCache) return payload.count(args);
 
