@@ -45,6 +45,8 @@ export const translateOperation = async (args: TranslateOperationArgs) => {
 
   let translatedData = args.data;
 
+  console.log(translatedData);
+
   if (!translatedData) {
     const { doc } = await findEntityWithConfig({
       collectionSlug,

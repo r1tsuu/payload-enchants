@@ -26,4 +26,4 @@ export type TranslateResult =
       translatedData: Record<string, any>;
     };
 
-export type TranslateEndpointArgs = Omit<TranslateArgs, 'data' | 'update'>;
+export type TranslateEndpointArgs = Omit<TranslateArgs, 'update'>;

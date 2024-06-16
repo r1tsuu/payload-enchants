@@ -14,6 +14,7 @@ https://github.com/r1tsuu/payload-plugin-translator/assets/64744993/d39aeba4-baf
 2. Can be used not only from the admin panel, but within Local API as well. [Example of the hook](#example-of-the-hook-that-uses-local-operation-to-copy-the-doc-data-to-other-locales) that automatically fills the other locales data on create
 3. Out of the box supports 3 resolvers - Copy, Google Translate, OpenAI and your own can be written easily.
 4. Works with any nested document structure and 2 Rich Text editor adapters - Lexical and Slate.
+5. You can omit some fields to translate. [Documentation](#omitting-fields)
 
 ## Usage:
 
@@ -189,5 +190,20 @@ export const copyOtherLocales: CollectionAfterChangeHook = async ({
       update: true,
     });
   }
+};
+```
+
+### Omitting fields
+
+To omit a specific field for translation, simply add `custom.translatorSkip = true` to the field's config.
+
+```ts
+const field = {
+  custom: {
+    translatorSkip: true,
+  },
+  localized: true,
+  name: 'skip',
+  type: 'text',
 };
 ```

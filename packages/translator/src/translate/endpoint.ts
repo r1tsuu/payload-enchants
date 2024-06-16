@@ -9,10 +9,11 @@ export const translateEndpoint: PayloadHandler = async (req) => {
 
   const args: TranslateEndpointArgs = await req.json();
 
-  const { collectionSlug, emptyOnly, globalSlug, id, locale, localeFrom, resolver } = args;
+  const { collectionSlug, data, emptyOnly, globalSlug, id, locale, localeFrom, resolver } = args;
 
   const result = await translateOperation({
     collectionSlug,
+    data,
     emptyOnly,
     globalSlug,
     id,
