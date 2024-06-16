@@ -18,7 +18,8 @@ export const buildFindByID = ({
   ) {
     const hasInConfig = ctx.collections.some(({ slug }) => slug === args.collection);
 
-    const shouldCache = hasInConfig && (await ctx.shouldCacheFindByIDOperation(args));
+    const shouldCache =
+      hasInConfig && (await ctx.shouldCacheFindByIDOperation(args)) && !ctx.disableCache;
 
     if (!shouldCache) return payload.findByID(args);
 
@@ -68,7 +69,11 @@ export const buildFindByID = ({
       });
     }
 
-    const depth = args.depth ?? payload.config.defaultDepth;
+    let depth = args.depth ?? payload.config.defaultDepth;
+
+    if (depth > payload.config.maxDepth) {
+      depth = payload.config.maxDepth;
+    }
 
     if (depth > payload.config.maxDepth)
       throw new APIError(`maxDepth ${depth} - ${payload.config.maxDepth}`);
@@ -79,11 +84,10 @@ export const buildFindByID = ({
       await populateDocRelationships({
         context: args.context,
         ctx,
-        data: doc,
         depth,
+        docs: [{ data: doc, fields: payload.collections[args.collection].config.fields }],
         draft: args.draft,
         fallbackLocale: args.fallbackLocale || undefined,
-        fields: payload.collections[args.collection].config.fields,
         find,
         locale: args.locale || undefined,
         payload,

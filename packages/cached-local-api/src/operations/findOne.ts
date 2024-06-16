@@ -35,7 +35,7 @@ export const buildFindOne = ({
         { field: 'args.field', message: 'Invalid findOne field' + args.field },
       ]);
 
-    const shouldCache = await ctx.shouldCacheFindOneOperation(args);
+    const shouldCache = (await ctx.shouldCacheFindOneOperation(args)) && !ctx.disableCache;
 
     const where = field.buildWhere({ args, fieldName: field.name, shouldCache, value: args.value });
 
@@ -119,7 +119,11 @@ export const buildFindOne = ({
       });
     }
 
-    const depth = args.depth ?? payload.config.defaultDepth;
+    let depth = args.depth ?? payload.config.defaultDepth;
+
+    if (depth > payload.config.maxDepth) {
+      depth = payload.config.maxDepth;
+    }
 
     const populatedDocsMap = new Map<string, Record<string, any>>();
 
@@ -127,11 +131,10 @@ export const buildFindOne = ({
       await populateDocRelationships({
         context: args.context,
         ctx,
-        data: doc,
         depth,
+        docs: [{ data: doc, fields: payload.collections[args.collection].config.fields }],
         draft: args.draft,
         fallbackLocale: args.fallbackLocale ?? undefined,
-        fields: payload.collections[args.collection].config.fields,
         find,
         locale: args.locale || undefined,
         payload,
