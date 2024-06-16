@@ -2,7 +2,6 @@ import type { GeneratedTypes, Payload } from 'payload';
 
 import { populateDocRelationships } from '../populate';
 import type { Find, FindArgs, SanitizedArgsContext } from '../types';
-import { chunkArray } from '../utils/chunkArray';
 
 export const buildFind = ({
   ctx,
@@ -12,7 +11,7 @@ export const buildFind = ({
   payload: Payload;
 }): Find => {
   return async function find<T extends keyof GeneratedTypes['collections']>(args: FindArgs<T>) {
-    const shouldCache = await ctx.shouldCacheFindOperation(args);
+    const shouldCache = (await ctx.shouldCacheFindOperation(args)) && !ctx.disableCache;
 
     if (!shouldCache) return payload.find(args);
 
@@ -73,32 +72,29 @@ export const buildFind = ({
 
     const populatedDocsMap = args.populatedDocsMap ?? new Map<string, Record<string, any>>();
 
-    const depth = args.depth ?? payload.config.defaultDepth;
+    let depth = args.depth ?? payload.config.defaultDepth;
 
-    if (depth > 0) {
-      const batches = chunkArray(result.docs, 35);
-
-      for (const batch of batches) {
-        await Promise.all(
-          batch.map((doc) =>
-            populateDocRelationships({
-              context: args.context,
-              ctx,
-              data: doc,
-              depth,
-              draft: args.draft,
-              fallbackLocale: args.fallbackLocale ?? undefined,
-              fields: payload.collections[args.collection].config.fields,
-              find,
-              locale: args.locale || undefined,
-              payload,
-              populatedDocsMap,
-              showHiddenFields: args.showHiddenFields,
-            }),
-          ),
-        );
-      }
+    if (depth > payload.config.maxDepth) {
+      depth = payload.config.maxDepth;
     }
+
+    if (depth > 0)
+      await populateDocRelationships({
+        context: args.context,
+        ctx,
+        depth,
+        docs: result.docs.map((doc) => ({
+          data: doc,
+          fields: payload.collections[args.collection].config.fields,
+        })),
+        draft: args.draft,
+        fallbackLocale: args.fallbackLocale ?? undefined,
+        find,
+        locale: args.locale || undefined,
+        payload,
+        populatedDocsMap,
+        showHiddenFields: args.showHiddenFields,
+      });
 
     return result;
   };

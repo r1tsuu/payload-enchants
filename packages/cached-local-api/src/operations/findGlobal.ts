@@ -15,7 +15,7 @@ export const buildFindGlobal = ({
   return async function findGlobal<T extends keyof GeneratedTypes['globals']>(
     args: FindGlobalArgs<T>,
   ) {
-    const shouldCache = await ctx.shouldCacheFindGlobalOperation(args);
+    const shouldCache = (await ctx.shouldCacheFindGlobalOperation(args)) && !ctx.disableCache;
 
     if (!shouldCache) return payload.findGlobal(args);
 
@@ -63,7 +63,11 @@ export const buildFindGlobal = ({
       });
     }
 
-    const depth = args.depth ?? payload.config.defaultDepth;
+    let depth = args.depth ?? payload.config.defaultDepth;
+
+    if (depth > payload.config.maxDepth) {
+      depth = payload.config.maxDepth;
+    }
 
     const global = payload.config.globals.find((each) => each.slug === args.slug)!;
 
@@ -73,11 +77,10 @@ export const buildFindGlobal = ({
       await populateDocRelationships({
         context: args.context,
         ctx,
-        data: doc,
         depth,
+        docs: [{ data: doc, fields: global.fields }],
         draft: args.draft,
         fallbackLocale: args.fallbackLocale || undefined,
-        fields: global.fields,
         find,
         locale: args.locale || undefined,
         payload,

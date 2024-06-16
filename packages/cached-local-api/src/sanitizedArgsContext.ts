@@ -60,6 +60,7 @@ export const sanitizedArgsContext = (args: Args): SanitizedArgsContext => {
 
       payload.logger.info(`[Cached Local API] - ${message}`);
     },
+    disableCache: args.options?.disableCache ?? false,
     globals: (args.globals ?? []).map((each) => {
       return {
         slug: each.slug.toString(),

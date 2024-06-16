@@ -10,11 +10,10 @@ import type { PopulationItem } from './types';
 export const populateDocRelationships = async ({
   context,
   ctx,
-  data,
   depth,
+  docs,
   draft,
   fallbackLocale,
-  fields,
   find,
   locale,
   overrideAccess,
@@ -27,11 +26,10 @@ export const populateDocRelationships = async ({
   context?: RequestContext;
   ctx: SanitizedArgsContext;
   currentDepth?: number;
-  data: Record<string, any>;
   depth: number;
+  docs: { data: any; fields: Field[] }[];
   draft?: boolean;
   fallbackLocale?: string;
-  fields: Field[];
   find: Find;
   locale?: string;
   overrideAccess?: boolean;
@@ -43,9 +41,15 @@ export const populateDocRelationships = async ({
 }) => {
   if (!depth) return;
 
-  const populationList: PopulationItem[] = [];
+  const populationLists = docs.map((doc) => {
+    const populationList: PopulationItem[] = [];
 
-  traverseFields({ data, fields, payload, populationList });
+    traverseFields({ data: doc.data, fields: doc.fields, payload, populationList });
+
+    return { doc, populationList };
+  });
+
+  const populationList = populationLists.flatMap((each) => each.populationList);
 
   const populatedPromises: Promise<{
     collection: string;
@@ -72,6 +76,7 @@ export const populateDocRelationships = async ({
         const { docs } = await find({
           collection: collection as keyof GeneratedTypes['collections'],
           context,
+          currentDepth: depth,
           depth: depth - 1,
           disableErrors: true,
           draft,
@@ -105,37 +110,41 @@ export const populateDocRelationships = async ({
     );
   });
 
-  await Promise.all(populatedPromises);
+  for (const promise of populatedPromises) {
+    await promise;
+  }
 
-  await Promise.all(
-    populationList.map(async (item) => {
-      const populatedDoc = populatedDocsMap.get(`${item.collection.slug}-${item.id}`);
+  const nextDepthData = [] as { data: any; fields: Field[] }[];
 
-      if (!populatedDoc || typeof populatedDoc !== 'object') {
-        return;
-      }
+  for (const item of populationList) {
+    const populatedDoc = populatedDocsMap.get(`${item.collection.slug}-${item.id}`);
 
-      item.ref[item.accessor] = populatedDoc;
+    if (!populatedDoc || typeof populatedDoc !== 'object') {
+      return;
+    }
 
-      if (depth > 1) {
-        await populateDocRelationships({
-          context,
-          ctx,
-          data: item.ref[item.accessor] as Record<string, unknown>,
-          depth: depth - 2,
-          draft,
-          fallbackLocale,
-          fields: item.collection.fields,
-          find,
-          locale,
-          overrideAccess,
-          payload,
-          populatedDocsMap,
-          req,
-          showHiddenFields,
-          user,
-        });
-      }
-    }),
-  );
+    item.ref[item.accessor] = populatedDoc;
+
+    if (depth > 1)
+      nextDepthData.push({ data: item.ref[item.accessor], fields: item.collection.fields });
+  }
+
+  if (depth > 1) {
+    await populateDocRelationships({
+      context,
+      ctx,
+      depth: depth - 2,
+      docs: nextDepthData,
+      draft,
+      fallbackLocale,
+      find,
+      locale,
+      overrideAccess,
+      payload,
+      populatedDocsMap,
+      req,
+      showHiddenFields,
+      user,
+    });
+  }
 };
