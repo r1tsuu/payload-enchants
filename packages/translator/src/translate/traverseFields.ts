@@ -184,10 +184,10 @@ export const traverseFields = ({
 
       case 'text':
       case 'textarea':
-        if (field.custom && typeof field.custom === 'object' && field.custom.translatorSkip) return;
+        if (field.custom && typeof field.custom === 'object' && field.custom.translatorSkip) break;
 
-        if (!field.localized || !localizedParent || isEmpty(siblingDataFrom[field.name])) return;
-        if (emptyOnly && siblingDataTranslated[field.name]) return;
+        if (!(field.localized || localizedParent) || isEmpty(siblingDataFrom[field.name])) break;
+        if (emptyOnly && siblingDataTranslated[field.name]) break;
 
         // do not translate the block ID or admin-facing label
         if (field.name === 'blockName' || field.name === 'id') {
@@ -203,8 +203,9 @@ export const traverseFields = ({
         break;
 
       case 'richText':
-        if (!field.localized && !localizedParent && isEmpty(siblingDataFrom[field.name])) break;
-        if (emptyOnly && siblingDataTranslated[field.name]) return;
+        if (!(field.localized || localizedParent) || isEmpty(siblingDataFrom[field.name])) break;
+        if (emptyOnly && siblingDataTranslated[field.name]) break;
+
         const richTextDataFrom = siblingDataFrom[field.name] as object;
 
         siblingDataTranslated[field.name] = richTextDataFrom;
