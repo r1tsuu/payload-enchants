@@ -84,6 +84,7 @@ export const buildFindOne = ({
       args.context,
       args.field,
       args.value,
+      ctx.useSimpleCacheStrategy ? args.depth : null,
     ];
 
     let cacheHit = true;

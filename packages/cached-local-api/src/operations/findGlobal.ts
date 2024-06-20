@@ -33,6 +33,7 @@ export const buildFindGlobal = ({
       args.overrideAccess,
       user,
       args.showHiddenFields,
+      ctx.useSimpleCacheStrategy ? args.depth : null,
     ];
 
     let cacheHit = true;

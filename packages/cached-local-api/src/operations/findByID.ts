@@ -34,6 +34,7 @@ export const buildFindByID = ({
       args.draft,
       fallbackLocale,
       locale,
+      ctx.useSimpleCacheStrategy ? args.depth : null,
       args.id,
       args.overrideAccess,
       user,
