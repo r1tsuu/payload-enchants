@@ -123,7 +123,7 @@ export const populateDocRelationships = async ({
       return;
     }
 
-    item.ref[item.accessor] = populatedDoc;
+    item.ref[item.accessor] = JSON.parse(JSON.stringify(populatedDoc));
 
     if (depth > 1)
       nextDepthData.push({ data: item.ref[item.accessor], fields: item.collection.fields });
@@ -133,7 +133,7 @@ export const populateDocRelationships = async ({
     await populateDocRelationships({
       context,
       ctx,
-      depth: depth - 2,
+      depth: depth - 1,
       docs: nextDepthData,
       draft,
       fallbackLocale,

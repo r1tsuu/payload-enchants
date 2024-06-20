@@ -42,11 +42,15 @@ export const buildCount = ({
       () => {
         cacheHit = false;
 
-        return payload.count({ ...args, depth: 0 });
+        return payload.count(args);
       },
       [JSON.stringify(keys)],
       {
-        tags: [ctx.buildTagFind({ slug: args.collection as string })],
+        tags: [
+          ctx.useSimpleCacheStrategy
+            ? ctx.SIMPLE_CACHE_TAG
+            : ctx.buildTagFind({ slug: args.collection as string }),
+        ],
       },
     )();
 

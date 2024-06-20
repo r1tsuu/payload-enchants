@@ -123,9 +123,15 @@ export type Args = {
   };
   revalidateTag: (tag: string) => void;
   unstable_cache: UnstableCache;
+  /**
+   *  Instead of revalidating each collection document separately
+   * 'simpleCache' revalidates all cached data on Payload database update
+   *  */
+  useSimpleCacheStrategy?: boolean;
 };
 
 export type SanitizedArgsContext = {
+  SIMPLE_CACHE_TAG: string;
   buildTagFind: (args: { slug: string }) => string;
   buildTagFindByID: (args: { id: number | string; slug: string }) => string;
   buildTagFindGlobal: (args: { slug: string }) => string;
@@ -134,9 +140,11 @@ export type SanitizedArgsContext = {
   debugLog: (args: { message: string; payload: Payload }) => void;
   disableCache: boolean;
   globals: Array<{ slug: string }>;
+  revalidate?: number;
+  revalidateSimpleTag: (payload: Payload) => void;
   revalidateTag: (tag: string) => void;
   revalidateTags: (args: {
-    operation: 'CREATE' | 'DELETE' | 'DELETE-BULK' | 'UPDATE' | 'UPDATE-BULK';
+    operation: 'CREATE' | 'DELETE' | 'DELETE-BULK' | 'SIMPLE-TAG' | 'UPDATE' | 'UPDATE-BULK';
     payload: Payload;
     tags: string[];
   }) => void;
@@ -155,6 +163,7 @@ export type SanitizedArgsContext = {
     args: Parameters<CollectionAfterDeleteHook>[0],
   ) => Promise<boolean> | boolean;
   unstable_cache: UnstableCache;
+  useSimpleCacheStrategy: boolean;
 };
 
 export type CachedPayload = {

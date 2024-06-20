@@ -35,6 +35,7 @@ export const buildFind = ({
       args.where,
       args.limit,
       args.page,
+      ctx.useSimpleCacheStrategy ? args.depth : null,
       args.pagination,
       args.overrideAccess,
       userKey,
@@ -50,11 +51,14 @@ export const buildFind = ({
       () => {
         cacheHit = false;
 
-        return payload.find({ ...args, depth: 0 });
+        return payload.find({ ...args, depth: ctx.useSimpleCacheStrategy ? args.depth : 0 });
       },
       [JSON.stringify(keys)],
       {
-        tags: args.tags ?? [ctx.buildTagFind({ slug: args.collection as string })],
+        tags:
+          args.tags ?? ctx.useSimpleCacheStrategy
+            ? [ctx.SIMPLE_CACHE_TAG]
+            : [ctx.buildTagFind({ slug: args.collection as string })],
       },
     )();
 
@@ -70,37 +74,39 @@ export const buildFind = ({
       });
     }
 
-    let depth = args.depth ?? payload.config.defaultDepth;
+    if (!ctx.useSimpleCacheStrategy) {
+      let depth = args.depth ?? payload.config.defaultDepth;
 
-    if (depth > payload.config.maxDepth) {
-      depth = payload.config.maxDepth;
-    }
-
-    if (depth > 0) {
-      const populatedDocsMap = args.populatedDocsMap ?? new Map<string, Record<string, any>>();
-
-      for (const doc of result.docs) {
-        const docKey = `${args.collection.toString()}-${doc.id}`;
-
-        if (!populatedDocsMap.has(docKey)) populatedDocsMap.set(docKey, doc);
+      if (depth > payload.config.maxDepth) {
+        depth = payload.config.maxDepth;
       }
 
-      await populateDocRelationships({
-        context: args.context,
-        ctx,
-        depth,
-        docs: result.docs.map((doc) => ({
-          data: doc,
-          fields: payload.collections[args.collection].config.fields,
-        })),
-        draft: args.draft,
-        fallbackLocale: args.fallbackLocale ?? undefined,
-        find,
-        locale: args.locale || undefined,
-        payload,
-        populatedDocsMap,
-        showHiddenFields: args.showHiddenFields,
-      });
+      if (depth > 0) {
+        const populatedDocsMap = args.populatedDocsMap ?? new Map<string, Record<string, any>>();
+
+        for (const doc of result.docs) {
+          const docKey = `${args.collection.toString()}-${doc.id}`;
+
+          if (!populatedDocsMap.has(docKey)) populatedDocsMap.set(docKey, { ...doc });
+        }
+
+        await populateDocRelationships({
+          context: args.context,
+          ctx,
+          depth,
+          docs: result.docs.map((doc) => ({
+            data: doc,
+            fields: payload.collections[args.collection].config.fields,
+          })),
+          draft: args.draft,
+          fallbackLocale: args.fallbackLocale ?? undefined,
+          find,
+          locale: args.locale || undefined,
+          payload,
+          populatedDocsMap,
+          showHiddenFields: args.showHiddenFields,
+        });
+      }
     }
 
     return result;

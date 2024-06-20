@@ -128,6 +128,12 @@ export type Args = {
 
   /** Next.js unstable_cache */
   unstable_cache: UnstableCache;
+
+  /**
+   * (experiment): Instead of revalidating each collection document separately
+   * 'simpleCache' revalidates all cached data on Payload database update
+   *  */
+  useSimpleCacheStrategy?: boolean;
 };
 
 export type FindOneFieldConfig = {

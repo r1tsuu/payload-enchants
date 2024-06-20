@@ -32,6 +32,7 @@ const should = () => true;
 export const sanitizedArgsContext = (args: Args): SanitizedArgsContext => {
   return {
     ...args,
+    SIMPLE_CACHE_TAG: 'simple-cache-tag',
     buildTagFind: args.options?.buildTagFind ?? defaultBuildTagFind,
     buildTagFindByID: args.options?.buildTagFindByID ?? defaultBuildTagFindByID,
     buildTagFindGlobal: args.options?.buildTagFindGlobal ?? defaultBuildTagFindGlobal,
@@ -66,6 +67,10 @@ export const sanitizedArgsContext = (args: Args): SanitizedArgsContext => {
         slug: each.slug.toString(),
       };
     }),
+    revalidateSimpleTag: function (payload) {
+      this.revalidateTag(this.SIMPLE_CACHE_TAG);
+      this.debugLog({ message: `Cache Revalidated`, payload });
+    },
     revalidateTags: function ({ operation, payload, tags }) {
       tags.forEach((tag) => {
         this.revalidateTag(tag);
@@ -80,5 +85,6 @@ export const sanitizedArgsContext = (args: Args): SanitizedArgsContext => {
     shouldRevalidateGlobalOnChange: args.options?.shouldRevalidateGlobalOnChange ?? should,
     shouldRevalidateOnChange: args.options?.shouldRevalidateOnChange ?? should,
     shouldRevalidateOnDelete: args.options?.shouldRevalidateOnDelete ?? should,
+    useSimpleCacheStrategy: args.useSimpleCacheStrategy ?? false,
   };
 };
