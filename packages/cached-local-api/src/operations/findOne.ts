@@ -95,7 +95,7 @@ export const buildFindOne = ({
         cacheHit = false;
         const {
           docs: [doc],
-        } = await payload.find({ ...fullArgs, depth: 0 });
+        } = await payload.find({ ...fullArgs, depth: ctx.useSimpleCacheStrategy ? args.depth : 0 });
 
         if (!doc) return null;
 
@@ -103,7 +103,7 @@ export const buildFindOne = ({
       },
       [JSON.stringify(keys)],
       {
-        tags: [tag],
+        tags: [ctx.useSimpleCacheStrategy ? ctx.SIMPLE_CACHE_TAG : tag],
       },
     )();
 
@@ -119,33 +119,35 @@ export const buildFindOne = ({
       });
     }
 
-    let depth = args.depth ?? payload.config.defaultDepth;
+    if (!ctx.useSimpleCacheStrategy) {
+      let depth = args.depth ?? payload.config.defaultDepth;
 
-    if (depth > payload.config.maxDepth) {
-      depth = payload.config.maxDepth;
-    }
+      if (depth > payload.config.maxDepth) {
+        depth = payload.config.maxDepth;
+      }
 
-    if (depth > 0 && doc) {
-      const populatedDocsMap = new Map<string, Record<string, any>>();
+      if (depth > 0 && doc) {
+        const populatedDocsMap = new Map<string, Record<string, any>>();
 
-      const docKey = `${args.collection.toString()}-${doc.id}`;
+        const docKey = `${args.collection.toString()}-${doc.id}`;
 
-      if (!populatedDocsMap.has(docKey)) populatedDocsMap.set(docKey, doc);
+        if (!populatedDocsMap.has(docKey)) populatedDocsMap.set(docKey, { ...doc });
 
-      await populateDocRelationships({
-        context: args.context,
-        ctx,
-        depth,
-        docs: [{ data: doc, fields: payload.collections[args.collection].config.fields }],
-        draft: args.draft,
-        fallbackLocale: args.fallbackLocale ?? undefined,
-        find,
-        locale: args.locale || undefined,
-        payload,
-        populatedDocsMap,
-        req: args.req,
-        showHiddenFields: args.showHiddenFields,
-      });
+        await populateDocRelationships({
+          context: args.context,
+          ctx,
+          depth,
+          docs: [{ data: doc, fields: payload.collections[args.collection].config.fields }],
+          draft: args.draft,
+          fallbackLocale: args.fallbackLocale ?? undefined,
+          find,
+          locale: args.locale || undefined,
+          payload,
+          populatedDocsMap,
+          req: args.req,
+          showHiddenFields: args.showHiddenFields,
+        });
+      }
     }
 
     return doc;

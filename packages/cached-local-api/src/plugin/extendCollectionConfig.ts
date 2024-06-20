@@ -96,6 +96,7 @@ export const extendCollectionConfig = ({
       afterChange: [
         ...(collection.hooks?.afterChange ?? []),
         async (hookArgs) => {
+          if (ctx.useSimpleCacheStrategy) return;
           if (!(await ctx.shouldRevalidateOnChange(hookArgs))) return;
 
           executeSingleDocHook({
@@ -116,6 +117,7 @@ export const extendCollectionConfig = ({
       afterDelete: [
         ...(collection.hooks?.afterDelete ?? []),
         async (hookArgs) => {
+          if (ctx.useSimpleCacheStrategy) return;
           if (!(await ctx.shouldRevalidateOnDelete(hookArgs))) return;
 
           executeSingleDocHook({
@@ -131,6 +133,16 @@ export const extendCollectionConfig = ({
             payload: hookArgs.req.payload,
             tags: [ctx.buildTagFind({ slug: collection.slug })],
           });
+        },
+      ],
+      afterOperation: [
+        ({ operation, req: { payload }, result }) => {
+          if (!ctx.useSimpleCacheStrategy) return result;
+          if (!['delete', 'deleteByID', 'update', 'updateByID'].includes(operation)) return result;
+
+          ctx.revalidateSimpleTag(payload);
+
+          return result;
         },
       ],
     },

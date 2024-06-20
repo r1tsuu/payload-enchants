@@ -43,11 +43,15 @@ export const buildFindGlobal = ({
       () => {
         cacheHit = false;
 
-        return payload.findGlobal({ ...args, depth: 0 });
+        return payload.findGlobal({ ...args, depth: ctx.useSimpleCacheStrategy ? args.depth : 0 });
       },
       [JSON.stringify(keys)],
       {
-        tags: [ctx.buildTagFindGlobal({ slug: args.slug as string })],
+        tags: [
+          ctx.useSimpleCacheStrategy
+            ? ctx.SIMPLE_CACHE_TAG
+            : ctx.buildTagFindGlobal({ slug: args.slug as string }),
+        ],
       },
     )();
 
@@ -63,31 +67,33 @@ export const buildFindGlobal = ({
       });
     }
 
-    let depth = args.depth ?? payload.config.defaultDepth;
+    if (!ctx.useSimpleCacheStrategy) {
+      let depth = args.depth ?? payload.config.defaultDepth;
 
-    if (depth > payload.config.maxDepth) {
-      depth = payload.config.maxDepth;
+      if (depth > payload.config.maxDepth) {
+        depth = payload.config.maxDepth;
+      }
+
+      const global = payload.config.globals.find((each) => each.slug === args.slug)!;
+
+      const populatedDocsMap = new Map<string, Record<string, any>>();
+
+      if (depth > 0)
+        await populateDocRelationships({
+          context: args.context,
+          ctx,
+          depth,
+          docs: [{ data: doc, fields: global.fields }],
+          draft: args.draft,
+          fallbackLocale: args.fallbackLocale || undefined,
+          find,
+          locale: args.locale || undefined,
+          payload,
+          populatedDocsMap,
+          req: args.req,
+          showHiddenFields: args.showHiddenFields,
+        });
     }
-
-    const global = payload.config.globals.find((each) => each.slug === args.slug)!;
-
-    const populatedDocsMap = new Map<string, Record<string, any>>();
-
-    if (depth > 0)
-      await populateDocRelationships({
-        context: args.context,
-        ctx,
-        depth,
-        docs: [{ data: doc, fields: global.fields }],
-        draft: args.draft,
-        fallbackLocale: args.fallbackLocale || undefined,
-        find,
-        locale: args.locale || undefined,
-        payload,
-        populatedDocsMap,
-        req: args.req,
-        showHiddenFields: args.showHiddenFields,
-      });
 
     return doc;
   };

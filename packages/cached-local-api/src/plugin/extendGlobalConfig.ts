@@ -22,6 +22,12 @@ export const extendGlobalConfig = ({
 
           if (!shouldValidate) return;
 
+          if (ctx.useSimpleCacheStrategy) {
+            ctx.revalidateSimpleTag(hookArgs.req.payload);
+
+            return;
+          }
+
           ctx.revalidateTags({
             operation: 'UPDATE',
             payload: hookArgs.req.payload,
