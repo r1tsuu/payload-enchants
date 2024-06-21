@@ -136,6 +136,7 @@ export const extendCollectionConfig = ({
         },
       ],
       afterOperation: [
+        ...(collection.hooks?.afterOperation ?? []),
         ({ operation, req: { payload }, result }) => {
           if (!ctx.useSimpleCacheStrategy) return result;
           if (!['delete', 'deleteByID', 'update', 'updateByID'].includes(operation)) return result;
