@@ -1,4 +1,5 @@
 // import { betterLocalizedFields } from '@payload-enchants/better-localized-fields';
+import { fieldsSelect } from '@payload-enchants/fields-select';
 import { translator } from '@payload-enchants/translator';
 import { copyResolver } from '@payload-enchants/translator/resolvers/copy';
 import { googleResolver } from '@payload-enchants/translator/resolvers/google';
@@ -171,6 +172,22 @@ export default buildConfig({
           url: process.env.MONGODB_URI || '',
         }),
   editor: isLexical ? lexicalEditor({}) : slateEditor({}),
+  endpoints: [
+    {
+      handler: async ({ payload }) => {
+        const data = await payload.find({
+          collection: 'posts',
+          context: {
+            select: ['up', 'array.titleLocalized', 'blocks.id'],
+          },
+        });
+
+        return Response.json(data);
+      },
+      method: 'get',
+      path: '/select',
+    },
+  ],
   globals: [
     {
       fields: [],
@@ -235,6 +252,8 @@ export default buildConfig({
         }),
       ],
     }),
+    fieldsSelect({ sanitizeExternals: true }),
+
     // betterLocalizedFields(),
     // betterUseAsTitle({
     //   collections: [
