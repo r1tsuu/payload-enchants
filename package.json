@@ -25,6 +25,7 @@
     "publish:seo": "cd ./packages/seo && pnpm publish",
     "publish:translator": "cd ./packages/translator && pnpm publish",
     "publish:better-use-as-title": "cd ./packages/better-use-as-title && pnpm publish",
+    "publish:fields-select": "cd ./packages/fields-select && pnpm publish",
     "test": "cd test && pnpm test"
   },
   "devDependencies": {
