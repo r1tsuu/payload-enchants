@@ -9,7 +9,7 @@ import { postgresAdapter } from '@payloadcms/db-postgres';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import { slateEditor } from '@payloadcms/richtext-slate';
 import path from 'path';
-import { buildConfig } from 'payload/config';
+import { buildConfig } from 'payload';
 import { en } from 'payload/i18n/en';
 import { fileURLToPath } from 'url';
 

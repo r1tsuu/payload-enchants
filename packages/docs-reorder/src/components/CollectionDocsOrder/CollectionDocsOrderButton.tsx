@@ -1,15 +1,18 @@
 'use client';
 
-import { Button, toast } from '@payloadcms/ui/elements';
+import {
+  Button,
+  DragHandleIcon,
+  toast,
+  useConfig,
+  useListInfo,
+  useLocale,
+  useTranslation,
+} from '@payloadcms/ui';
 import { DraggableSortable } from '@payloadcms/ui/elements/DraggableSortable';
 import { DraggableSortableItem } from '@payloadcms/ui/elements/DraggableSortable/DraggableSortableItem';
 import { Radio } from '@payloadcms/ui/fields/RadioGroup/Radio';
-import { DragHandle } from '@payloadcms/ui/icons/DragHandle';
-import { useConfig } from '@payloadcms/ui/providers/Config';
-import { useListInfo } from '@payloadcms/ui/providers/ListInfo';
-import { useLocale } from '@payloadcms/ui/providers/Locale';
-import { useTranslation } from '@payloadcms/ui/providers/Translation';
-import type { PaginatedDocs } from 'payload/database';
+import type { PaginatedDocs } from 'payload';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { saveChanges } from '../../handlers/saveChanges.client';
@@ -209,7 +212,7 @@ const CollectionDocsOrderContent = () => {
                     className='order-drag'
                     role='button'
                   >
-                    <DragHandle />
+                    <DragHandleIcon />
                   </div>
                   <a
                     href={`${routes.admin}/collections/${collectionSlug}/${doc.id}`}

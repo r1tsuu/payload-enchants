@@ -1,5 +1,5 @@
-import { type CollectionConfig, type Field, fieldAffectsData } from 'payload/types';
-import { tabHasName } from 'payload/types';
+import type { CollectionConfig, Field } from 'payload';
+import { fieldAffectsData, tabHasName } from 'payload/shared';
 
 import { withDefaultFields } from './withDefaultFields';
 

@@ -1,5 +1,4 @@
 import type { GeneratedTypes, Payload } from 'payload';
-import { APIError } from 'payload/errors';
 
 import { populateDocRelationships } from '../populate';
 import type { FindByID, FindByIDArgs, SanitizedArgsContext } from '../types';
@@ -80,9 +79,6 @@ export const buildFindByID = ({
       if (depth > payload.config.maxDepth) {
         depth = payload.config.maxDepth;
       }
-
-      if (depth > payload.config.maxDepth)
-        throw new APIError(`maxDepth ${depth} - ${payload.config.maxDepth}`);
 
       if (depth > 0) {
         const populatedDocsMap = new Map<string, Record<string, any>>();

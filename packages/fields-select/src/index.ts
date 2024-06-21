@@ -1,4 +1,4 @@
-import type { Plugin } from 'payload/config';
+import type { Plugin } from 'payload';
 
 import { applySelect } from './applySelect';
 import { withDefaultFields } from './withDefaultFields';

@@ -1,4 +1,4 @@
-import type { Plugin } from 'payload/config';
+import type { Plugin } from 'payload';
 
 import { attachLocalesProvider } from './attachLocalesProvider';
 // import { attachLocalizedFieldToEditor } from './attachLocalizedFieldToEditor';

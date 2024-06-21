@@ -1,16 +1,18 @@
 'use client';
 
-import type { UploadInputProps } from '@payloadcms/ui/fields/Upload';
-import { UploadInput } from '@payloadcms/ui/fields/Upload';
-import { FieldLabel } from '@payloadcms/ui/forms/FieldLabel';
-import { useFieldProps } from '@payloadcms/ui/forms/FieldPropsProvider';
-import { useAllFormFields } from '@payloadcms/ui/forms/Form';
-import { useField } from '@payloadcms/ui/forms/useField';
-import { withCondition } from '@payloadcms/ui/forms/withCondition';
-import { useConfig } from '@payloadcms/ui/providers/Config';
-import { useDocumentInfo } from '@payloadcms/ui/providers/DocumentInfo';
-import { useLocale } from '@payloadcms/ui/providers/Locale';
-import { useTranslation } from '@payloadcms/ui/providers/Translation';
+import type { UploadInputProps } from '@payloadcms/ui';
+import {
+  FieldLabel,
+  UploadInput,
+  useAllFormFields,
+  useConfig,
+  useDocumentInfo,
+  useField,
+  useFieldProps,
+  useLocale,
+  useTranslation,
+  withCondition,
+} from '@payloadcms/ui';
 import React, { useCallback } from 'react';
 
 import type { GenerateImage } from '../types';

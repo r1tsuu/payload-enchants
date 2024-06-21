@@ -1,5 +1,4 @@
-import { APIError } from 'payload/errors';
-import type { Payload, PayloadRequest } from 'payload/types';
+import { APIError, type Payload, type PayloadRequest } from 'payload';
 
 import type { TranslateResolver } from '../resolvers/types';
 import { findEntityWithConfig } from './findEntityWithConfig';

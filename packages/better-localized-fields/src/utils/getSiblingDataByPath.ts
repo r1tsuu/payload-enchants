@@ -1,9 +1,9 @@
 /** Copy of ui/src/forms/Form/getSiblingData.ts as its not exported */
 
-import { reduceFieldsToValues } from '@payloadcms/ui/utilities/reduceFieldsToValues';
+import { reduceFieldsToValues } from '@payloadcms/ui/shared';
 // @ts-expect-error package no types
 import flatleyImport from 'flatley';
-import type { Data, FormState } from 'payload/types';
+import type { Data, FormState } from 'payload';
 
 const { unflatten } = flatleyImport;
 

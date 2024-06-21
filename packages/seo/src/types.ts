@@ -1,5 +1,5 @@
 import type { DocumentInfoContext } from '@payloadcms/ui/providers/DocumentInfo';
-import type { Field, TextareaField, TextField, UploadField } from 'payload/types';
+import type { Field, TextareaField, TextField, UploadField } from 'payload';
 
 export type GenerateTitle = <T = any>(
   args: { doc: T; locale?: string } & DocumentInfoContext,

@@ -2,7 +2,7 @@
 
 // @ts-expect-error err
 import flatleyImport from 'flatley';
-import type { FormState } from 'payload/types';
+import type { FormState } from 'payload';
 
 const { unflatten } = flatleyImport;
 

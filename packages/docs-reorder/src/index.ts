@@ -1,7 +1,7 @@
 import './styles.scss';
 
-import type { Plugin } from 'payload/config';
-import { deepMerge } from 'payload/utilities';
+import type { Plugin } from 'payload';
+import { deepMerge } from 'payload/shared';
 
 import { defaultAccess } from './defaultAccess';
 import { extendCollectionsConfig } from './extendCollectionsConfig';

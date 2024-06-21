@@ -1,5 +1,5 @@
-import { APIError } from 'payload/errors';
-import type { PayloadRequest, TypeWithID } from 'payload/types';
+import type { PayloadRequest, TypeWithID } from 'payload';
+import { APIError } from 'payload';
 
 type Args = {
   collectionSlug?: string;

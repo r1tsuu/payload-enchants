@@ -1,6 +1,5 @@
 import { getTranslation } from '@payloadcms/translations';
-import { Button, Popup, PopupList } from '@payloadcms/ui/elements';
-import { useTranslation } from '@payloadcms/ui/providers/Translation';
+import { Button, Popup, PopupList, useTranslation } from '@payloadcms/ui';
 
 import { useTranslator } from '../../providers/Translator/context';
 import { LocaleLabel } from '../LocaleLabel';

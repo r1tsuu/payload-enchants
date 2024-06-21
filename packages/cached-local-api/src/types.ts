@@ -1,13 +1,14 @@
-import type { GeneratedTypes, Payload } from 'payload';
-import type payload from 'payload';
-import type { Plugin } from 'payload/config';
-import type { PaginatedDocs } from 'payload/database';
 import type {
   CollectionAfterChangeHook,
   CollectionAfterDeleteHook,
+  GeneratedTypes,
   GlobalAfterChangeHook,
+  PaginatedDocs,
+  Payload,
+  Plugin,
   Where,
-} from 'payload/types';
+} from 'payload';
+import type payload from 'payload';
 
 type Callback = (...args: any[]) => Promise<any>;
 

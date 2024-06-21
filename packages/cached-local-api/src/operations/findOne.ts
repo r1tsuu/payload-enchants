@@ -1,5 +1,4 @@
-import type { GeneratedTypes, Payload } from 'payload';
-import { ValidationError } from 'payload/errors';
+import { APIError, type GeneratedTypes, type Payload } from 'payload';
 
 import { populateDocRelationships } from '../populate';
 import type { FindOneArgs, SanitizedArgsContext } from '../types';
@@ -19,21 +18,23 @@ export const buildFindOne = ({
     const collectionInConfig = ctx.collections.find(({ slug }) => slug === args.collection);
 
     if (!collectionInConfig)
-      throw new ValidationError([
-        {
-          field: 'args.collection',
-          message: 'Invalid findOne collection ' + String(args.collection),
-        },
-      ]);
+      throw new APIError(
+        JSON.stringify([
+          {
+            field: 'args.collection',
+            message: 'Invalid findOne collection ' + String(args.collection),
+          },
+        ]),
+      );
 
     const field = args.field
       ? collectionInConfig.findOneFields.find((each) => each.name === args.field)
       : collectionInConfig.findOneFields[0];
 
     if (!field)
-      throw new ValidationError([
-        { field: 'args.field', message: 'Invalid findOne field' + args.field },
-      ]);
+      throw new APIError(
+        JSON.stringify([{ field: 'args.field', message: 'Invalid findOne field' + args.field }]),
+      );
 
     const shouldCache = (await ctx.shouldCacheFindOneOperation(args)) && !ctx.disableCache;
 

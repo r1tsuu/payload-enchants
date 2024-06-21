@@ -1,8 +1,7 @@
 import { addDataAndFileToRequest } from '@payloadcms/next/utilities';
-import { withMergedProps } from '@payloadcms/ui/elements/withMergedProps';
-import type { Config } from 'payload/config';
-import type { Field, GroupField, TabsField, TextField } from 'payload/types';
-import { deepMerge } from 'payload/utilities';
+import { withMergedProps } from '@payloadcms/ui/shared';
+import type { Config, Field, GroupField, TabsField, TextField } from 'payload';
+import { deepMerge } from 'payload/shared';
 
 import { MetaDescription } from './fields/MetaDescription';
 import { MetaImage } from './fields/MetaImage';

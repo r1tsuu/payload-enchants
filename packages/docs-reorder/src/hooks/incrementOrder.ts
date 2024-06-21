@@ -1,4 +1,4 @@
-import type { CollectionBeforeValidateHook } from 'payload/types';
+import type { CollectionBeforeValidateHook } from 'payload';
 
 export const incrementOrder: CollectionBeforeValidateHook = async ({
   collection,

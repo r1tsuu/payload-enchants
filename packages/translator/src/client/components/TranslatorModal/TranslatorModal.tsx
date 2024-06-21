@@ -1,6 +1,6 @@
 import './styles.scss';
 
-import { Modal } from '@payloadcms/ui/elements';
+import { Modal } from '@payloadcms/ui';
 
 import { useTranslator } from '../../providers/Translator/context';
 import { Content } from './Content';

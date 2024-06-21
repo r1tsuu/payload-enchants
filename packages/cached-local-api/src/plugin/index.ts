@@ -1,4 +1,4 @@
-import type { Plugin } from 'payload/config';
+import type { Plugin } from 'payload';
 
 import type { SanitizedArgsContext } from '../types';
 import { extendCollectionConfig } from './extendCollectionConfig';

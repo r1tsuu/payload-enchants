@@ -1,4 +1,4 @@
-import type { RichTextAdapter } from 'payload/types';
+import type { RichTextAdapter } from 'payload';
 
 import { LocalizedField } from './components/LocalizedField';
 import type { BetterLocalizedFieldsOptions } from './types';

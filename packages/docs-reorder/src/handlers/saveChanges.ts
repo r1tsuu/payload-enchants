@@ -1,5 +1,4 @@
-import type { PayloadHandler } from 'payload/config';
-import { Forbidden } from 'payload/errors';
+import { Forbidden, type PayloadHandler } from 'payload';
 import { z } from 'zod';
 
 import type { DocsReorderOptions } from '../types';

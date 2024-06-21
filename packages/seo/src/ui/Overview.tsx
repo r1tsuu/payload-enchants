@@ -1,9 +1,8 @@
 'use client';
 
-import { useAllFormFields, useForm } from '@payloadcms/ui/forms/Form';
-import { useTranslation } from '@payloadcms/ui/providers/Translation';
-import type { FormField } from 'payload/types';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useAllFormFields, useForm, useTranslation } from '@payloadcms/ui';
+import type { FormField } from 'payload';
+import { useCallback, useEffect, useState } from 'react';
 
 import { defaults } from '../defaults';
 

@@ -2,7 +2,7 @@ import type {
   CollectionAfterChangeHook,
   CollectionAfterDeleteHook,
   CollectionConfig,
-} from 'payload/types';
+} from 'payload';
 
 import type { SanitizedArgsContext } from '../types';
 

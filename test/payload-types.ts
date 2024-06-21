@@ -11,6 +11,7 @@ export interface Config {
     users: User;
     posts: Post;
     'better-use-as-title-test': BetterUseAsTitleTest;
+    media: Media;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -46,6 +47,7 @@ export interface User {
 export interface Post {
   id: string;
   title?: string | null;
+  skip?: string | null;
   checkbox?: boolean | null;
   array: {
     titleLocalized?: string | null;
@@ -65,6 +67,21 @@ export interface Post {
         blockType: 'first';
       }[]
     | null;
+  deep?:
+    | {
+        arr?:
+          | {
+              group?: {
+                text?: string | null;
+              };
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'test';
+      }[]
+    | null;
   someRich?: {
     root: {
       type: string;
@@ -80,8 +97,28 @@ export interface Post {
     };
     [k: string]: unknown;
   } | null;
+  up?: string | Media | null;
+  slug?: string | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -92,7 +129,6 @@ export interface BetterUseAsTitleTest {
   firstName?: string | null;
   secondName?: string | null;
   age?: number | null;
-  useAsTitle?: string | null;
   updatedAt: string;
   createdAt: string;
 }

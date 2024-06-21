@@ -1,5 +1,5 @@
 import type { Row } from '@payloadcms/ui/fields/Row';
-import type { Field } from 'payload/types';
+import type { Field } from 'payload';
 
 import { LocalesDataProvider } from './providers/LocalesData/provider';
 import { getClientProps } from './utils/getClientProps';

@@ -1,7 +1,12 @@
 // experimental
 
-import { type GeneratedTypes, type Payload, type RequestContext } from 'payload';
-import type { Field, PayloadRequestWithData } from 'payload/types';
+import type {
+  Field,
+  GeneratedTypes,
+  Payload,
+  PayloadRequestWithData,
+  RequestContext,
+} from 'payload';
 
 import type { Find, SanitizedArgsContext } from '../types';
 import { traverseFields } from './traverseFields';

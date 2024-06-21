@@ -34,15 +34,15 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@payloadcms/ui": "3.0.0-beta.41",
-    "payload": "3.0.0-beta.41",
+    "@payloadcms/ui": "3.0.0-beta.53",
+    "payload": "3.0.0-beta.53",
     "react-dom": "19.0.0-rc-f994737d14-20240522",
     "@types/react": "npm:types-react@19.0.0-beta.2",
     "@types/react-dom": "npm:types-react-dom@19.0.0-beta.2"
   },
   "peerDependencies": {
-    "@payloadcms/ui": "^3.0.0-beta.41",
-    "payload": "^3.0.0-beta.41"
+    "@payloadcms/ui": "^3.0.0-beta.53",
+    "payload": "^3.0.0-beta.53"
   },
   "publishConfig": {
     "exports": {
