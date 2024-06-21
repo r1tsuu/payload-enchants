@@ -37,6 +37,10 @@ export const withDefaultFields = (collection: CollectionConfig) => {
     ];
   }
 
+  if (collection.versions) {
+    fields.push({ name: '_status', type: 'text' });
+  }
+
   if (collection.auth) {
     if (typeof collection.auth === 'object' && collection.auth.disableLocalStrategy) return fields;
     fields = [

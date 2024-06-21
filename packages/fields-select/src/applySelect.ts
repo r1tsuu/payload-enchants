@@ -61,24 +61,26 @@ export const applySelect = ({
     }
 
     if (field.type === 'relationship' || field.type === 'upload') {
-      if (select?.includes(`${path}${field.name}`)) return;
+      let useDefaultSelect = true;
 
-      let useDefaultSelect = false;
-
-      if (
-        select &&
-        !select.some((selectPath) => `${selectPath}.`.startsWith(`${path}${field.name}`))
-      ) {
-        if (Array.isArray(field.custom?.defaultSelect)) {
-          useDefaultSelect = true;
-        } else {
+      if (select && !select.includes(`${path}${field.name}`)) {
+        if (select.some((selectPath) => `${selectPath}.`.startsWith(`${path}${field.name}`))) {
+          useDefaultSelect = false;
+        } else if (!Array.isArray(field.custom?.defaultSelect)) {
           delete data[field.name];
+
+          return;
         }
+      }
+
+      if (useDefaultSelect && Array.isArray(field.custom?.defaultSelect)) {
+        field.custom.defaultSelect.forEach((val) => select?.push(`${path}${field.name}.${val}.`));
       }
 
       if (
         (!('hasMany' in field) || !field.hasMany) &&
         typeof data[field.name] === 'object' &&
+        data[field.name] &&
         Array.isArray(field.relationTo)
       ) {
         const collection = collections.find((each) => each.slug === data[field.name].relationTo);
@@ -100,6 +102,7 @@ export const applySelect = ({
       if (
         (!('hasMany' in field) || !field.hasMany) &&
         typeof data[field.name] === 'object' &&
+        data[field.name] &&
         !Array.isArray(field.relationTo)
       ) {
         const collection = collections.find((each) => each.slug === field.relationTo);
@@ -140,9 +143,9 @@ export const applySelect = ({
               data: value.value,
               fields: withDefaultFields(collection),
               level: level + 1,
-              path: `${path}${field.name}.`,
+              path: useDefaultSelect ? '' : `${path}${field.name}.`,
               sanitizeExternals,
-              select,
+              select: useDefaultSelect ? (field.custom?.defaultSelect as string[]) : select,
             });
           }
         });
@@ -165,9 +168,9 @@ export const applySelect = ({
               data: value,
               fields: withDefaultFields(collection),
               level: level + 1,
-              path: `${path}${field.name}.`,
+              path: useDefaultSelect ? '' : `${path}${field.name}.`,
               sanitizeExternals,
-              select,
+              select: useDefaultSelect ? (field.custom?.defaultSelect as string[]) : select,
             });
           }
         });
@@ -192,7 +195,7 @@ export const applySelect = ({
         if (!Array.isArray(data[field.name])) return;
 
         data[field.name].forEach((value: any) => {
-          if ('fields' in field)
+          if ('fields' in field) {
             applySelect({
               collections,
               data: value,
@@ -202,6 +205,7 @@ export const applySelect = ({
               sanitizeExternals,
               select,
             });
+          }
 
           if ('blocks' in field) {
             const currentBlock = field.blocks.find((each) => each.slug === value.blockType);
@@ -229,7 +233,6 @@ export const applySelect = ({
 
       if (field.type === 'group') {
         if (typeof data[field.name] !== 'object') return;
-        if (select?.includes(`${path}${field.name}`)) return;
 
         applySelect({
           collections,

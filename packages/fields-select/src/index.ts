@@ -24,28 +24,12 @@ export const fieldsSelect =
             ...(collection.hooks ?? {}),
             afterOperation: [
               ...(collection.hooks?.afterOperation ?? []),
-              ({ args, operation, req, result }) => {
-                req.payload.logger.info(operation);
-                // req.payload.logger.info({
-                //   args: {
-                //     ...args,
-                //     collection: args.collection.config.slug,
-                //     i18n: undefined,
-                //     req: undefined,
-                //   },
-                //   operation,
-                // });
-                if (
-                  typeof (args as any).currentDepth === 'number' &&
-                  (args as any).currentDepth !== (args as any).depth
-                )
-                  return result;
+              ({ args, operation, result }) => {
+                if (typeof (args as any).currentDepth === 'number') return result;
 
                 const select = sanitizeSelect((args as any)?.select);
 
                 if (operation === 'find') {
-                  const now = Date.now();
-
                   result.docs.forEach((data) =>
                     applySelect({
                       collections: config.collections ?? [],
@@ -55,9 +39,7 @@ export const fieldsSelect =
                       select,
                     }),
                   );
-                  console.log(Date.now() - now);
                 } else if (operation === 'findByID') {
-                  console.log('by id');
                   applySelect({
                     collections: config.collections ?? [],
                     data: result,
