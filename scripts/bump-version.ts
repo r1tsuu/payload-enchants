@@ -54,6 +54,7 @@ const packageJsonPaths = [
   './packages/bump-payload/package.json',
   './packages/seo/package.json',
   './packages/cached-local-api/package.json',
+  './packages/fields-select/package.json',
   './test/package.json',
 ];
 

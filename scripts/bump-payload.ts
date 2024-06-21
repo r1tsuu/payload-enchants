@@ -16,6 +16,7 @@ const packageJsonPaths = [
   './packages/better-use-as-title/package.json',
   './packages/cached-local-api/package.json',
   './packages/seo/package.json',
+  './packages/fields-select/package.json',
   './test/package.json',
 ];
 
