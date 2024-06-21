@@ -6,9 +6,16 @@ const args = process.argv.slice(2);
 
 const type = args[0] as 'major' | 'minor' | 'patch';
 
+let version = null;
+
 if (!['major', 'minor', 'patch'].includes(type)) {
-  console.error('Type should be major | minor | patch');
-  process.exit(1);
+  if (Number(type[0])) {
+    version = type;
+    console.log(`Using custom version ${type}`);
+  } else {
+    console.error('Type should be major | minor | patch');
+    process.exit(1);
+  }
 }
 
 const bump = (version: string, type: 'major' | 'minor' | 'patch'): string => {
@@ -73,7 +80,7 @@ const bumpVersion = () => {
       version: string;
     };
 
-    packageJsonObject.version = bump(packageJsonObject.version, type);
+    packageJsonObject.version = version || bump(packageJsonObject.version, type);
 
     console.log(`Bumped to ${packageJsonObject.version}`);
 
