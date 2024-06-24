@@ -17,9 +17,9 @@
   "dependencies": {
     "@payload-enchants/better-localized-fields": "workspace:*",
     "@payload-enchants/better-use-as-title": "workspace:*",
-    "@payload-enchants/fields-select": "workspace:*",
     "@payload-enchants/cached-local-api": "workspace:*",
     "@payload-enchants/docs-reorder": "workspace:*",
+    "@payload-enchants/fields-select": "workspace:*",
     "@payload-enchants/seo": "workspace:*",
     "@payload-enchants/translator": "workspace:*",
     "@payloadcms/db-mongodb": "3.0.0-beta.53",
@@ -31,7 +31,7 @@
     "@payloadcms/ui": "3.0.0-beta.53",
     "@swc/jest": "^0.2.36",
     "@types/jest": "^29.5.12",
-    "@types/node": "^20.12.12",
+    "@types/node": "^20.14.7",
     "@types/react": "npm:types-react@19.0.0-beta.2",
     "@types/react-dom": "npm:types-react-dom@19.0.0-beta.2",
     "babel-plugin-react-compiler": "0.0.0-experimental-592953e-20240517",
@@ -44,10 +44,17 @@
     "react": "19.0.0-rc-f994737d14-20240522",
     "react-dom": "19.0.0-rc-f994737d14-20240522",
     "sharp": "0.32.6",
-    "tsx": "^4.10.5",
-    "typescript": "^5.4.5"
+    "tsx": "^4.15.7",
+    "typescript": "^5.5.2"
   },
   "engines": {
     "node": ">=18.19.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "npm:types-react@19.0.0-beta.2",
+      "@types/react-dom": "npm:types-react-dom@19.0.0-beta.2",
+      "@payloadcms/ui": "3.0.0-beta.53"
+    }
   }
 }

@@ -22,7 +22,7 @@
     "prepublishOnly": "pnpm clean && pnpm build"
   },
   "dependencies": {
-    "@npmcli/package-json": "^5.1.0"
+    "@npmcli/package-json": "^5.2.0"
   },
   "devDependencies": {
     "@types/npmcli__package-json": "^4.0.4"

@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "payload": "3.0.0-beta.53",
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.2"
   },
   "peerDependencies": {
     "payload": "^3.0.0-beta.53"

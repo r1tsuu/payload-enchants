@@ -7,25 +7,26 @@ settings:
 overrides:
   '@types/react': npm:types-react@19.0.0-beta.2
   '@types/react-dom': npm:types-react-dom@19.0.0-beta.2
+  '@payloadcms/ui': 3.0.0-beta.53
 
 importers:
 
   .:
     devDependencies:
       '@next/eslint-plugin-next':
-        specifier: ^14.2.3
+        specifier: ^14.2.4
         version: 14.2.4
       '@swc/cli':
         specifier: ^0.1.65
         version: 0.1.65(@swc/core@1.6.3)
       '@swc/core':
-        specifier: ^1.5.7
+        specifier: ^1.6.3
         version: 1.6.3
       '@types/eslint':
         specifier: 8.56.6
         version: 8.56.6
       '@types/node':
-        specifier: ^20.12.12
+        specifier: ^20.14.7
         version: 20.14.7
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.21.0
@@ -46,7 +47,7 @@ importers:
         specifier: ^2.29.1
         version: 2.29.1(@typescript-eslint/parser@6.21.0)(eslint@8.57.0)
       eslint-plugin-perfectionist:
-        specifier: ^2.10.0
+        specifier: ^2.11.0
         version: 2.11.0(eslint@8.57.0)(typescript@5.5.2)
       eslint-plugin-simple-import-sort:
         specifier: ^10.0.0
@@ -58,7 +59,7 @@ importers:
         specifier: ^0.11.3
         version: 0.11.3
       prettier:
-        specifier: ^3.2.5
+        specifier: ^3.3.2
         version: 3.3.2
       prettier-plugin-css-order:
         specifier: ^2.1.2
@@ -70,13 +71,13 @@ importers:
         specifier: ^2.10.0
         version: 2.10.0
       tsx:
-        specifier: ^4.10.5
+        specifier: ^4.15.7
         version: 4.15.7
       turbo:
-        specifier: ^1.13.3
+        specifier: ^1.13.4
         version: 1.13.4
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/better-localized-fields:
@@ -131,13 +132,13 @@ importers:
         specifier: 19.0.0-rc-f994737d14-20240522
         version: 19.0.0-rc-f994737d14-20240522(react@19.0.0-rc-f994737d14-20240522)
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/bump-payload:
     dependencies:
       '@npmcli/package-json':
-        specifier: ^5.1.0
+        specifier: ^5.2.0
         version: 5.2.0
     devDependencies:
       '@types/npmcli__package-json':
@@ -150,13 +151,13 @@ importers:
         specifier: 3.0.0-beta.53
         version: 3.0.0-beta.53(@swc/core@1.6.3)(@swc/types@0.1.8)(graphql@16.9.0)(typescript@5.5.2)
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/docs-reorder:
     dependencies:
       '@radix-ui/react-dialog':
-        specifier: ^1.0.5
+        specifier: ^1.1.1
         version: 1.1.1(react-dom@19.0.0-rc-f994737d14-20240522)(types-react-dom@19.0.0-beta.2)(types-react@19.0.0-beta.2)
       clsx:
         specifier: ^2.1.1
@@ -187,7 +188,7 @@ importers:
         specifier: 3.0.0-beta.53
         version: 3.0.0-beta.53(@swc/core@1.6.3)(@swc/types@0.1.8)(graphql@16.9.0)(typescript@5.5.2)
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/seo:
@@ -212,7 +213,7 @@ importers:
         specifier: npm:types-react-dom@19.0.0-beta.2
         version: /types-react-dom@19.0.0-beta.2
       openai:
-        specifier: ^4.47.1
+        specifier: ^4.52.0
         version: 4.52.0
       payload:
         specifier: 3.0.0-beta.53
@@ -224,7 +225,7 @@ importers:
         specifier: 19.0.0-rc-f994737d14-20240522
         version: 19.0.0-rc-f994737d14-20240522(react@19.0.0-rc-f994737d14-20240522)
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/translator:
@@ -255,7 +256,7 @@ importers:
         specifier: 19.0.0-rc-f994737d14-20240522
         version: 19.0.0-rc-f994737d14-20240522(react@19.0.0-rc-f994737d14-20240522)
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.5.2
         version: 5.5.2
 
   test:
@@ -309,7 +310,7 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
       '@types/node':
-        specifier: ^20.12.12
+        specifier: ^20.14.7
         version: 20.14.7
       '@types/react':
         specifier: npm:types-react@19.0.0-beta.2
@@ -348,10 +349,10 @@ importers:
         specifier: 0.32.6
         version: 0.32.6
       tsx:
-        specifier: ^4.10.5
+        specifier: ^4.15.7
         version: 4.15.7
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.5.2
         version: 5.5.2
 
 packages:
