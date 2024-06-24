@@ -73,10 +73,6 @@ export const applySelect = ({
         }
       }
 
-      if (useDefaultSelect && Array.isArray(field.custom?.defaultSelect)) {
-        field.custom.defaultSelect.forEach((val) => select?.push(`${path}${field.name}.${val}.`));
-      }
-
       if (
         (!('hasMany' in field) || !field.hasMany) &&
         typeof data[field.name] === 'object' &&
