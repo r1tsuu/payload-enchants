@@ -50,9 +50,10 @@ export class PayloadApiClient<C extends Config> {
       requestInit.body = formData;
     }
 
-    const request = this.createReqiest(`/${collection.toString()}${qs}`, requestInit);
-
-    const response = await this.fetcher(request);
+    const response = await this.fetcher(
+      `${this.apiURL}/${collection.toString()}${qs}`,
+      requestInit,
+    );
 
     return response.json();
   }
@@ -70,11 +71,9 @@ export class PayloadApiClient<C extends Config> {
   }): Promise<BulkOperationResult<C['collections'][T]>> {
     const qs = buildQueryString(toQs);
 
-    const request = this.createReqiest(`/${collection.toString()}${qs}`, {
+    const response = await this.fetcher(`${this.apiURL}/${collection.toString()}${qs}`, {
       method: 'DELETE',
     });
-
-    const response = await this.fetcher(request);
 
     return response.json();
   }
@@ -93,16 +92,14 @@ export class PayloadApiClient<C extends Config> {
   }): Promise<C['collections'][T]> {
     const qs = buildQueryString(toQs);
 
-    const request = this.createReqiest(`/${collection.toString()}/${id}${qs}`, {
+    const response = await this.fetcher(`${this.apiURL}/${collection.toString()}/${id}${qs}`, {
       method: 'DELETE',
     });
-
-    const response = await this.fetcher(request);
 
     return response.json();
   }
 
-  async find<T extends keyof C['collections'], K extends keyof C['collections'][T]>({
+  async find<T extends keyof C['collections'], K extends (keyof C['collections'][T])[]>({
     collection,
     ...toQs
   }: {
@@ -112,22 +109,20 @@ export class PayloadApiClient<C extends Config> {
     fallbackLocale?: C['locale'];
     locale?: 'all' | C['locale'];
     page?: number;
-    select?: K[];
+    select?: K;
     sort?: `-${Exclude<keyof C['collections'][T], symbol>}` | keyof C['collections'][T];
     where?: Where;
   }): Promise<
-    PaginatedDocs<K extends undefined ? C['collections'][T] : Pick<C['collections'][T], K>>
+    PaginatedDocs<K extends undefined ? C['collections'][T] : Pick<C['collections'][T], K[0]>>
   > {
     const qs = buildQueryString(toQs);
 
-    const request = this.createReqiest(`/${collection.toString()}${qs}`);
-
-    const response = await this.fetcher(request);
+    const response = await this.fetcher(`${this.apiURL}/${collection.toString()}${qs}`);
 
     return response.json();
   }
 
-  async findById<T extends keyof C['collections'], K extends keyof C['collections'][T]>({
+  async findById<T extends keyof C['collections'], K extends (keyof C['collections'][T])[]>({
     collection,
     id,
     ...toQs
@@ -138,32 +133,28 @@ export class PayloadApiClient<C extends Config> {
     fallbackLocale?: C['locale'];
     id: C['collections'][T]['id'];
     locale?: 'all' | C['locale'];
-    select?: K[];
-  }): Promise<K extends undefined ? C['collections'][T] : Pick<C['collections'][T], K>> {
+    select?: K;
+  }): Promise<K extends undefined ? C['collections'][T] : Pick<C['collections'][T], K[0]>> {
     const qs = buildQueryString(toQs);
 
-    const request = this.createReqiest(`/${collection.toString()}/${id}${qs}`);
-
-    const response = await this.fetcher(request);
+    const response = await this.fetcher(`${this.apiURL}/${collection.toString()}/${id}${qs}`);
 
     return response.json();
   }
 
-  async findGlobal<T extends keyof C['globals'], K extends keyof C['globals'][T]>({
+  async findGlobal<T extends keyof C['globals'], K extends (keyof C['globals'][T])[]>({
     slug,
     ...toQs
   }: {
     depth?: number;
     fallbackLocale?: C['locale'];
     locale?: 'all' | C['locale'];
-    select?: K[];
+    select?: K;
     slug: T;
-  }): Promise<K extends undefined ? C['globals'][T] : Pick<C['globals'][T], K>> {
+  }): Promise<K extends undefined ? C['globals'][T] : Pick<C['globals'][T], K[0]>> {
     const qs = buildQueryString(toQs);
 
-    const request = this.createReqiest(`/globals/${slug.toString()}${qs}`);
-
-    const response = await this.fetcher(request);
+    const response = await this.fetcher(`${this.apiURL}/globals/${slug.toString()}${qs}`);
 
     return response.json();
   }
@@ -192,15 +183,13 @@ export class PayloadApiClient<C extends Config> {
   }): Promise<BulkOperationResult<C['collections'][T]>> {
     const qs = buildQueryString(toQs);
 
-    const request = this.createReqiest(`/${collection.toString()}${qs}`, {
+    const response = await this.fetcher(`${this.apiURL}/${collection.toString()}${qs}`, {
       body: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json',
       },
       method: 'DELETE',
     });
-
-    const response = await this.fetcher(request);
 
     return response.json();
   }
@@ -236,9 +225,10 @@ export class PayloadApiClient<C extends Config> {
       };
     }
 
-    const request = this.createReqiest(`/${collection.toString()}${qs}`, requestInit);
-
-    const response = await this.fetcher(request);
+    const response = await this.fetcher(
+      `${this.apiURL}/${collection.toString()}${qs}`,
+      requestInit,
+    );
 
     return response.json();
   }
@@ -256,12 +246,10 @@ export class PayloadApiClient<C extends Config> {
   }): Promise<C['globals'][T]> {
     const qs = buildQueryString(toQs);
 
-    const request = this.createReqiest(`/globals/${slug.toString()}${qs}`, {
+    const response = await this.fetcher(`${this.apiURL}/globals/${slug.toString()}${qs}`, {
       body: JSON.stringify(data),
       method: 'PATCH',
     });
-
-    const response = await this.fetcher(request);
 
     return response.json();
   }
