@@ -12,7 +12,7 @@ import { PayloadApiClient } from '@payload-enchants/sdk';
 // Import it from generated types
 import { Config } from 'payload-types';
 
-const client = new PayloadApiClient({
+const client = new PayloadApiClient<Config>({
   apiURL: 'http://localhost:3000/api',
 });
 
@@ -23,7 +23,7 @@ const data = await client.find({ collection: 'pages' });
 To rewrite headers, you can pass your `fetcher`
 
 ```ts
-const client = new PayloadApiClient({
+const client = new PayloadApiClient<Config>({
   apiURL: '',
   fetcher: (url, init) => {
     return fetch(url, {
