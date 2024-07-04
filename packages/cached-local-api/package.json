@@ -33,11 +33,11 @@
     "prepublishOnly": "pnpm clean && pnpm build"
   },
   "devDependencies": {
-    "payload": "3.0.0-beta.53",
+    "payload": "3.0.0-beta.58",
     "typescript": "^5.5.2"
   },
   "peerDependencies": {
-    "payload": "^3.0.0-beta.53"
+    "payload": "^3.0.0-beta.58"
   },
   "publishConfig": {
     "exports": {
