@@ -1,6 +1,5 @@
-import type { Payload } from 'payload';
-import type { Field } from 'payload/types';
-import { tabHasName } from 'payload/types';
+import type { Field, Payload } from 'payload';
+import { tabHasName } from 'payload/shared';
 
 import { traverseRichText } from './traverseRichText';
 import type { PopulationItem } from './types';

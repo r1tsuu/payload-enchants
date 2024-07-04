@@ -1,4 +1,4 @@
-import type { Plugin } from 'payload/config';
+import type { Plugin } from 'payload';
 
 import { applySelect } from './applySelect';
 import { withDefaultFields } from './withDefaultFields';
@@ -30,23 +30,31 @@ export const fieldsSelect =
                 const select = sanitizeSelect((args as any)?.select);
 
                 if (operation === 'find') {
-                  result.docs.forEach((data) =>
+                  const updated = JSON.parse(JSON.stringify(result));
+
+                  updated.docs.forEach((data: any) => {
                     applySelect({
                       collections: config.collections ?? [],
                       data,
                       fields: withDefaultFields(collection),
                       sanitizeExternals,
                       select,
-                    }),
-                  );
+                    });
+                  });
+
+                  return updated;
                 } else if (operation === 'findByID') {
+                  const updated = JSON.parse(JSON.stringify(result));
+
                   applySelect({
                     collections: config.collections ?? [],
-                    data: result,
+                    data: updated,
                     fields: withDefaultFields(collection),
                     sanitizeExternals,
                     select,
                   });
+
+                  return updated;
                 }
 
                 return result;

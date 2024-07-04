@@ -1,4 +1,4 @@
-import type { GeneratedTypes, Payload } from 'payload';
+import type { CollectionSlug, Payload } from 'payload';
 
 import type { Count, CountArgs, SanitizedArgsContext } from '../types';
 
@@ -9,7 +9,7 @@ export const buildCount = ({
   ctx: SanitizedArgsContext;
   payload: Payload;
 }): Count => {
-  return async function count<T extends keyof GeneratedTypes['collections']>(args: CountArgs<T>) {
+  return async function count<T extends CollectionSlug>(args: CountArgs<T>) {
     const shouldCache = (await ctx.shouldCacheCountOperation(args)) && !ctx.disableCache;
 
     if (!shouldCache) return payload.count(args);

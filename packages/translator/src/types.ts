@@ -1,4 +1,4 @@
-import type { GeneratedTypes } from 'payload';
+import type { CollectionSlug, GlobalSlug } from 'payload';
 
 import type { TranslateResolver } from './resolvers/types';
 
@@ -6,7 +6,7 @@ export type TranslatorConfig = {
   /**
    * Collections with the enabled translator in the admin UI
    */
-  collections: (keyof GeneratedTypes['collections'])[];
+  collections: CollectionSlug[];
   /**
    * Disable the plugin
    */
@@ -14,7 +14,7 @@ export type TranslatorConfig = {
   /**
    * Globals with the enabled translator in the admin UI
    */
-  globals: (keyof GeneratedTypes['globals'])[];
+  globals: GlobalSlug[];
   /**
    * Add resolvers that you want to include, examples on how to write your own in ./plugin/src/resolvers
    */

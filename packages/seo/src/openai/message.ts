@@ -1,5 +1,5 @@
 import OpenAI from 'openai';
-import type { PayloadRequest } from 'payload/types';
+import type { PayloadRequest } from 'payload';
 
 let openai: OpenAI;
 

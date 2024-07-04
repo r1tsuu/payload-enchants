@@ -1,5 +1,6 @@
 import ObjectID from 'bson-objectid';
-import { type Field, tabHasName } from 'payload/types';
+import type { Field } from 'payload';
+import { tabHasName } from 'payload/shared';
 
 import { isEmpty } from '../utils/isEmpty';
 import { traverseRichText } from './traverseRichText';

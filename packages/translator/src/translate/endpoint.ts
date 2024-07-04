@@ -1,5 +1,5 @@
-import type { PayloadHandler } from 'payload/config';
-import { APIError } from 'payload/errors';
+import type { PayloadHandler } from 'payload';
+import { APIError } from 'payload';
 
 import { translateOperation } from './operation';
 import type { TranslateEndpointArgs } from './types';

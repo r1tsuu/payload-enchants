@@ -8,8 +8,11 @@ import { mongooseAdapter } from '@payloadcms/db-mongodb';
 import { postgresAdapter } from '@payloadcms/db-postgres';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import { slateEditor } from '@payloadcms/richtext-slate';
+import { Button, Modal, PublishButton } from '@payloadcms/ui';
+import { ButtonContents } from '@payloadcms/ui/elements/Button';
+import { DefaultSaveButton, SaveButton } from '@payloadcms/ui/elements/SaveButton';
 import path from 'path';
-import { buildConfig } from 'payload/config';
+import { buildConfig } from 'payload';
 import { en } from 'payload/i18n/en';
 import { fileURLToPath } from 'url';
 

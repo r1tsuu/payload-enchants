@@ -1,5 +1,5 @@
-import type { Field } from 'payload/types';
-import { isReactClientComponent } from 'payload/utilities';
+import type { Field } from 'payload';
+import { isReactClientComponent } from 'payload/shared';
 
 import { LocalizedField } from './components/LocalizedField';
 import type { BetterLocalizedFieldsOptions } from './types';

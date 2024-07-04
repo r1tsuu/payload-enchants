@@ -1,7 +1,7 @@
 'use client';
 
-import { useTranslation } from '@payloadcms/ui/providers/Translation';
-import React, { Fragment, useEffect, useState } from 'react';
+import { useTranslation } from '@payloadcms/ui';
+import { Fragment, useEffect, useState } from 'react';
 
 import { Pill } from './Pill';
 

@@ -1,4 +1,4 @@
-import type { GeneratedTypes, Payload } from 'payload';
+import type { GlobalSlug, Payload } from 'payload';
 
 import { populateDocRelationships } from '../populate';
 import type { FindGlobal, FindGlobalArgs, SanitizedArgsContext } from '../types';
@@ -12,9 +12,7 @@ export const buildFindGlobal = ({
   find: Payload['find'];
   payload: Payload;
 }): FindGlobal => {
-  return async function findGlobal<T extends keyof GeneratedTypes['globals']>(
-    args: FindGlobalArgs<T>,
-  ) {
+  return async function findGlobal<T extends GlobalSlug>(args: FindGlobalArgs<T>) {
     const shouldCache = (await ctx.shouldCacheFindGlobalOperation(args)) && !ctx.disableCache;
 
     if (!shouldCache) return payload.findGlobal(args);

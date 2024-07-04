@@ -1,7 +1,6 @@
 import { getTranslation } from '@payloadcms/translations';
-import { Chevron } from '@payloadcms/ui/icons/Chevron';
-import { useTranslation } from '@payloadcms/ui/providers/Translation';
-import type { Locale } from 'payload/config';
+import { ChevronIcon, useTranslation } from '@payloadcms/ui';
+import type { Locale } from 'payload';
 
 const baseClass = 'localizer-button';
 
@@ -16,7 +15,7 @@ export const LocaleLabel = ({ locale }: { locale: Locale }) => {
         {`${getTranslation(locale.label, i18n)}`}
       </span>
       &nbsp;
-      <Chevron className={`${baseClass}__chevron`} />
+      <ChevronIcon className={`${baseClass}__chevron`} />
     </div>
   );
 };

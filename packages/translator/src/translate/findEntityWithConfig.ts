@@ -1,10 +1,10 @@
-import { APIError } from 'payload/errors';
 import type {
   PayloadRequest,
   SanitizedCollectionConfig,
   SanitizedGlobalConfig,
   TypeWithID,
-} from 'payload/types';
+} from 'payload';
+import { APIError } from 'payload';
 
 type Args = {
   collectionSlug?: string;
@@ -65,6 +65,6 @@ export const findEntityWithConfig = async (
 
   return {
     config: entityConfig,
-    doc: await docPromise,
+    doc: (await docPromise) as any,
   };
 };

@@ -1,9 +1,7 @@
 'use client';
 
-import { useAllFormFields } from '@payloadcms/ui/forms/Form';
-import { useConfig } from '@payloadcms/ui/providers/Config';
-import { useDocumentInfo } from '@payloadcms/ui/providers/DocumentInfo';
-import { reduceFieldsToValues } from '@payloadcms/ui/utilities/reduceFieldsToValues';
+import { useAllFormFields, useConfig, useDocumentInfo } from '@payloadcms/ui';
+import { reduceFieldsToValues } from '@payloadcms/ui/shared';
 import { useEffect, useRef } from 'react';
 
 export const InjectCustomUseAsTitle = () => {

@@ -3,20 +3,22 @@
 import './index.scss';
 
 import { getTranslation } from '@payloadcms/translations';
-import type { Row } from '@payloadcms/ui/fields/Row';
-import { useFieldProps } from '@payloadcms/ui/forms/FieldPropsProvider';
-import { RenderFields } from '@payloadcms/ui/forms/RenderFields';
-import { useConfig } from '@payloadcms/ui/providers/Config';
-import { useDocumentInfo } from '@payloadcms/ui/providers/DocumentInfo';
-import { useLocale } from '@payloadcms/ui/providers/Locale';
-import { useTranslation } from '@payloadcms/ui/providers/Translation';
-import { getFormState } from '@payloadcms/ui/utilities/getFormState';
-import type { FormState } from 'payload/types';
+import {
+  RenderFields,
+  useConfig,
+  useDocumentInfo,
+  useFieldProps,
+  useLocale,
+  useTranslation,
+} from '@payloadcms/ui';
+import { getFormState } from '@payloadcms/ui/shared';
+import type { FormState, RowLabelComponent } from 'payload';
+import type { ComponentProps } from 'react';
 import React, { useEffect, useState } from 'react';
 
 import { LocalesDataContext } from './context';
 
-export const LocalesDataProvider = (props: React.ComponentProps<typeof Row>) => {
+export const LocalesDataProvider = (props: ComponentProps<RowLabelComponent>) => {
   const { fieldMap, forceRender = false } = props;
 
   const [localesFormState, setLocalesFormState] = useState<

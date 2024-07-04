@@ -1,6 +1,6 @@
 {
   "name": "@payload-enchants/fields-select",
-  "version": "1.1.41",
+  "version": "1.2.0",
   "private": false,
   "bugs": "https://github.com/r1tsuu/payload-enchants/issues",
   "repository": "https://github.com/r1tsuu/payload-enchants",
@@ -28,11 +28,11 @@
     "prepublishOnly": "pnpm clean && pnpm build"
   },
   "devDependencies": {
-    "payload": "3.0.0-beta.41",
-    "typescript": "^5.4.5"
+    "payload": "3.0.0-beta.58",
+    "typescript": "^5.5.2"
   },
   "peerDependencies": {
-    "payload": "^3.0.0-beta.41"
+    "payload": "^3.0.0-beta.58"
   },
   "publishConfig": {
     "exports": {

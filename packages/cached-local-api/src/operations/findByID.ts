@@ -1,5 +1,4 @@
-import type { GeneratedTypes, Payload } from 'payload';
-import { APIError } from 'payload/errors';
+import type { CollectionSlug, Payload } from 'payload';
 
 import { populateDocRelationships } from '../populate';
 import type { FindByID, FindByIDArgs, SanitizedArgsContext } from '../types';
@@ -13,9 +12,7 @@ export const buildFindByID = ({
   find: Payload['find'];
   payload: Payload;
 }): FindByID => {
-  return async function findByID<T extends keyof GeneratedTypes['collections']>(
-    args: FindByIDArgs<T>,
-  ) {
+  return async function findByID<T extends CollectionSlug>(args: FindByIDArgs<T>) {
     const hasInConfig = ctx.collections.some(({ slug }) => slug === args.collection);
 
     const shouldCache =
@@ -80,9 +77,6 @@ export const buildFindByID = ({
       if (depth > payload.config.maxDepth) {
         depth = payload.config.maxDepth;
       }
-
-      if (depth > payload.config.maxDepth)
-        throw new APIError(`maxDepth ${depth} - ${payload.config.maxDepth}`);
 
       if (depth > 0) {
         const populatedDocsMap = new Map<string, Record<string, any>>();

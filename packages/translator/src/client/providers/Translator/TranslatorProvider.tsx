@@ -1,12 +1,14 @@
-import { toast } from '@payloadcms/ui/elements';
-import { useModal } from '@payloadcms/ui/elements/Modal';
-import { useAllFormFields, useForm } from '@payloadcms/ui/forms/Form';
-import { useConfig } from '@payloadcms/ui/providers/Config';
-import { useDocumentInfo } from '@payloadcms/ui/providers/DocumentInfo';
-import { useLocale } from '@payloadcms/ui/providers/Locale';
-import { useTranslation } from '@payloadcms/ui/providers/Translation';
-import { getFormState } from '@payloadcms/ui/utilities/getFormState';
-import { reduceFieldsToValues } from '@payloadcms/ui/utilities/reduceFieldsToValues';
+import {
+  toast,
+  useAllFormFields,
+  useConfig,
+  useDocumentInfo,
+  useForm,
+  useLocale,
+  useModal,
+  useTranslation,
+} from '@payloadcms/ui';
+import { getFormState, reduceFieldsToValues } from '@payloadcms/ui/shared';
 import { type ReactNode, useEffect, useMemo, useState } from 'react';
 
 import type { TranslateResolver } from '../../../resolvers/types';

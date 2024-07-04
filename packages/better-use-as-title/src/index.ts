@@ -1,16 +1,14 @@
-import type { GeneratedTypes } from 'payload';
-import type { Plugin } from 'payload/config';
-import type { PayloadRequest, TextField } from 'payload/types';
-import { deepMerge } from 'payload/utilities';
+import type { PayloadRequest, Plugin, TextField, TypedCollection } from 'payload';
+import { deepMerge } from 'payload/shared';
 
 import { InjectCustomUseAsTitle } from './index.client';
 
-export type BetterUseAsTitleArgs<T extends keyof GeneratedTypes['collections']> = {
+export type BetterUseAsTitleArgs<T extends keyof TypedCollection> = {
   collections: {
     fieldOverride?: Partial<TextField>;
     slug: T;
     useAsTitle: (args: {
-      data: GeneratedTypes['collections'][T];
+      data: TypedCollection[T];
       req: PayloadRequest;
     }) => Promise<string> | string;
   }[];
@@ -18,7 +16,7 @@ export type BetterUseAsTitleArgs<T extends keyof GeneratedTypes['collections']> 
 };
 
 export const betterUseAsTitle =
-  <T extends keyof GeneratedTypes['collections']>(args: BetterUseAsTitleArgs<T>): Plugin =>
+  <T extends keyof TypedCollection>(args: BetterUseAsTitleArgs<T>): Plugin =>
   (config) => {
     if (!config.collections) return config;
 

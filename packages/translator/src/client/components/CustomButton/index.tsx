@@ -1,5 +1,4 @@
-import { DefaultPublishButton } from '@payloadcms/ui/elements/PublishButton';
-import { DefaultSaveButton } from '@payloadcms/ui/elements/SaveButton';
+import { DefaultPublishButton, DefaultSaveButton } from '@payloadcms/ui';
 
 import { CustomButtonWithTranslator } from './CustomButtonWithTranslator';
 

@@ -1,4 +1,4 @@
-import type { CollectionConfig } from 'payload/types';
+import type { CollectionConfig } from 'payload';
 
 import { CollectionDocsOrderButton } from './components/CollectionDocsOrder';
 import { incrementOrder } from './hooks/incrementOrder';
@@ -12,7 +12,7 @@ const externdCollectionConfig = (collection: CollectionConfig) => {
       components: {
         ...(collection.admin?.components ?? {}),
         BeforeList: [
-          ...(collection.admin?.components?.BeforeList ?? []),
+          ...(collection.admin?.components?.beforeList ?? []),
           CollectionDocsOrderButton,
         ],
       },

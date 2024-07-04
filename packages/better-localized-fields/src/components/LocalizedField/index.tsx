@@ -2,14 +2,16 @@
 
 import './index.scss';
 
-import { useFieldProps } from '@payloadcms/ui/forms/FieldPropsProvider';
+import {
+  useConfig,
+  useDocumentInfo,
+  useFieldComponents,
+  useFieldProps,
+  useLocale,
+  withCondition,
+} from '@payloadcms/ui';
 import { FormContext, FormFieldsContext, FormWatchContext } from '@payloadcms/ui/forms/Form';
-import { withCondition } from '@payloadcms/ui/forms/withCondition';
-import { useConfig } from '@payloadcms/ui/providers/Config';
-import { useDocumentInfo } from '@payloadcms/ui/providers/DocumentInfo';
-import { useFieldComponents } from '@payloadcms/ui/providers/FieldComponents';
-import { useLocale } from '@payloadcms/ui/providers/Locale';
-import { reduceFieldsToValues } from '@payloadcms/ui/utilities/reduceFieldsToValues';
+import { reduceFieldsToValues } from '@payloadcms/ui/shared';
 import type { ComponentProps, CSSProperties, ReactElement, ReactNode } from 'react';
 import { cloneElement, useEffect, useState } from 'react';
 

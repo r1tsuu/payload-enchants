@@ -2,8 +2,7 @@
 
 import './styles.scss';
 
-import { useConfig } from '@payloadcms/ui/providers/Config';
-import { useDocumentInfo } from '@payloadcms/ui/providers/DocumentInfo';
+import { useConfig, useDocumentInfo } from '@payloadcms/ui';
 import type { ReactNode } from 'react';
 
 import type { TranslateResolver } from '../../../resolvers/types';

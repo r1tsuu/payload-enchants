@@ -1,6 +1,6 @@
 'use client';
 
-import type { FormState } from 'payload/types';
+import type { FormState } from 'payload';
 import { createContext, useContext } from 'react';
 
 export const LocalesDataContext = createContext<{

@@ -1,7 +1,5 @@
 'use client';
 
-import React from 'react';
-
 export const Pill: React.FC<{
   backgroundColor: string;
   color: string;

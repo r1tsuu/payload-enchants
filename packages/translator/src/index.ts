@@ -1,6 +1,6 @@
 /* eslint-disable perfectionist/sort-named-exports */
-import type { Plugin } from 'payload/config';
-import { deepMerge } from 'payload/utilities';
+import type { Plugin } from 'payload';
+import { deepMerge } from 'payload/shared';
 
 import { CustomButton } from './client/components/CustomButton';
 import { translations } from './i18n-translations';
