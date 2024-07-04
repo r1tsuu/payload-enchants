@@ -107,6 +107,7 @@ export class PayloadApiClient<C extends Config> {
     depth?: number;
     draft?: boolean;
     fallbackLocale?: C['locale'];
+    limit?: number;
     locale?: 'all' | C['locale'];
     page?: number;
     select?: K;
