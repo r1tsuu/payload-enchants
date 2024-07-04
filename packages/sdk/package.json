@@ -1,5 +1,5 @@
 {
-  "name": "@payload-enchants/seo",
+  "name": "@payload-enchants/sdk",
   "version": "1.2.0",
   "private": false,
   "bugs": "https://github.com/r1tsuu/payload-enchants/issues",
@@ -9,9 +9,9 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./src/index.tsx",
-      "require": "./src/index.tsx",
-      "types": "./src/index.tsx"
+      "import": "./src/index.ts",
+      "require": "./src/index.ts",
+      "types": "./src/index.ts"
     }
   },
   "files": [
@@ -27,26 +27,9 @@
     "lint:fix": "eslint --fix --ext .ts,.tsx src",
     "prepublishOnly": "pnpm clean && pnpm build"
   },
-  "dependencies": {
-    "bson-objectid": "^2.0.4"
-  },
   "devDependencies": {
-    "@payloadcms/translations": "3.0.0-beta.58",
-    "@payloadcms/ui": "3.0.0-beta.58",
-    "@types/react": "npm:types-react@19.0.0-beta.2",
-    "@types/react-dom": "npm:types-react-dom@19.0.0-beta.2",
-    "openai": "^4.52.0",
     "payload": "3.0.0-beta.58",
-    "react": "19.0.0-rc-f994737d14-20240522",
-    "react-dom": "19.0.0-rc-f994737d14-20240522",
     "typescript": "^5.5.2"
-  },
-  "peerDependencies": {
-    "@payloadcms/next": "^3.0.0-beta.58",
-    "@payloadcms/translations": "^3.0.0-beta.58",
-    "@payloadcms/ui": "^3.0.0-beta.58",
-    "openai": "^4.30.0",
-    "payload": "^3.0.0-beta.58"
   },
   "publishConfig": {
     "exports": {
@@ -59,5 +42,10 @@
     "main": "./dist/index.js",
     "registry": "https://registry.npmjs.org/",
     "types": "./dist/index.d.ts"
+  },
+  "dependencies": {
+    "@types/qs": "^6.9.15",
+    "qs": "^6.12.2",
+    "ts-essentials": "^10.0.1"
   }
 }

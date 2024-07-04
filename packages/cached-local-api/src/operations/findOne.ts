@@ -1,4 +1,5 @@
-import { APIError, type GeneratedTypes, type Payload } from 'payload';
+import type { CollectionSlug, Payload, TypedCollection } from 'payload';
+import { APIError } from 'payload';
 
 import { populateDocRelationships } from '../populate';
 import type { FindOneArgs, SanitizedArgsContext } from '../types';
@@ -12,9 +13,9 @@ export const buildFindOne = ({
   find: Payload['find'];
   payload: Payload;
 }) => {
-  return async function findOne<T extends keyof GeneratedTypes['collections']>(
+  return async function findOne<T extends CollectionSlug>(
     args: FindOneArgs<T>,
-  ): Promise<GeneratedTypes['collections'][T] | null> {
+  ): Promise<TypedCollection[T] | null> {
     const collectionInConfig = ctx.collections.find(({ slug }) => slug === args.collection);
 
     if (!collectionInConfig)

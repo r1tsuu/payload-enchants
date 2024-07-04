@@ -1,11 +1,12 @@
 // experimental
 
 import type {
+  CollectionSlug,
   Field,
-  GeneratedTypes,
   Payload,
-  PayloadRequestWithData,
+  PayloadRequest,
   RequestContext,
+  TypedLocale,
 } from 'payload';
 
 import type { Find, SanitizedArgsContext } from '../types';
@@ -40,7 +41,7 @@ export const populateDocRelationships = async ({
   overrideAccess?: boolean;
   payload: Payload;
   populatedDocsMap: Map<string, Record<string, any>>;
-  req?: PayloadRequestWithData;
+  req?: PayloadRequest;
   showHiddenFields?: boolean;
   user?: Record<string, any>;
 }) => {
@@ -79,14 +80,14 @@ export const populateDocRelationships = async ({
     populatedPromises.push(
       new Promise(async (resolve) => {
         const { docs } = await find({
-          collection: collection as keyof GeneratedTypes['collections'],
+          collection: collection as CollectionSlug,
           context,
           currentDepth: depth,
           depth: 0,
           disableErrors: true,
           draft,
-          fallbackLocale: fallbackLocale as GeneratedTypes['locale'],
-          locale: locale as GeneratedTypes['locale'],
+          fallbackLocale: fallbackLocale as TypedLocale,
+          locale: locale as TypedLocale,
           overrideAccess,
           pagination: false,
           populatedDocsMap,

@@ -49,5 +49,5 @@ export const updateEntity = ({
         req,
       });
 
-  return promise;
+  return promise as any;
 };

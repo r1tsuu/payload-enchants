@@ -1,4 +1,4 @@
-import type { GeneratedTypes, Payload } from 'payload';
+import type { CollectionSlug, Payload } from 'payload';
 
 import { populateDocRelationships } from '../populate';
 import type { FindByID, FindByIDArgs, SanitizedArgsContext } from '../types';
@@ -12,9 +12,7 @@ export const buildFindByID = ({
   find: Payload['find'];
   payload: Payload;
 }): FindByID => {
-  return async function findByID<T extends keyof GeneratedTypes['collections']>(
-    args: FindByIDArgs<T>,
-  ) {
+  return async function findByID<T extends CollectionSlug>(args: FindByIDArgs<T>) {
     const hasInConfig = ctx.collections.some(({ slug }) => slug === args.collection);
 
     const shouldCache =

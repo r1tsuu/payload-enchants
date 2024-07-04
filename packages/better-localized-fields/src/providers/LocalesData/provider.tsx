@@ -11,14 +11,14 @@ import {
   useLocale,
   useTranslation,
 } from '@payloadcms/ui';
-import type { Row } from '@payloadcms/ui/fields/Row';
 import { getFormState } from '@payloadcms/ui/shared';
-import type { FormState } from 'payload';
+import type { FormState, RowLabelComponent } from 'payload';
+import type { ComponentProps } from 'react';
 import React, { useEffect, useState } from 'react';
 
 import { LocalesDataContext } from './context';
 
-export const LocalesDataProvider = (props: React.ComponentProps<typeof Row>) => {
+export const LocalesDataProvider = (props: ComponentProps<RowLabelComponent>) => {
   const { fieldMap, forceRender = false } = props;
 
   const [localesFormState, setLocalesFormState] = useState<

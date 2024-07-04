@@ -12,7 +12,7 @@ const externdCollectionConfig = (collection: CollectionConfig) => {
       components: {
         ...(collection.admin?.components ?? {}),
         BeforeList: [
-          ...(collection.admin?.components?.BeforeList ?? []),
+          ...(collection.admin?.components?.beforeList ?? []),
           CollectionDocsOrderButton,
         ],
       },

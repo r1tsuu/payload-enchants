@@ -1,11 +1,14 @@
 import type {
   CollectionAfterChangeHook,
   CollectionAfterDeleteHook,
-  GeneratedTypes,
+  CollectionSlug,
   GlobalAfterChangeHook,
+  GlobalSlug,
   PaginatedDocs,
   Payload,
   Plugin,
+  TypedCollection,
+  TypedGlobal,
   Where,
 } from 'payload';
 import type payload from 'payload';
@@ -28,18 +31,18 @@ export type Select = string[];
 
 export type Populate = Record<string, Select | true>;
 
-export type Find = <T extends keyof GeneratedTypes['collections']>(
+export type Find = <T extends CollectionSlug>(
   args: FindArgs<T>,
-) => Promise<PaginatedDocs<GeneratedTypes['collections'][T]>>;
+) => Promise<PaginatedDocs<TypedCollection[T]>>;
 
-export type FindArgs<T extends keyof GeneratedTypes['collections']> = {
+export type FindArgs<T extends CollectionSlug> = {
   populate?: Populate;
   populatedDocsMap?: Map<string, Record<string, any>>;
   select?: Select;
   tags?: string[];
 } & Parameters<typeof payload.find<T>>[0];
 
-export type FindOneArgs<T extends keyof GeneratedTypes['collections']> = {
+export type FindOneArgs<T extends keyof TypedCollection> = {
   /** @default first field from the fields array */
   field?: string;
   populate?: Populate;
@@ -50,33 +53,29 @@ export type FindOneArgs<T extends keyof GeneratedTypes['collections']> = {
     collection: T;
   };
 
-export type FindOne = <T extends keyof GeneratedTypes['collections']>(
+export type FindOne = <T extends CollectionSlug>(
   args: FindOneArgs<T>,
-) => Promise<GeneratedTypes['collections'][T] | null>;
+) => Promise<TypedCollection[T] | null>;
 
-export type FindByID = <T extends keyof GeneratedTypes['collections']>(
+export type FindByID = <T extends CollectionSlug>(
   args: FindByIDArgs<T>,
-) => Promise<GeneratedTypes['collections'][T]>;
+) => Promise<TypedCollection[T]>;
 
-export type FindByIDArgs<T extends keyof GeneratedTypes['collections']> = {
+export type FindByIDArgs<T extends CollectionSlug> = {
   populate?: Populate;
   select?: Select;
 } & Parameters<typeof payload.findByID<T>>[0];
 
-export type FindGlobal = <T extends keyof GeneratedTypes['globals']>(
-  args: FindGlobalArgs<T>,
-) => Promise<GeneratedTypes['globals'][T]>;
+export type FindGlobal = <T extends GlobalSlug>(args: FindGlobalArgs<T>) => Promise<TypedGlobal[T]>;
 
-export type FindGlobalArgs<T extends keyof GeneratedTypes['globals']> = {
+export type FindGlobalArgs<T extends GlobalSlug> = {
   populate?: Populate;
   select?: Select;
 } & Parameters<typeof payload.findGlobal<T>>[0];
 
 export type Count = Payload['count'];
 
-export type CountArgs<T extends keyof GeneratedTypes['collections']> = Parameters<
-  typeof payload.count<T>
->[0];
+export type CountArgs<T extends CollectionSlug> = Parameters<typeof payload.count<T>>[0];
 
 export type FindOneFieldConfig = {
   buildWhere?: (args: {
@@ -94,11 +93,11 @@ export type Extension = (args: Omit<Args, 'extensions'>) => Omit<Args, 'extensio
 export type Args = {
   collections?: Array<{
     findOneFields?: (FindOneFieldConfig | string)[];
-    slug: keyof GeneratedTypes['collections'];
+    slug: CollectionSlug;
   }>;
   extensions?: Extension[];
   globals?: Array<{
-    slug: keyof GeneratedTypes['globals'];
+    slug: GlobalSlug;
   }>;
   loggerDebug?: boolean;
   options?: {

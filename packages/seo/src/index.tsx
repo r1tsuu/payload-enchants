@@ -209,10 +209,10 @@ const seo =
         ...(config.endpoints ?? []),
         {
           handler: async (req) => {
-            const reqWithData = await addDataAndFileToRequest({ request: req });
+            await addDataAndFileToRequest(req);
 
             const args: Parameters<GenerateTitle>[0] =
-              reqWithData.data as unknown as Parameters<GenerateTitle>[0];
+              req.data as unknown as Parameters<GenerateTitle>[0];
 
             const result = pluginConfig.generateTitle ? await pluginConfig.generateTitle(args) : '';
 
@@ -228,10 +228,10 @@ const seo =
                 status: 500,
               });
 
-            const reqWithData = await addDataAndFileToRequest({ request: req });
+            await addDataAndFileToRequest(req);
 
             const args: Parameters<GenerateTitle>[0] =
-              reqWithData.data as unknown as Parameters<GenerateTitle>[0];
+              req.data as unknown as Parameters<GenerateTitle>[0];
 
             const content = pluginConfig.generateTitleAi
               ? await pluginConfig.generateTitleAi(args)
@@ -250,10 +250,10 @@ const seo =
         },
         {
           handler: async (req) => {
-            const reqWithData = await addDataAndFileToRequest({ request: req });
+            addDataAndFileToRequest(req);
 
             const args: Parameters<GenerateDescription>[0] =
-              reqWithData.data as unknown as Parameters<GenerateDescription>[0];
+              req.data as unknown as Parameters<GenerateDescription>[0];
 
             const result = pluginConfig.generateDescription
               ? await pluginConfig.generateDescription(args)
@@ -271,10 +271,10 @@ const seo =
                 status: 500,
               });
 
-            const reqWithData = await addDataAndFileToRequest({ request: req });
+            await addDataAndFileToRequest(req);
 
             const args: Parameters<GenerateDescription>[0] =
-              reqWithData.data as unknown as Parameters<GenerateDescription>[0];
+              req.data as unknown as Parameters<GenerateDescription>[0];
 
             const content = pluginConfig.generateDescriptionAi
               ? await pluginConfig.generateDescriptionAi(args)
@@ -293,10 +293,10 @@ const seo =
         },
         {
           handler: async (req) => {
-            const reqWithData = await addDataAndFileToRequest({ request: req });
+            await addDataAndFileToRequest(req);
 
             const args: Parameters<GenerateURL>[0] =
-              reqWithData.data as unknown as Parameters<GenerateURL>[0];
+              req.data as unknown as Parameters<GenerateURL>[0];
 
             const result = pluginConfig.generateURL ? await pluginConfig.generateURL(args) : '';
 
@@ -307,10 +307,10 @@ const seo =
         },
         {
           handler: async (req) => {
-            const reqWithData = await addDataAndFileToRequest({ request: req });
+            await addDataAndFileToRequest(req);
 
             const args: Parameters<GenerateImage>[0] =
-              reqWithData.data as unknown as Parameters<GenerateImage>[0];
+              req.data as unknown as Parameters<GenerateImage>[0];
 
             const result = pluginConfig.generateImage ? await pluginConfig.generateImage(args) : '';
 

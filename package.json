@@ -1,6 +1,6 @@
 {
   "name": "payload-enchants",
-  "version": "1.2.0-pre.0",
+  "version": "1.2.0",
   "private": true,
   "description": "",
   "keywords": [],
@@ -59,8 +59,7 @@
   "pnpm": {
     "overrides": {
       "@types/react": "npm:types-react@19.0.0-beta.2",
-      "@types/react-dom": "npm:types-react-dom@19.0.0-beta.2",
-      "@payloadcms/ui": "3.0.0-beta.53"
+      "@types/react-dom": "npm:types-react-dom@19.0.0-beta.2"
     }
   }
 }
