@@ -8,7 +8,8 @@ import {
   useModal,
   useTranslation,
 } from '@payloadcms/ui';
-import { getFormState, reduceFieldsToValues } from '@payloadcms/ui/shared';
+import { getFormState } from '@payloadcms/ui/shared';
+import { reduceFieldsToValues } from 'payload/shared';
 import { type ReactNode, useEffect, useMemo, useState } from 'react';
 
 import type { TranslateResolver } from '../../../resolvers/types';

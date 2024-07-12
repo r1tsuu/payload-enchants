@@ -248,9 +248,6 @@ export const CollectionDocsOrderButton = () => {
   const { t } = useTranslation();
 
   type TArg = Parameters<typeof t>[0];
-  // const params = useParams();
-
-  // console.log(params);
 
   return (
     <div className='gutter--left gutter--right collection-docs-order'>
