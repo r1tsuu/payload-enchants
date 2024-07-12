@@ -11,7 +11,7 @@ import {
   withCondition,
 } from '@payloadcms/ui';
 import { FormContext, FormFieldsContext, FormWatchContext } from '@payloadcms/ui/forms/Form';
-import { reduceFieldsToValues } from '@payloadcms/ui/shared';
+import { reduceFieldsToValues } from 'payload/shared';
 import type { ComponentProps, CSSProperties, ReactElement, ReactNode } from 'react';
 import { cloneElement, useEffect, useState } from 'react';
 
