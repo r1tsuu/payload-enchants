@@ -11,7 +11,7 @@ const externdCollectionConfig = (collection: CollectionConfig) => {
       ...(collection.admin ?? {}),
       components: {
         ...(collection.admin?.components ?? {}),
-        BeforeList: [
+        beforeList: [
           ...(collection.admin?.components?.beforeList ?? []),
           CollectionDocsOrderButton,
         ],
