@@ -25,6 +25,9 @@ const externdCollectionConfig = (collection: CollectionConfig) => {
           read: () => true,
           update: () => false,
         },
+        admin: {
+          hidden: true,
+        },
         index: true,
         name: 'docOrder',
         type: 'number',
