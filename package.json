@@ -1,6 +1,6 @@
 {
   "name": "payload-enchants",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "private": true,
   "description": "",
   "keywords": [],
@@ -17,7 +17,7 @@
     "dev": "pnpm --filter test dev",
     "dev:types": "cd test && pnpm generate:types",
     "lint": "turbo lint --filter \"@payload-enchants/*\"",
-    "publish:all": "pnpm publish:docs-reorder && pnpm publish:translator && pnpm publish:better-localized-fields && pnpm publish:bump-payload && pnpm publish:seo && pnpm publish:better-use-as-title && pnpm publish:cached-local-api && pnpm publish:fields-select",
+    "publish:all": "pnpm publish:docs-reorder && pnpm publish:translator && pnpm publish:better-localized-fields && pnpm publish:bump-payload && pnpm publish:seo && pnpm publish:better-use-as-title && pnpm publish:cached-local-api && pnpm publish:fields-select && pnpm publish:sdk",
     "publish:better-localized-fields": "cd ./packages/better-localized-fields && pnpm publish",
     "publish:bump-payload": "cd ./packages/bump-payload && pnpm publish",
     "publish:cached-local-api": "cd ./packages/cached-local-api && pnpm publish",
@@ -26,6 +26,7 @@
     "publish:translator": "cd ./packages/translator && pnpm publish",
     "publish:better-use-as-title": "cd ./packages/better-use-as-title && pnpm publish",
     "publish:fields-select": "cd ./packages/fields-select && pnpm publish",
+    "publish:sdk": "cd ./packages/sdk && pnpm publish",
     "test": "cd test && pnpm test"
   },
   "devDependencies": {
