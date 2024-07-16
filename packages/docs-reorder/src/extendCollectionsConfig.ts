@@ -11,7 +11,7 @@ const externdCollectionConfig = (collection: CollectionConfig) => {
       ...(collection.admin ?? {}),
       components: {
         ...(collection.admin?.components ?? {}),
-        BeforeList: [
+        beforeList: [
           ...(collection.admin?.components?.beforeList ?? []),
           CollectionDocsOrderButton,
         ],
@@ -24,6 +24,9 @@ const externdCollectionConfig = (collection: CollectionConfig) => {
           create: () => false,
           read: () => true,
           update: () => false,
+        },
+        admin: {
+          hidden: true,
         },
         index: true,
         name: 'docOrder',
