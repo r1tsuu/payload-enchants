@@ -1,5 +1,5 @@
 /* eslint-disable perfectionist/sort-named-exports */
-import type { Plugin } from 'payload';
+import type { Config, Plugin } from 'payload';
 import { deepMerge } from 'payload/shared';
 
 import { CustomButton } from './client/components/CustomButton';
@@ -15,7 +15,7 @@ export const translator: (pluginConfig: TranslatorConfig) => Plugin = (pluginCon
     if (pluginConfig.disabled || !config.localization || config.localization.locales.length < 2)
       return config;
 
-    return {
+    const updatedConfig: Config = {
       ...config,
       admin: {
         ...(config.admin ?? {}),
@@ -85,5 +85,7 @@ export const translator: (pluginConfig: TranslatorConfig) => Plugin = (pluginCon
         },
       },
     };
+
+    return updatedConfig;
   };
 };

@@ -1,6 +1,6 @@
 {
   "name": "@payload-enchants/translator",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "private": false,
   "bugs": "https://github.com/r1tsuu/payload-enchants/issues",
   "repository": "https://github.com/r1tsuu/payload-enchants",
@@ -37,6 +37,11 @@
       "import": "./src/resolvers/openAI.ts",
       "require": "./src/resolvers/openAI.ts",
       "types": "./src/resolvers/openAI.ts"
+    },
+    "./client": {
+      "import": "./src/exports/client.ts",
+      "require": "./src/exports/client.ts",
+      "types": "./src/exports/client.ts"
     }
   },
   "files": [
@@ -56,19 +61,19 @@
     "bson-objectid": "^2.0.4"
   },
   "devDependencies": {
-    "@payloadcms/translations": "3.0.0-beta.61",
-    "@payloadcms/ui": "3.0.0-beta.61",
+    "@payloadcms/translations": "3.0.0-beta.84",
+    "@payloadcms/ui": "3.0.0-beta.84",
     "@types/react": "npm:types-react@19.0.0-beta.2",
     "@types/react-dom": "npm:types-react-dom@19.0.0-beta.2",
-    "payload": "3.0.0-beta.61",
-    "react": "19.0.0-rc-f994737d14-20240522",
-    "react-dom": "19.0.0-rc-f994737d14-20240522",
+    "payload": "3.0.0-beta.84",
+    "react": "19.0.0-rc-06d0b89e-20240801",
+    "react-dom": "19.0.0-rc-06d0b89e-20240801",
     "typescript": "^5.5.2"
   },
   "peerDependencies": {
-    "@payloadcms/translations": "^3.0.0-beta.61",
-    "@payloadcms/ui": "^3.0.0-beta.61",
-    "payload": "^3.0.0-beta.61"
+    "@payloadcms/translations": "^3.0.0-beta.84",
+    "@payloadcms/ui": "^3.0.0-beta.84",
+    "payload": "^3.0.0-beta.84"
   },
   "publishConfig": {
     "exports": {
@@ -101,6 +106,11 @@
         "import": "./dist/resolvers/openAI.js",
         "require": "./dist/resolvers/openAI.js",
         "types": "./dist/resolvers/openAI.d.ts"
+      },
+      "./client": {
+        "import": "./dist/exports/client.js",
+        "require": "./dist/exports/client.js",
+        "types": "./dist/exports/client.d.ts"
       }
     },
     "main": "./dist/index.js",

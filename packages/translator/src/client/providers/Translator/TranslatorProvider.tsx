@@ -49,10 +49,12 @@ export const TranslatorProvider = ({ children }: { children: ReactNode }) => {
   const locale = useLocale();
 
   const {
-    admin: { custom },
-    localization,
-    routes: { api },
-    serverURL,
+    config: {
+      admin: { custom },
+      localization,
+      routes: { api },
+      serverURL,
+    },
   } = useConfig();
 
   const apiClient = createClient({ api, serverURL });

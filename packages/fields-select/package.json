@@ -28,11 +28,11 @@
     "prepublishOnly": "pnpm clean && pnpm build"
   },
   "devDependencies": {
-    "payload": "3.0.0-beta.61",
+    "payload": "3.0.0-beta.84",
     "typescript": "^5.5.2"
   },
   "peerDependencies": {
-    "payload": "^3.0.0-beta.61"
+    "payload": "^3.0.0-beta.84"
   },
   "publishConfig": {
     "exports": {
