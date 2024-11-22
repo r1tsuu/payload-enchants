@@ -1,3 +1,4 @@
+import he from 'he';
 import { APIError, type Payload, type PayloadRequest } from 'payload';
 
 import type { TranslateResolver } from '../resolvers/types';
@@ -80,7 +81,9 @@ export const translateOperation = async (args: TranslateOperationArgs) => {
     };
   } else {
     resolveResult.translatedTexts.forEach((translated, index) => {
-      valuesToTranslate[index].onTranslate(translated);
+      const formattedValue = he.decode(translated);
+
+      valuesToTranslate[index].onTranslate(formattedValue);
     });
 
     if (args.update) {

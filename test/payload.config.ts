@@ -1,16 +1,10 @@
 // import { betterLocalizedFields } from '@payload-enchants/better-localized-fields';
-import { fieldsSelect } from '@payload-enchants/fields-select';
 import { translator } from '@payload-enchants/translator';
 import { copyResolver } from '@payload-enchants/translator/resolvers/copy';
-import { googleResolver } from '@payload-enchants/translator/resolvers/google';
-import { openAIResolver } from '@payload-enchants/translator/resolvers/openAI';
 import { mongooseAdapter } from '@payloadcms/db-mongodb';
 import { postgresAdapter } from '@payloadcms/db-postgres';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import { slateEditor } from '@payloadcms/richtext-slate';
-import { Button, Modal, PublishButton } from '@payloadcms/ui';
-import { ButtonContents } from '@payloadcms/ui/elements/Button';
-import { DefaultSaveButton, SaveButton } from '@payloadcms/ui/elements/SaveButton';
 import path from 'path';
 import { buildConfig } from 'payload';
 import { en } from 'payload/i18n/en';
@@ -245,18 +239,9 @@ export default buildConfig({
     translator({
       collections: ['posts'],
       globals: [],
-      resolvers: [
-        copyResolver(),
-        googleResolver({
-          apiKey: process.env.GOOGLE_API_KEY!,
-        }),
-        openAIResolver({
-          apiKey: process.env.OPENAI_KEY!,
-        }),
-      ],
+      resolvers: [copyResolver()],
     }),
-    fieldsSelect({ sanitizeExternals: true }),
-
+    // fieldsSelect({ sanitizeExternals: true }),
     // betterLocalizedFields(),
     // betterUseAsTitle({
     //   collections: [

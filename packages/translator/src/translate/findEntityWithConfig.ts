@@ -1,4 +1,6 @@
 import type {
+  CollectionSlug,
+  GlobalSlug,
   PayloadRequest,
   SanitizedCollectionConfig,
   SanitizedGlobalConfig,
@@ -47,18 +49,18 @@ export const findEntityWithConfig = async (
   const docPromise = isGlobal
     ? payload.findGlobal({
         depth: 0,
-        fallbackLocale: null,
-        locale,
+        fallbackLocale: undefined,
+        locale: locale as any,
         overrideAccess,
         req,
-        slug: args.globalSlug as string,
+        slug: args.globalSlug as GlobalSlug,
       })
     : payload.findByID({
-        collection: collectionSlug as string,
+        collection: collectionSlug as CollectionSlug,
         depth: 0,
-        fallbackLocale: null,
+        fallbackLocale: undefined,
         id: id as number | string,
-        locale,
+        locale: locale as any,
         overrideAccess,
         req,
       });

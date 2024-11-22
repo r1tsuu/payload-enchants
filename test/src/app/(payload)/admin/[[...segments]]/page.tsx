@@ -1,17 +1,19 @@
 /* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
-import config from '@payload-config'
+import config from '@payload-config';
 /* DO NOT MODIFY IT BECAUSE IT COULD BE REWRITTEN AT ANY TIME. */
-import { RootPage } from '@payloadcms/next/views'
+import { RootPage } from '@payloadcms/next/views';
+import { importMap } from '../importMap';
 
 type Args = {
   params: {
-    segments: string[]
-  }
+    segments: string[];
+  };
   searchParams: {
-    [key: string]: string | string[]
-  }
-}
+    [key: string]: string | string[];
+  };
+};
 
-const Page = ({ params, searchParams }: Args) => RootPage({ config, params, searchParams })
+const Page = ({ params, searchParams }: Args) =>
+  RootPage({ importMap, config, params, searchParams });
 
-export default Page
+export default Page;

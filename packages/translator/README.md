@@ -24,6 +24,7 @@ import { translator } from '@payload-enchants/translator';
 import { copyResolver } from '@payload-enchants/translator/resolvers/copy';
 import { googleResolver } from '@payload-enchants/translator/resolvers/google';
 import { openAIResolver } from '@payload-enchants/translator/resolvers/openAI';
+import { libreResolver } from '@payload-enchants/translator/resolvers/libreTranslate';
 
 export default buildConfig({
   plugins: [
@@ -40,6 +41,9 @@ export default buildConfig({
         }),
         openAIResolver({
           apiKey: process.env.OPENAI_KEY!,
+        }),
+        libreResolver({
+          apiKey: process.env.LIBRE_KEY!,
         }),
       ],
     }),

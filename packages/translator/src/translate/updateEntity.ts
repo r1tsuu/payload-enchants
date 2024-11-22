@@ -1,4 +1,4 @@
-import type { PayloadRequest, TypeWithID } from 'payload';
+import type { CollectionSlug, GlobalSlug, PayloadRequest, TypeWithID } from 'payload';
 import { APIError } from 'payload';
 
 type Args = {
@@ -34,17 +34,17 @@ export const updateEntity = ({
     ? req.payload.updateGlobal({
         data,
         depth,
-        locale,
+        locale: locale as any,
         overrideAccess,
         req,
-        slug: globalSlug as string,
+        slug: globalSlug as GlobalSlug,
       })
     : req.payload.update({
-        collection: collectionSlug as string,
+        collection: collectionSlug as CollectionSlug,
         data,
         depth,
         id: id as number | string,
-        locale,
+        locale: locale as any,
         overrideAccess,
         req,
       });

@@ -1,15 +1,9 @@
 import { chunkArray } from '../utils/chunkArray';
 import type { TranslateResolver } from './types';
 
-type GoogleResponse = {
+type LibreResponse = {
   data: {
-    data: {
-      translations: {
-        detectedSourceLanguage: string;
-        model: string;
-        translatedText: string;
-      }[];
-    };
+    translatedText: string[];
   };
   success: boolean;
 };
@@ -23,30 +17,37 @@ const mapLocale = (incoming: string) =>
     ? localeToCountryCodeMapper[incoming as keyof typeof localeToCountryCodeMapper]
     : incoming;
 
-export type GoogleResolverConfig = {
+export type LibreResolverConfig = {
   apiKey: string;
   /**
    * How many texts to include into 1 request
    * @default 100
    */
   chunkLength?: number;
+  /**
+   * Custom url for the libre translate instance
+   * @default "https://libretranslate.com/translate"
+   */
+  url?: string;
 };
 
-export const googleResolver = ({
+export const libreResolver = ({
   apiKey,
   chunkLength = 100,
-}: GoogleResolverConfig): TranslateResolver => {
+  url = 'https://libretranslate.com/translate',
+}: LibreResolverConfig): TranslateResolver => {
   return {
-    key: 'google',
+    key: 'libre',
     resolve: async (args) => {
       const { localeFrom, localeTo, req, texts } = args;
 
-      const apiUrl = `https://translation.googleapis.com/language/translate/v2?key=${apiKey}`;
+      const apiUrl = url;
 
-      const responses: GoogleResponse[] = await Promise.all(
+      const responses: LibreResponse[] = await Promise.all(
         chunkArray(texts, chunkLength).map((q) =>
           fetch(apiUrl, {
             body: JSON.stringify({
+              api_key: apiKey,
               q,
               source: mapLocale(localeFrom),
               target: mapLocale(localeTo),
@@ -60,8 +61,9 @@ export const googleResolver = ({
 
             if (!res.ok)
               req.payload.logger.info({
-                googleResponse: data,
-                message: 'An error occurred when trying to translate the data using Google API',
+                libreResponse: data,
+                message:
+                  'An error occurred when trying to translate the data using LibreTranslate API',
               });
 
             return {
@@ -78,9 +80,7 @@ export const googleResolver = ({
         };
       }
 
-      const translatedTexts = responses
-        .flatMap((chunk) => chunk.data.data.translations)
-        .map((translation) => translation.translatedText);
+      const translatedTexts = responses.flatMap((chunk) => chunk.data.translatedText);
 
       return {
         success: true,

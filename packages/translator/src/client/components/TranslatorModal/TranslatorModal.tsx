@@ -13,12 +13,7 @@ export const TranslatorModal = () => {
   return (
     <Modal className={'translator__modal'} slug={modalSlug}>
       <div className={'translator__wrapper'}>
-        <span
-          aria-label='Close'
-          className={'translator__close'}
-          onClick={closeTranslator}
-          role='button'
-        />
+        <button aria-label='Close' className={'translator__close'} onClick={closeTranslator} />
         <Content />
       </div>
     </Modal>
