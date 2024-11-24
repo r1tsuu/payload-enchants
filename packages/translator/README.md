@@ -20,11 +20,13 @@ https://github.com/r1tsuu/payload-plugin-translator/assets/64744993/d39aeba4-baf
 
 ```ts
 import { buildConfig } from 'payload/config';
-import { translator } from '@payload-enchants/translator';
-import { copyResolver } from '@payload-enchants/translator/resolvers/copy';
-import { googleResolver } from '@payload-enchants/translator/resolvers/google';
-import { openAIResolver } from '@payload-enchants/translator/resolvers/openAI';
-import { libreResolver } from '@payload-enchants/translator/resolvers/libreTranslate';
+import {
+  translator,
+  copyResolver,
+  googleResolver,
+  openAIResolver,
+  libreResolver,
+} from '@payload-enchants/translator';
 
 export default buildConfig({
   plugins: [
