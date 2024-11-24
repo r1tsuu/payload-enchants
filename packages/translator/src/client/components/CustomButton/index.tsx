@@ -1,11 +1,10 @@
-import { DefaultPublishButton, DefaultSaveButton } from '@payloadcms/ui';
+import type { CustomPublishButton, CustomSaveButton } from 'payload';
 
-import { CustomButtonWithTranslator } from './CustomButtonWithTranslator';
-
-export const CustomButton = (type: 'publish' | 'save') => {
-  return () => {
-    const defaultButton = type === 'publish' ? <DefaultPublishButton /> : <DefaultSaveButton />;
-
-    return <CustomButtonWithTranslator defaultButton={defaultButton} />;
+export const CustomButton = (type: 'publish' | 'save'): CustomPublishButton | CustomSaveButton => {
+  return {
+    clientProps: {
+      type,
+    },
+    path: '@payload-enchants/translator/client#CustomButtonWithTranslator',
   };
 };

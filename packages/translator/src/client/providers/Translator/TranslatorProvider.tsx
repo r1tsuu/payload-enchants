@@ -6,9 +6,9 @@ import {
   useForm,
   useLocale,
   useModal,
+  useServerFunctions,
   useTranslation,
 } from '@payloadcms/ui';
-import { getFormState } from '@payloadcms/ui/shared';
 import { reduceFieldsToValues } from 'payload/shared';
 import { type ReactNode, useEffect, useMemo, useState } from 'react';
 
@@ -24,7 +24,9 @@ export const TranslatorProvider = ({ children }: { children: ReactNode }) => {
 
   const [data, dispatch] = useAllFormFields();
 
-  const { collectionSlug, globalSlug, id } = useDocumentInfo();
+  const { getFormState } = useServerFunctions();
+
+  const { collectionSlug, getDocPreferences, globalSlug, id } = useDocumentInfo();
 
   const { setModified } = useForm();
 
@@ -49,10 +51,12 @@ export const TranslatorProvider = ({ children }: { children: ReactNode }) => {
   const locale = useLocale();
 
   const {
-    admin: { custom },
-    localization,
-    routes: { api },
-    serverURL,
+    config: {
+      admin: { custom },
+      localization,
+      routes: { api },
+      serverURL,
+    },
   } = useConfig();
 
   const apiClient = createClient({ api, serverURL });
@@ -83,7 +87,7 @@ export const TranslatorProvider = ({ children }: { children: ReactNode }) => {
 
     if (defaultFromOptions) setLocaleToTranslateFrom(defaultFromOptions.code);
     setLocaleToTranslateFrom(localesOptions[0].code);
-  }, [locale]);
+  }, [locale, localesOptions, localization.defaultLocale]);
 
   const closeTranslator = () => modal.closeModal(modalSlug);
 
@@ -109,22 +113,26 @@ export const TranslatorProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
 
-    dispatch({
-      state: await getFormState({
-        apiRoute: api,
-        body: {
-          collectionSlug,
-          data: result.translatedData,
-          globalSlug,
-          locale: locale.code,
-          schemaPath: collectionSlug || globalSlug || '',
-        },
-        serverURL,
-      }),
-      type: 'REPLACE_STATE',
+    const { state } = await getFormState({
+      collectionSlug,
+      data: result.translatedData,
+      docPermissions: {
+        fields: true,
+        update: true,
+      },
+      docPreferences: await getDocPreferences(),
+      globalSlug,
+      locale: locale.code,
+      operation: 'update',
+      renderAllFields: true,
+      schemaPath: collectionSlug || globalSlug || '',
     });
 
-    if (resolverConfig) {
+    if (state) {
+      dispatch({
+        state,
+        type: 'REPLACE_STATE',
+      });
       setModified(true);
       toast.success(resolverT('successMessage'));
     }

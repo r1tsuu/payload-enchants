@@ -1,5 +1,4 @@
-/* eslint-disable perfectionist/sort-named-exports */
-import type { Plugin } from 'payload';
+import type { CollectionSlug, Config, GlobalSlug, Plugin } from 'payload';
 import { deepMerge } from 'payload/shared';
 
 import { CustomButton } from './client/components/CustomButton';
@@ -15,7 +14,7 @@ export const translator: (pluginConfig: TranslatorConfig) => Plugin = (pluginCon
     if (pluginConfig.disabled || !config.localization || config.localization.locales.length < 2)
       return config;
 
-    return {
+    const updatedConfig: Config = {
       ...config,
       admin: {
         ...(config.admin ?? {}),
@@ -28,7 +27,8 @@ export const translator: (pluginConfig: TranslatorConfig) => Plugin = (pluginCon
       },
       collections:
         config.collections?.map((collection) => {
-          if (!pluginConfig.collections.includes(collection.slug)) return collection;
+          if (!pluginConfig.collections.includes(collection.slug as CollectionSlug))
+            return collection;
 
           return {
             ...collection,
@@ -61,7 +61,7 @@ export const translator: (pluginConfig: TranslatorConfig) => Plugin = (pluginCon
       ],
       globals:
         config.globals?.map((global) => {
-          if (!pluginConfig.globals.includes(global.slug)) return global;
+          if (!pluginConfig.globals.includes(global.slug as GlobalSlug)) return global;
 
           return {
             ...global,
@@ -85,5 +85,7 @@ export const translator: (pluginConfig: TranslatorConfig) => Plugin = (pluginCon
         },
       },
     };
+
+    return updatedConfig;
   };
 };

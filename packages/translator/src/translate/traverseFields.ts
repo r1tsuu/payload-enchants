@@ -28,10 +28,10 @@ export const traverseFields = ({
   siblingDataFrom = siblingDataFrom ?? dataFrom;
   siblingDataTranslated = siblingDataTranslated ?? translatedData;
 
-  fields.forEach((field) => {
+  for (const field of fields) {
     switch (field.type) {
       case 'tabs':
-        field.tabs.forEach((tab) => {
+        for (const tab of field.tabs) {
           const hasName = tabHasName(tab);
 
           const tabDataFrom = hasName
@@ -41,7 +41,7 @@ export const traverseFields = ({
           if (!tabDataFrom) return;
 
           const tabDataTranslated = hasName
-            ? (siblingDataTranslated[tab.name] as Record<string, unknown>) ?? {}
+            ? ((siblingDataTranslated[tab.name] as Record<string, unknown>) ?? {})
             : siblingDataTranslated;
 
           traverseFields({
@@ -54,11 +54,11 @@ export const traverseFields = ({
             translatedData,
             valuesToTranslate,
           });
-        });
+        }
 
         break;
 
-      case 'group':
+      case 'group': {
         const groupDataFrom = siblingDataFrom[field.name] as Record<string, unknown>;
 
         if (!groupDataFrom) break;
@@ -78,8 +78,9 @@ export const traverseFields = ({
         });
 
         break;
+      }
 
-      case 'array':
+      case 'array': {
         const arrayDataFrom = siblingDataFrom[field.name] as {
           id: string;
         }[];
@@ -113,9 +114,13 @@ export const traverseFields = ({
         siblingDataTranslated[field.name] = arrayDataTranslated;
 
         break;
+      }
 
-      case 'blocks':
-        const blocksDataFrom = siblingDataFrom[field.name] as { blockType: string; id: string }[];
+      case 'blocks': {
+        const blocksDataFrom = siblingDataFrom[field.name] as {
+          blockType: string;
+          id: string;
+        }[];
 
         if (isEmpty(blocksDataFrom)) break;
 
@@ -152,6 +157,7 @@ export const traverseFields = ({
         siblingDataTranslated[field.name] = blocksDataTranslated;
 
         break;
+      }
 
       case 'collapsible':
       case 'row':
@@ -203,7 +209,7 @@ export const traverseFields = ({
         });
         break;
 
-      case 'richText':
+      case 'richText': {
         if (!(field.localized || localizedParent) || isEmpty(siblingDataFrom[field.name])) break;
         if (emptyOnly && siblingDataTranslated[field.name]) break;
 
@@ -252,9 +258,10 @@ export const traverseFields = ({
         }
 
         break;
+      }
 
       default:
         break;
     }
-  });
+  }
 };

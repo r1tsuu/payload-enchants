@@ -14,12 +14,12 @@ export const traverseRichText = ({
   }
 
   if (Array.isArray(siblingData?.children)) {
-    siblingData.children.forEach((siblingData) => {
+    for (const child of siblingData.children) {
       traverseRichText({
         onText,
         root,
-        siblingData,
+        siblingData: child,
       });
-    });
+    }
   }
 };

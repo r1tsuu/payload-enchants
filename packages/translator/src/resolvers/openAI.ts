@@ -19,7 +19,7 @@ export type OpenAIResolverConfig = {
    * @default "gpt-3.5-turbo"
    */
   model?: string;
-  promt?: OpenAIPrompt;
+  prompt?: OpenAIPrompt;
 };
 
 type OpenAIResponse = {
@@ -30,7 +30,7 @@ type OpenAIResponse = {
   }[];
 };
 
-const defaultPromt: OpenAIPrompt = ({ localeFrom, localeTo, texts }) => {
+const defaultPrompt: OpenAIPrompt = ({ localeFrom, localeTo, texts }) => {
   return `Translate me the following array: ${JSON.stringify(texts)} in locale=${localeFrom} to locale ${localeTo}, respond me with the same array structure`;
 };
 
@@ -39,7 +39,7 @@ export const openAIResolver = ({
   baseUrl,
   chunkLength = 100,
   model = 'gpt-3.5-turbo',
-  promt = defaultPromt,
+  prompt = defaultPrompt,
 }: OpenAIResolverConfig): TranslateResolver => {
   return {
     key: 'openai',
@@ -47,7 +47,7 @@ export const openAIResolver = ({
       const apiUrl = `${baseUrl || 'https://api.openai.com'}/v1/chat/completions`;
 
       try {
-        const respones: {
+        const response: {
           data: OpenAIResponse;
           success: boolean;
         }[] = await Promise.all(
@@ -56,7 +56,7 @@ export const openAIResolver = ({
               body: JSON.stringify({
                 messages: [
                   {
-                    content: promt({ localeFrom, localeTo, texts }),
+                    content: prompt({ localeFrom, localeTo, texts }),
                     role: 'user',
                   },
                 ],
@@ -72,7 +72,7 @@ export const openAIResolver = ({
 
               if (!res.ok)
                 req.payload.logger.info({
-                  message: `An error occurred when trying to translate the data using OpenAI API`,
+                  message: 'An error occurred when trying to translate the data using OpenAI API',
                   openAIresponse: data,
                 });
 
@@ -86,7 +86,7 @@ export const openAIResolver = ({
 
         const translated: string[] = [];
 
-        for (const { data, success } of respones) {
+        for (const { data, success } of response) {
           if (!success)
             return {
               success: false as const,
@@ -96,7 +96,7 @@ export const openAIResolver = ({
 
           if (!content) {
             req.payload.logger.error(
-              `An error occurred when trying to translate the data using OpenAI API - missing content in the response`,
+              'An error occurred when trying to translate the data using OpenAI API - missing content in the response',
             );
 
             return {
@@ -110,7 +110,8 @@ export const openAIResolver = ({
             req.payload.logger.error({
               data: translatedChunk,
               fullContent: content,
-              message: `An error occurred when trying to translate the data using OpenAI API - parsed content is not an array`,
+              message:
+                'An error occurred when trying to translate the data using OpenAI API - parsed content is not an array',
             });
 
             return {
@@ -124,7 +125,8 @@ export const openAIResolver = ({
                 chunkData: translatedChunk,
                 data: text,
                 fullContent: content,
-                message: `An error occurred when trying to translate the data using OpenAI API - parsed content is not a string`,
+                message:
+                  'An error occurred when trying to translate the data using OpenAI API - parsed content is not a string',
               });
 
               return {
@@ -143,7 +145,7 @@ export const openAIResolver = ({
       } catch (e) {
         if (e instanceof Error) {
           req.payload.logger.info({
-            message: `An error occurred when trying to translate the data using OpenAI API`,
+            message: 'An error occurred when trying to translate the data using OpenAI API',
             originalErr: e.message,
           });
         }

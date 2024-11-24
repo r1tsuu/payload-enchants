@@ -2,9 +2,6 @@ import { config } from 'dotenv';
 import mongoose from 'mongoose';
 import path from 'path';
 import type { Payload } from 'payload';
-import { getPayload } from 'payload';
-import { importConfig } from 'payload/node';
-import { translateOperation } from 'payload-plugin-translator/operation';
 import { fileURLToPath } from 'url';
 
 config({
@@ -14,13 +11,7 @@ config({
 let payload: Payload;
 
 describe('Translator operation test', () => {
-  beforeAll(async () => {
-    payload = await getPayload({
-      config: await importConfig(
-        path.resolve(fileURLToPath(import.meta.url), '../../payload.config.ts'),
-      ),
-    });
-  });
+  beforeAll(async () => {});
 
   afterAll(async () => {
     await mongoose.connection.dropDatabase();

@@ -2,22 +2,23 @@
 
 import './styles.scss';
 
-import { useConfig, useDocumentInfo } from '@payloadcms/ui';
-import type { ReactNode } from 'react';
+import { PublishButton, SaveButton, useConfig, useDocumentInfo } from '@payloadcms/ui';
 
 import type { TranslateResolver } from '../../../resolvers/types';
 import { TranslatorProvider } from '../../providers/Translator/TranslatorProvider';
 import { ResolverButton } from '../ResolverButton';
 import { TranslatorModal } from '../TranslatorModal';
 
-export const CustomButtonWithTranslator = ({ defaultButton }: { defaultButton: ReactNode }) => {
-  const config = useConfig();
+export const CustomButtonWithTranslator = ({ type }: { type: 'publish' | 'save' }) => {
+  const { config } = useConfig();
+
+  const DefaultButton = type === 'publish' ? PublishButton : SaveButton;
 
   const { globalSlug, id } = useDocumentInfo();
 
   const resolvers = (config.admin?.custom?.translator?.resolvers as TranslateResolver[]) ?? [];
 
-  if (!id && !globalSlug) return defaultButton;
+  if (!id && !globalSlug) return <DefaultButton />;
 
   return (
     <TranslatorProvider>
@@ -26,7 +27,7 @@ export const CustomButtonWithTranslator = ({ defaultButton }: { defaultButton: R
         {resolvers.map((resolver) => (
           <ResolverButton key={resolver.key} resolver={resolver} />
         ))}
-        {defaultButton}
+        {<DefaultButton />}
       </div>
     </TranslatorProvider>
   );

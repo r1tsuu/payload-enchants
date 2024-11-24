@@ -15,6 +15,13 @@ export const translations = {
       resolver_google_submitButtonLabelFull: 'Translate all',
       resolver_google_successMessage: 'Successfully translated. Press "Save" to apply the changes.',
 
+      resolver_libre_buttonLabel: 'Libre Translate',
+      resolver_libre_errorMessage: 'An error occurred when trying to translate the data',
+      resolver_libre_modalTitle: 'Choose the locale to translate from',
+      resolver_libre_submitButtonLabelEmpty: 'Translate only empty fields',
+      resolver_libre_submitButtonLabelFull: 'Translate all',
+      resolver_libre_successMessage: 'Successfully translated. Press "Save" to apply the changes.',
+
       resolver_openai_buttonLabel: 'AI Translate',
       resolver_openai_errorMessage: 'An error occurred when trying to translate the data',
       resolver_openai_modalTitle: 'Choose the locale to translate from',
@@ -32,6 +39,7 @@ export const translations = {
       resolver_copy_submitButtonLabelFull: 'Копіювати все',
       resolver_copy_successMessage:
         'Успішно скопійовано. Натисніть "Зберегти", щоб застосувати зміни.',
+
       resolver_google_buttonLabel: 'Переклад Google',
       resolver_google_errorMessage: 'Сталася помилка під час спроби перекладу даних',
       resolver_google_modalTitle: 'Виберіть локаль для перекладу',
@@ -39,6 +47,15 @@ export const translations = {
       resolver_google_submitButtonLabelFull: 'Перекласти все',
       resolver_google_successMessage:
         'Успішно перекладено. Натисніть "Зберегти", щоб застосувати зміни.',
+
+      resolver_libre_buttonLabel: 'Переклад Libre',
+      resolver_libre_errorMessage: 'Сталася помилка під час спроби перекладу даних',
+      resolver_libre_modalTitle: 'Виберіть локаль для перекладу',
+      resolver_libre_submitButtonLabelEmpty: 'Перекласти лише порожні поля',
+      resolver_libre_submitButtonLabelFull: 'Перекласти все',
+      resolver_libre_successMessage:
+        'Успішно перекладено. Натисніть "Зберегти", щоб застосувати зміни.',
+
       resolver_openai_buttonLabel: 'Переклад AI',
       resolver_openai_errorMessage: 'Сталася помилка під час спроби перекладу даних',
       resolver_openai_modalTitle: 'Виберіть локаль для перекладу',
@@ -63,6 +80,13 @@ export const translations = {
       resolver_google_submitButtonLabelEmpty: '仅翻译空字段',
       resolver_google_submitButtonLabelFull: '翻译全部',
       resolver_google_successMessage: '翻译成功。按下“保存”以应用更改。',
+
+      resolver_libre_buttonLabel: '自由翻译',
+      resolver_libre_errorMessage: '尝试翻译数据时发生错误',
+      resolver_libre_modalTitle: '选择要翻译的语言',
+      resolver_libre_submitButtonLabelEmpty: '仅翻译空字段',
+      resolver_libre_submitButtonLabelFull: '翻译全部',
+      resolver_libre_successMessage: '翻译成功。按下“保存”以应用更改。',
 
       resolver_openai_buttonLabel: 'AI翻译',
       resolver_openai_errorMessage: '尝试翻译数据时发生错误',
