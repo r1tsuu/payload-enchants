@@ -8,3 +8,4 @@
 **/dist/**
 **/node_modules
 **/temp
+test/src/app(payload)/admin/importMap.js

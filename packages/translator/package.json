@@ -62,20 +62,17 @@
     "he": "^1.2.0"
   },
   "devDependencies": {
-    "@payloadcms/translations": "3.0.2",
-    "@payloadcms/ui": "3.0.2",
     "@types/he": "^1.2.3",
     "@types/react": "npm:types-react@19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
-    "payload": "3.0.2",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106",
-    "typescript": "^5.5.2"
+    "typescript": "5.7.2"
   },
   "peerDependencies": {
-    "@payloadcms/translations": "^3.0.2",
-    "@payloadcms/ui": "^3.0.2",
-    "payload": "^3.0.2"
+    "@payloadcms/translations": "^3.1.0",
+    "@payloadcms/ui": "^3.1.0",
+    "payload": "^3.1.0"
   },
   "publishConfig": {
     "exports": {

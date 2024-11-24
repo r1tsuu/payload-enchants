@@ -1,6 +1,5 @@
 // import { betterLocalizedFields } from '@payload-enchants/better-localized-fields';
-import { translator } from '@payload-enchants/translator';
-import { copyResolver } from '@payload-enchants/translator/resolvers/copy';
+import { copyResolver, translator } from '@payload-enchants/translator';
 import { mongooseAdapter } from '@payloadcms/db-mongodb';
 import { postgresAdapter } from '@payloadcms/db-postgres';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
@@ -166,7 +165,7 @@ export default buildConfig({
           },
         })
       : mongooseAdapter({
-          url: process.env.MONGODB_URI || '',
+          url: process.env.MONGODB_URI || 'mongodb://localhost:27017/translator',
         }),
   editor: isLexical ? lexicalEditor({}) : slateEditor({}),
   endpoints: [
@@ -252,7 +251,7 @@ export default buildConfig({
     //   ],
     // }),
   ],
-  secret: process.env.PAYLOAD_SECRET || '',
+  secret: process.env.PAYLOAD_SECRET || 'secret',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },

@@ -51,16 +51,49 @@
     "sort-package-json": "^2.10.0",
     "tsx": "^4.15.7",
     "turbo": "^1.13.4",
-    "typescript": "^5.5.2"
+    "typescript": "^5.5.2",
+    "@payloadcms/db-mongodb": "3.1.0",
+    "@payloadcms/db-postgres": "3.1.0",
+    "@payloadcms/next": "3.1.0",
+    "@payloadcms/richtext-lexical": "3.1.0",
+    "@payloadcms/richtext-slate": "3.1.0",
+    "@payloadcms/translations": "3.1.0",
+    "@payloadcms/ui": "3.1.0",
+    "payload": "3.1.0",
+    "next": "15.0.0",
+    "react": "19.0.0-rc-65a56d0e-20241020",
+    "react-dom": "19.0.0-rc-65a56d0e-20241020"
   },
   "overrides": {
-    "@types/react": "npm:types-react@19.0.0-beta.2",
-    "@types/react-dom": "npm:types-react-dom@19.0.0-beta.2"
+    "@types/react": "npm:types-react@19.0.0-rc.1",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
+    "@payloadcms/db-mongodb": "$@payloadcms/db-mongodb",
+    "@payloadcms/db-postgres": "$@payloadcms/db-postgres",
+    "@payloadcms/next": "$@payloadcms/next",
+    "@payloadcms/richtext-lexical": "$@payloadcms/richtext-lexical",
+    "@payloadcms/richtext-slate": "$@payloadcms/richtext-slate",
+    "@payloadcms/translations": "$@payloadcms/translations",
+    "@payloadcms/ui": "$@payloadcms/ui",
+    "payload": "$payload",
+    "next": "$next",
+    "react": "$react",
+    "react-dom": "$react-dom"
   },
   "pnpm": {
     "overrides": {
-      "@types/react": "npm:types-react@19.0.0-beta.2",
-      "@types/react-dom": "npm:types-react-dom@19.0.0-beta.2"
+      "@types/react": "npm:types-react@19.0.0-rc.1",
+      "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
+      "@payloadcms/db-mongodb": "$@payloadcms/db-mongodb",
+      "@payloadcms/db-postgres": "$@payloadcms/db-postgres",
+      "@payloadcms/next": "$@payloadcms/next",
+      "@payloadcms/richtext-lexical": "$@payloadcms/richtext-lexical",
+      "@payloadcms/richtext-slate": "$@payloadcms/richtext-slate",
+      "@payloadcms/translations": "$@payloadcms/translations",
+      "@payloadcms/ui": "$@payloadcms/ui",
+      "payload": "$payload",
+      "next": "$next",
+      "react": "$react",
+      "react-dom": "$react-dom"
     }
   }
 }
