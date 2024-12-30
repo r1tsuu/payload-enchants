@@ -1,44 +1,112 @@
-import type { DocumentInfoContext } from '@payloadcms/ui/providers/DocumentInfo';
-import type { Field, TextareaField, TextField, UploadField } from 'payload';
+import type { DocumentInfoContext } from '@payloadcms/ui';
+import type {
+  CollectionConfig,
+  CollectionSlug,
+  Field,
+  GlobalConfig,
+  GlobalSlug,
+  PayloadRequest,
+} from 'payload';
 
-export type GenerateTitle = <T = any>(
-  args: { doc: T; locale?: string } & DocumentInfoContext,
-) => Promise<string> | string;
+export type FieldsOverride = (args: { defaultFields: Field[] }) => Field[];
 
-export type GenerateDescription = <T = any>(
+export type PartialDocumentInfoContext = Pick<
+  DocumentInfoContext,
+  | 'collectionSlug'
+  | 'docPermissions'
+  | 'globalSlug'
+  | 'hasPublishPermission'
+  | 'hasPublishedDoc'
+  | 'hasSavePermission'
+  | 'id'
+  | 'initialData'
+  | 'initialState'
+  | 'preferencesKey'
+  | 'title'
+  | 'versionCount'
+>;
+
+export type GenerateTitle<T = any> = (
   args: {
+    collectionConfig?: CollectionConfig;
     doc: T;
+    globalConfig?: GlobalConfig;
     locale?: string;
-  } & DocumentInfoContext,
+    req: PayloadRequest;
+  } & PartialDocumentInfoContext,
 ) => Promise<string> | string;
 
-export type GenerateImage = <T = any>(
-  args: { doc: T; locale?: string } & DocumentInfoContext,
+export type GenerateDescription<T = any> = (
+  args: {
+    collectionConfig?: CollectionConfig;
+    doc: T;
+    globalConfig?: GlobalConfig;
+    locale?: string;
+    req: PayloadRequest;
+  } & PartialDocumentInfoContext,
 ) => Promise<string> | string;
 
-export type GenerateURL = <T = any>(
-  args: { doc: T; locale?: string } & DocumentInfoContext,
+export type GenerateImage<T = any> = (
+  args: {
+    collectionConfig?: CollectionConfig;
+    doc: T;
+    globalConfig?: GlobalConfig;
+    locale?: string;
+    req: PayloadRequest;
+  } & PartialDocumentInfoContext,
 ) => Promise<string> | string;
 
-export type PluginConfig = {
-  collections?: string[];
-  fieldOverrides?: {
-    description?: Partial<TextareaField>;
-    image?: Partial<UploadField>;
-    title?: Partial<TextField>;
-  };
-  fields?: Field[];
+export type GenerateURL<T = any> = (
+  args: {
+    collectionConfig?: CollectionConfig;
+    doc: T;
+    globalConfig?: GlobalConfig;
+    locale?: string;
+    req: PayloadRequest;
+  } & PartialDocumentInfoContext,
+) => Promise<string> | string;
+
+export type SEOPluginConfig = {
+  /**
+   * Collections to include the SEO fields in
+   */
+  collections?: CollectionSlug[];
+  /**
+   * Override the default fields inserted by the SEO plugin via a function that receives the default fields and returns the new fields
+   *
+   * If you need more flexibility you can insert the fields manually as needed. @link https://payloadcms.com/docs/plugins/seo#direct-use-of-fields
+   */
+  fields?: FieldsOverride;
   generateDescription?: GenerateDescription;
   generateDescriptionAi?: GenerateDescription;
   generateImage?: GenerateImage;
   generateTitle?: GenerateTitle;
   generateTitleAi?: GenerateTitle;
+  /**
+   *
+   */
   generateURL?: GenerateURL;
-  globals?: string[];
+  /**
+   * Globals to include the SEO fields in
+   */
+  globals?: GlobalSlug[];
   interfaceName?: string;
+  /**
+   * OpenAI API key for generating descriptions and titles
+   * @link https://platform.openai.com/docs/guides/authentication
+   */
   openaiApiKey?: string;
+  /**
+   * Group fields into tabs, your content will be automatically put into a general tab and the SEO fields into an SEO tab
+   *
+   * If you need more flexibility you can insert the fields manually as needed. @link https://payloadcms.com/docs/plugins/seo#direct-use-of-fields
+   */
   tabbedUI?: boolean;
-  uploadsCollection?: string;
+
+  /**
+   * The slug of the collection used to handle image uploads
+   */
+  uploadsCollection?: CollectionSlug;
 };
 
 export type Meta = {

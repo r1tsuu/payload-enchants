@@ -1,9 +1,10 @@
 'use client';
 
 import { useTranslation } from '@payloadcms/ui';
-import { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 
-import { Pill } from './Pill';
+import type { PluginSEOTranslationKeys, PluginSEOTranslations } from '../translations/index.js';
+import { Pill } from './Pill.js';
 
 export const LengthIndicator: React.FC<{
   maxLength?: number;
@@ -21,15 +22,13 @@ export const LengthIndicator: React.FC<{
 
   const [barWidth, setBarWidth] = useState<number>(0);
 
-  const { t } = useTranslation();
-
-  type TArg = Parameters<typeof t>[0];
+  const { t } = useTranslation<PluginSEOTranslations, PluginSEOTranslationKeys>();
 
   useEffect(() => {
     const textLength = text?.length || 0;
 
     if (textLength === 0) {
-      setLabel('Missing');
+      setLabel(t('plugin-seo:missing'));
       setLabelStyle({
         backgroundColor: 'red',
         color: 'white',
@@ -42,13 +41,13 @@ export const LengthIndicator: React.FC<{
         const ratioUntilMin = textLength / minLength;
 
         if (ratioUntilMin > 0.9) {
-          setLabel(t('plugin-seo:almostThere' as TArg));
+          setLabel(t('plugin-seo:almostThere'));
           setLabelStyle({
             backgroundColor: 'orange',
             color: 'white',
           });
         } else {
-          setLabel(t('plugin-seo:tooShort' as TArg));
+          setLabel(t('plugin-seo:tooShort'));
           setLabelStyle({
             backgroundColor: 'orangered',
             color: 'white',
@@ -59,7 +58,7 @@ export const LengthIndicator: React.FC<{
       }
 
       if (progress >= 0 && progress <= 1) {
-        setLabel(t('plugin-seo:good' as TArg));
+        setLabel(t('plugin-seo:good'));
         setLabelStyle({
           backgroundColor: 'green',
           color: 'white',
@@ -68,7 +67,7 @@ export const LengthIndicator: React.FC<{
       }
 
       if (progress > 1) {
-        setLabel(t('plugin-seo:tooLong' as TArg));
+        setLabel(t('plugin-seo:tooLong'));
         setLabelStyle({
           backgroundColor: 'red',
           color: 'white',
@@ -102,24 +101,16 @@ export const LengthIndicator: React.FC<{
         }}
       >
         <small>
-          {t('plugin-seo:characterCount' as TArg, {
-            current: text?.length || 0,
-            maxLength,
-            minLength,
-          })}
+          {t('plugin-seo:characterCount', { current: text?.length || 0, maxLength, minLength })}
           {(textLength === 0 || charsUntilMin > 0) && (
-            <Fragment>
-              {t('plugin-seo:charactersToGo' as TArg, { characters: charsUntilMin })}
-            </Fragment>
+            <Fragment>{t('plugin-seo:charactersToGo', { characters: charsUntilMin })}</Fragment>
           )}
           {charsUntilMin <= 0 && charsUntilMax >= 0 && (
-            <Fragment>
-              {t('plugin-seo:charactersLeftOver' as TArg, { characters: charsUntilMax })}
-            </Fragment>
+            <Fragment>{t('plugin-seo:charactersLeftOver', { characters: charsUntilMax })}</Fragment>
           )}
           {charsUntilMax < 0 && (
             <Fragment>
-              {t('plugin-seo:charactersTooMany' as TArg, { characters: charsUntilMax * -1 })}
+              {t('plugin-seo:charactersTooMany', { characters: charsUntilMax * -1 })}
             </Fragment>
           )}
         </small>
