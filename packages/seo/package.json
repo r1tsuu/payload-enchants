@@ -10,8 +10,23 @@
   "exports": {
     ".": {
       "import": "./src/index.tsx",
-      "require": "./src/index.tsx",
-      "types": "./src/index.tsx"
+      "types": "./src/index.tsx",
+      "default": "./src/index.tsx"
+    },
+    "./types": {
+      "import": "./src/exports/types.ts",
+      "types": "./src/exports/types.ts",
+      "default": "./src/exports/types.ts"
+    },
+    "./fields": {
+      "import": "./src/exports/fields.ts",
+      "types": "./src/exports/fields.ts",
+      "default": "./src/exports/fields.ts"
+    },
+    "./client": {
+      "import": "./src/exports/client.ts",
+      "types": "./src/exports/client.ts",
+      "default": "./src/exports/client.ts"
     }
   },
   "files": [
@@ -31,22 +46,22 @@
     "bson-objectid": "^2.0.4"
   },
   "devDependencies": {
-    "@payloadcms/translations": "3.0.0-beta.61",
-    "@payloadcms/ui": "3.0.0-beta.61",
-    "@types/react": "npm:types-react@19.0.0-beta.2",
-    "@types/react-dom": "npm:types-react-dom@19.0.0-beta.2",
+    "@payloadcms/translations": "^3.1.0",
+    "@payloadcms/ui": "^3.1.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "openai": "^4.52.0",
-    "payload": "3.0.0-beta.61",
-    "react": "19.0.0-rc-f994737d14-20240522",
-    "react-dom": "19.0.0-rc-f994737d14-20240522",
+    "payload": "^3.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "typescript": "^5.5.2"
   },
   "peerDependencies": {
-    "@payloadcms/next": "^3.0.0-beta.61",
-    "@payloadcms/translations": "^3.0.0-beta.61",
-    "@payloadcms/ui": "^3.0.0-beta.61",
-    "openai": "^4.30.0",
-    "payload": "^3.0.0-beta.61"
+    "@payloadcms/next": "^3.1.0",
+    "@payloadcms/translations": "^3.1.0",
+    "@payloadcms/ui": "^3.1.0",
+    "openai": "^4.52.0",
+    "payload": "^3.1.0"
   },
   "publishConfig": {
     "exports": {

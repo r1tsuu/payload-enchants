@@ -1,125 +1,53 @@
-import { addDataAndFileToRequest } from '@payloadcms/next/utilities';
-import { withMergedProps } from '@payloadcms/ui/shared';
-import type { Config, Field, GroupField, TabsField, TextField } from 'payload';
-import { deepMerge } from 'payload/shared';
+import type { CollectionSlug, Config, Field, GlobalSlug, GroupField, TabsField } from 'payload';
+import { deepMergeSimple } from 'payload/shared';
 
-import { MetaDescription } from './fields/MetaDescription';
-import { MetaImage } from './fields/MetaImage';
-import { MetaTitle } from './fields/MetaTitle';
+import { MetaDescriptionField } from './fields/MetaDescription';
+import { MetaImageField } from './fields/MetaImage';
+import { MetaTitleField } from './fields/MetaTitle';
+import { OverviewField } from './fields/Overview';
+import { PreviewField } from './fields/Preview';
 import { openaiMessage } from './openai/message';
-import { translations } from './translations/index';
+import { translations } from './translations';
 import type {
   GenerateDescription,
   GenerateImage,
   GenerateTitle,
   GenerateURL,
-  PluginConfig,
+  SEOPluginConfig,
 } from './types';
-import { Overview } from './ui/Overview';
-import { Preview } from './ui/Preview';
 
-const seo =
-  (pluginConfig: PluginConfig) =>
+export const seoPlugin =
+  (pluginConfig: SEOPluginConfig) =>
   (config: Config): Config => {
+    const defaultFields: Field[] = [
+      OverviewField({}),
+      MetaTitleField({
+        hasGenerateAi: typeof pluginConfig?.generateTitleAi === 'function',
+        hasGenerateFn: typeof pluginConfig?.generateTitle === 'function',
+      }),
+      MetaDescriptionField({
+        hasGenerateAi: typeof pluginConfig?.generateDescriptionAi === 'function',
+        hasGenerateFn: typeof pluginConfig?.generateDescription === 'function',
+      }),
+      ...(pluginConfig?.uploadsCollection
+        ? [
+            MetaImageField({
+              hasGenerateFn: typeof pluginConfig?.generateImage === 'function',
+              relationTo: pluginConfig.uploadsCollection,
+            }),
+          ]
+        : []),
+      PreviewField({
+        hasGenerateFn: typeof pluginConfig?.generateURL === 'function',
+      }),
+    ];
+
     const seoFields: GroupField[] = [
       {
         fields: [
-          {
-            admin: {
-              components: {
-                Field: Overview,
-              },
-            },
-            label: 'Overview',
-            name: 'overview',
-            type: 'ui',
-          },
-          {
-            admin: {
-              components: {
-                Field: withMergedProps({
-                  Component: MetaTitle,
-                  sanitizeServerOnlyProps: true,
-                  toMergeIntoProps: {
-                    hasGenerateTitleAi:
-                      typeof pluginConfig.generateTitleAi === 'function' &&
-                      pluginConfig.openaiApiKey,
-                    hasGenerateTitleFn: typeof pluginConfig?.generateTitle === 'function',
-                  },
-                }),
-              },
-            },
-            localized: true,
-            name: 'title',
-            type: 'text',
-            ...((pluginConfig?.fieldOverrides?.title as unknown as TextField) ?? {}),
-          },
-          {
-            admin: {
-              components: {
-                Field: withMergedProps({
-                  Component: MetaDescription,
-                  sanitizeServerOnlyProps: true,
-                  toMergeIntoProps: {
-                    hasGenerateDescriptionAi:
-                      typeof pluginConfig.generateDescriptionAi === 'function' &&
-                      pluginConfig.openaiApiKey,
-                    hasGenerateDescriptionFn:
-                      typeof pluginConfig?.generateDescription === 'function',
-                  },
-                }),
-              },
-            },
-            localized: true,
-            name: 'description',
-            type: 'textarea',
-            ...(pluginConfig?.fieldOverrides?.description ?? {}),
-          },
-          ...(pluginConfig?.uploadsCollection
-            ? [
-                // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-                {
-                  admin: {
-                    components: {
-                      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                      Field: withMergedProps({
-                        Component: MetaImage,
-                        sanitizeServerOnlyProps: true,
-                        toMergeIntoProps: {
-                          hasGenerateImageFn: typeof pluginConfig?.generateImage === 'function',
-                        },
-                      }),
-                    },
-                    description:
-                      'Maximum upload file size: 12MB. Recommended file size for images is <500KB.',
-                  },
-                  label: 'Meta Image',
-                  localized: true,
-                  name: 'image',
-                  relationTo: pluginConfig?.uploadsCollection,
-                  type: 'upload',
-                  ...(pluginConfig?.fieldOverrides?.image ?? {}),
-                } as Field,
-              ]
-            : []),
-          ...(pluginConfig?.fields || []),
-          {
-            admin: {
-              components: {
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                Field: withMergedProps({
-                  Component: Preview,
-                  sanitizeServerOnlyProps: true,
-                  toMergeIntoProps: {
-                    hasGenerateURLFn: typeof pluginConfig?.generateURL === 'function',
-                  },
-                }),
-              },
-            },
-            label: 'Preview',
-            name: 'preview',
-            type: 'ui',
-          },
+          ...(pluginConfig?.fields && typeof pluginConfig.fields === 'function'
+            ? pluginConfig.fields({ defaultFields })
+            : defaultFields),
         ],
         interfaceName: pluginConfig.interfaceName,
         label: 'SEO',
@@ -134,14 +62,17 @@ const seo =
         config.collections?.map((collection) => {
           const { slug } = collection;
 
-          const isEnabled = pluginConfig?.collections?.includes(slug);
+          const isEnabled = pluginConfig?.collections?.includes(slug as CollectionSlug);
 
           if (isEnabled) {
             if (pluginConfig?.tabbedUI) {
               // prevent issues with auth enabled collections having an email field that shouldn't be moved to the SEO tab
               const emailField =
                 (collection.auth ||
-                  !(typeof collection.auth === 'object' && collection.auth.disableLocalStrategy)) &&
+                  !(
+                    typeof collection.auth === 'object' &&
+                    (collection.auth as any).disableLocalStrategy
+                  )) &&
                 collection.fields?.find((field) => 'name' in field && field.name === 'email');
 
               const hasOnlyEmailField = collection.fields?.length === 1 && emailField;
@@ -209,12 +140,27 @@ const seo =
         ...(config.endpoints ?? []),
         {
           handler: async (req) => {
-            await addDataAndFileToRequest(req);
+            const data: Omit<
+              Parameters<GenerateTitle>[0],
+              'collectionConfig' | 'globalConfig' | 'req'
+            > = await req.json?.();
 
-            const args: Parameters<GenerateTitle>[0] =
-              req.data as unknown as Parameters<GenerateTitle>[0];
+            if (data) {
+              req.data = data;
+            }
 
-            const result = pluginConfig.generateTitle ? await pluginConfig.generateTitle(args) : '';
+            const result = pluginConfig.generateTitle
+              ? await pluginConfig.generateTitle({
+                  ...data,
+                  collectionConfig: req.data?.collectionSlug
+                    ? config.collections?.find((c) => c.slug === req.data?.collectionSlug)
+                    : undefined,
+                  globalConfig: req.data?.globalSlug
+                    ? config.globals?.find((g) => g.slug === req.data?.globalSlug)
+                    : undefined,
+                  req,
+                } satisfies Parameters<GenerateTitle>[0])
+              : '';
 
             return new Response(JSON.stringify({ result }), { status: 200 });
           },
@@ -228,13 +174,26 @@ const seo =
                 status: 500,
               });
 
-            await addDataAndFileToRequest(req);
+            const data: Omit<
+              Parameters<GenerateTitle>[0],
+              'collectionConfig' | 'globalConfig' | 'req'
+            > = await req.json?.();
 
-            const args: Parameters<GenerateTitle>[0] =
-              req.data as unknown as Parameters<GenerateTitle>[0];
+            if (data) {
+              req.data = data;
+            }
 
             const content = pluginConfig.generateTitleAi
-              ? await pluginConfig.generateTitleAi(args)
+              ? await pluginConfig.generateTitleAi({
+                  ...data,
+                  collectionConfig: req.data?.collectionSlug
+                    ? config.collections?.find((c) => c.slug === req.data?.collectionSlug)
+                    : undefined,
+                  globalConfig: req.data?.globalSlug
+                    ? config.globals?.find((g) => g.slug === req.data?.globalSlug)
+                    : undefined,
+                  req,
+                })
               : '';
 
             const aiResult = await openaiMessage({
@@ -250,13 +209,26 @@ const seo =
         },
         {
           handler: async (req) => {
-            addDataAndFileToRequest(req);
+            const data: Omit<
+              Parameters<GenerateTitle>[0],
+              'collectionConfig' | 'globalConfig' | 'req'
+            > = await req.json?.();
 
-            const args: Parameters<GenerateDescription>[0] =
-              req.data as unknown as Parameters<GenerateDescription>[0];
+            if (data) {
+              req.data = data;
+            }
 
             const result = pluginConfig.generateDescription
-              ? await pluginConfig.generateDescription(args)
+              ? await pluginConfig.generateDescription({
+                  ...data,
+                  collectionConfig: req.data?.collectionSlug
+                    ? config.collections?.find((c) => c.slug === req.data?.collectionSlug)
+                    : undefined,
+                  globalConfig: req.data?.globalSlug
+                    ? config.globals?.find((g) => g.slug === req.data?.globalSlug)
+                    : undefined,
+                  req,
+                } satisfies Parameters<GenerateDescription>[0])
               : '';
 
             return new Response(JSON.stringify({ result }), { status: 200 });
@@ -271,13 +243,25 @@ const seo =
                 status: 500,
               });
 
-            await addDataAndFileToRequest(req);
+            const data: Omit<
+              Parameters<GenerateTitle>[0],
+              'collectionConfig' | 'globalConfig' | 'req'
+            > = await req.json?.();
 
-            const args: Parameters<GenerateDescription>[0] =
-              req.data as unknown as Parameters<GenerateDescription>[0];
-
+            if (data) {
+              req.data = data;
+            }
             const content = pluginConfig.generateDescriptionAi
-              ? await pluginConfig.generateDescriptionAi(args)
+              ? await pluginConfig.generateDescriptionAi({
+                  ...data,
+                  collectionConfig: req.data?.collectionSlug
+                    ? config.collections?.find((c) => c.slug === req.data?.collectionSlug)
+                    : undefined,
+                  globalConfig: req.data?.globalSlug
+                    ? config.globals?.find((g) => g.slug === req.data?.globalSlug)
+                    : undefined,
+                  req,
+                })
               : '';
 
             const aiResult = await openaiMessage({
@@ -293,12 +277,27 @@ const seo =
         },
         {
           handler: async (req) => {
-            await addDataAndFileToRequest(req);
+            const data: Omit<
+              Parameters<GenerateTitle>[0],
+              'collectionConfig' | 'globalConfig' | 'req'
+            > = await req.json?.();
 
-            const args: Parameters<GenerateURL>[0] =
-              req.data as unknown as Parameters<GenerateURL>[0];
+            if (data) {
+              req.data = data;
+            }
 
-            const result = pluginConfig.generateURL ? await pluginConfig.generateURL(args) : '';
+            const result = pluginConfig.generateURL
+              ? await pluginConfig.generateURL({
+                  ...data,
+                  collectionConfig: req.data?.collectionSlug
+                    ? config.collections?.find((c) => c.slug === req.data?.collectionSlug)
+                    : undefined,
+                  globalConfig: req.data?.globalSlug
+                    ? config.globals?.find((g) => g.slug === req.data?.globalSlug)
+                    : undefined,
+                  req,
+                } satisfies Parameters<GenerateURL>[0])
+              : '';
 
             return new Response(JSON.stringify({ result }), { status: 200 });
           },
@@ -307,14 +306,29 @@ const seo =
         },
         {
           handler: async (req) => {
-            await addDataAndFileToRequest(req);
+            const data: Omit<
+              Parameters<GenerateTitle>[0],
+              'collectionConfig' | 'globalConfig' | 'req'
+            > = await req.json?.();
 
-            const args: Parameters<GenerateImage>[0] =
-              req.data as unknown as Parameters<GenerateImage>[0];
+            if (data) {
+              req.data = data;
+            }
 
-            const result = pluginConfig.generateImage ? await pluginConfig.generateImage(args) : '';
+            const result = pluginConfig.generateImage
+              ? await pluginConfig.generateImage({
+                  ...data,
+                  collectionConfig: req.data?.collectionSlug
+                    ? config.collections?.find((c) => c.slug === req.data?.collectionSlug)
+                    : null,
+                  globalConfig: req.data?.globalSlug
+                    ? config.globals?.find((g) => g.slug === req.data?.globalSlug)
+                    : null,
+                  req,
+                } as Parameters<GenerateImage>[0])
+              : '';
 
-            return new Response(JSON.stringify({ result }), { status: 200 });
+            return new Response(result, { status: 200 });
           },
           method: 'post',
           path: '/plugin-seo/generate-image',
@@ -324,7 +338,7 @@ const seo =
         config.globals?.map((global) => {
           const { slug } = global;
 
-          const isEnabled = pluginConfig?.globals?.includes(slug);
+          const isEnabled = pluginConfig?.globals?.includes(slug as GlobalSlug);
 
           if (isEnabled) {
             if (pluginConfig?.tabbedUI) {
@@ -369,11 +383,9 @@ const seo =
         }) || [],
       i18n: {
         ...config.i18n,
-        translations: {
-          ...deepMerge(translations, config.i18n?.translations),
-        },
+        translations: config.i18n?.translations
+          ? deepMergeSimple(translations, config.i18n.translations)
+          : translations,
       },
     };
   };
-
-export { seo };

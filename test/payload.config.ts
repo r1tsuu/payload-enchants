@@ -1,5 +1,6 @@
 // import { betterLocalizedFields } from '@payload-enchants/better-localized-fields';
 import { copyResolver, translator } from '@payload-enchants/translator';
+import { seoPlugin } from '@payload-enchants/seo';
 import { mongooseAdapter } from '@payloadcms/db-mongodb';
 import { postgresAdapter } from '@payloadcms/db-postgres';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
@@ -227,7 +228,7 @@ export default buildConfig({
   },
   plugins: [
     // cachedPayloadPlugin,
-    // seo({ collections: ['posts'], uploadsCollection: 'media' }),
+    seoPlugin({ collections: ['posts'], uploadsCollection: 'media' }),
     // docsReorder({
     //   collections: [
     //     {

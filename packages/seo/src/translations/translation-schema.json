@@ -10,10 +10,16 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
+        "missing": {
+          "type": "string"
+        },
         "almostThere": {
           "type": "string"
         },
         "autoGenerate": {
+          "type": "string"
+        },
+        "generateAi": {
           "type": "string"
         },
         "bestPractices": {
@@ -60,10 +66,6 @@
         },
         "tooShort": {
           "type": "string"
-        },
-
-        "generateAi": {
-          "type": "string"
         }
       },
       "required": [
@@ -84,7 +86,7 @@
         "checksPassing",
         "preview",
         "previewDescription",
-        "generateAi"
+        "missing"
       ]
     }
   },
