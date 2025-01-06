@@ -56,7 +56,7 @@ export const buildFind = ({
       [JSON.stringify(keys)],
       {
         tags:
-          args.tags ?? ctx.useSimpleCacheStrategy
+          (args.tags ?? ctx.useSimpleCacheStrategy)
             ? [ctx.SIMPLE_CACHE_TAG]
             : [ctx.buildTagFind({ slug: args.collection as string })],
       },
@@ -99,7 +99,7 @@ export const buildFind = ({
             fields: payload.collections[args.collection].config.fields,
           })),
           draft: args.draft,
-          fallbackLocale: args.fallbackLocale ?? undefined,
+          fallbackLocale: typeof args.fallbackLocale === 'string' ? args.fallbackLocale : undefined,
           find,
           locale: args.locale || undefined,
           payload,
