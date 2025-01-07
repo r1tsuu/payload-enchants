@@ -2,7 +2,7 @@ import type { CollectionSlug, Payload, TypedCollection } from 'payload';
 import { APIError } from 'payload';
 
 import { populateDocRelationships } from '../populate';
-import type { FindOneArgs, SanitizedArgsContext } from '../types';
+import type { Find, FindOneArgs, SanitizedArgsContext } from '../types';
 
 export const buildFindOne = ({
   ctx,
@@ -10,7 +10,7 @@ export const buildFindOne = ({
   payload,
 }: {
   ctx: SanitizedArgsContext;
-  find: Payload['find'];
+  find: Find;
   payload: Payload;
 }) => {
   return async function findOne<T extends CollectionSlug>(
@@ -142,7 +142,7 @@ export const buildFindOne = ({
           depth,
           docs: [{ data: doc, fields: payload.collections[args.collection].config.fields }],
           draft: args.draft,
-          fallbackLocale: args.fallbackLocale ?? undefined,
+          fallbackLocale: typeof args.fallbackLocale === 'string' ? args.fallbackLocale : undefined,
           find,
           locale: args.locale || undefined,
           payload,

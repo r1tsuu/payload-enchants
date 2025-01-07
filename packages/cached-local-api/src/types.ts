@@ -40,7 +40,8 @@ export type FindArgs<T extends CollectionSlug> = {
   populatedDocsMap?: Map<string, Record<string, any>>;
   select?: Select;
   tags?: string[];
-} & Parameters<typeof payload.find<T>>[0];
+  // eslint-disable-next-line perfectionist/sort-intersection-types
+} & Omit<Parameters<Payload['find']>[0], 'collection'> & { collection: T };
 
 export type FindOneArgs<T extends keyof TypedCollection> = {
   /** @default first field from the fields array */
@@ -64,14 +65,16 @@ export type FindByID = <T extends CollectionSlug>(
 export type FindByIDArgs<T extends CollectionSlug> = {
   populate?: Populate;
   select?: Select;
-} & Parameters<typeof payload.findByID<T>>[0];
+  // eslint-disable-next-line perfectionist/sort-intersection-types
+} & Omit<Parameters<Payload['findByID']>[0], 'collection'> & { collection: T };
 
 export type FindGlobal = <T extends GlobalSlug>(args: FindGlobalArgs<T>) => Promise<TypedGlobal[T]>;
 
 export type FindGlobalArgs<T extends GlobalSlug> = {
   populate?: Populate;
   select?: Select;
-} & Parameters<typeof payload.findGlobal<T>>[0];
+  // eslint-disable-next-line perfectionist/sort-intersection-types
+} & Omit<Parameters<Payload['findGlobal']>[0], 'slug'> & { slug: T };
 
 export type Count = Payload['count'];
 

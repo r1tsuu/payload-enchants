@@ -1,7 +1,7 @@
 import type { CollectionSlug, Payload } from 'payload';
 
 import { populateDocRelationships } from '../populate';
-import type { FindByID, FindByIDArgs, SanitizedArgsContext } from '../types';
+import type { Find, FindByID, FindByIDArgs, SanitizedArgsContext } from '../types';
 
 export const buildFindByID = ({
   ctx,
@@ -9,7 +9,7 @@ export const buildFindByID = ({
   payload,
 }: {
   ctx: SanitizedArgsContext;
-  find: Payload['find'];
+  find: Find;
   payload: Payload;
 }): FindByID => {
   return async function findByID<T extends CollectionSlug>(args: FindByIDArgs<T>) {

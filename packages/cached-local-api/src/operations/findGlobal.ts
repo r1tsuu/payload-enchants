@@ -1,7 +1,7 @@
 import type { GlobalSlug, Payload } from 'payload';
 
 import { populateDocRelationships } from '../populate';
-import type { FindGlobal, FindGlobalArgs, SanitizedArgsContext } from '../types';
+import type { Find, FindGlobal, FindGlobalArgs, SanitizedArgsContext } from '../types';
 
 export const buildFindGlobal = ({
   ctx,
@@ -9,7 +9,7 @@ export const buildFindGlobal = ({
   payload,
 }: {
   ctx: SanitizedArgsContext;
-  find: Payload['find'];
+  find: Find;
   payload: Payload;
 }): FindGlobal => {
   return async function findGlobal<T extends GlobalSlug>(args: FindGlobalArgs<T>) {
