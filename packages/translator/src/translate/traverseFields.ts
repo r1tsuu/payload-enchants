@@ -210,6 +210,8 @@ export const traverseFields = ({
         break;
 
       case 'richText': {
+        if (field.custom && typeof field.custom === 'object' && field.custom.translatorSkip) break;
+        
         if (!(field.localized || localizedParent) || isEmpty(siblingDataFrom[field.name])) break;
         if (emptyOnly && siblingDataTranslated[field.name]) break;
 
